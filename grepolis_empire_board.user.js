@@ -2,7 +2,7 @@
 //==UserScript==
 //@name		Grepolis Empire Board EC
 //@namespace	empire-board.grepolis
-//@version	190
+//@version	001
 //@author		Inselk0enig
 //@description	Display population, resources, trading, transports, incomes, buildings, and army or fleet units overviews for each cities. Require Grepolis v.0.3.x server game. Support any countries/languages.
 //@require	http://userscripts.org/scripts/source/60774.user.js
@@ -35,7 +35,7 @@ var language;
 var langtype;
 var texts;
 var buildings;
-var tavernWineUsage = [0, 4, 8, 13, 18, 24, 30, 37, 44, 51, 60, 68, 78, 88, 99, 110, 122, 136,150,165,180,197,216,235,255,277,300,325,351,378,408,439,472,507,544,584,626,670,717,766,818];
+var tavernfavUsage = [0, 4, 8, 13, 18, 24, 30, 37, 44, 51, 60, 68, 78, 88, 99, 110, 122, 136,150,165,180,197,216,235,255,277,300,325,351,378,408,439,472,507,544,584,626,670,717,766,818];
 var townHallSpaces = [0, 60, 96, 142, 200, 262, 332, 410, 492, 580, 672, 768, 870, 976, 1086, 1200, 1320, 1440, 1566, 1696, 1828, 1964, 2102, 2246, 2390, 2540, 2690, 2845, 3003, 3163, 3326, 3492, 3710, 3880, 4054, 4230, 4410, 4590, 4774, 4960, 5148, 5340, 5532, 5728, 5926, 6126, 6328, 6534, 6760];
 
 var LocalizationStrings = {};
@@ -78,7 +78,8 @@ var player=uW.Game.player_id;
 var town=uW.Game.townId;
 var ally=uW.Game.alliance_id;
 var csrfToken=uW.Game.csrfToken;
-var storage=uW.Layout.storage_volume;
+var storage_volume=uW.Layout.storage_volume;
+var max_favor=uW.Layout.max_favor;
 var servertime=uW.Game.server_time;
 var res=[];
 res['wood']=uW.Layout.resources['wood'];
@@ -116,7 +117,7 @@ EmpireBoard =
 		Version:		 190,
 		HomePage:		 '',
 		ScriptURL:		 '',
-		UserScriptsID:	 41051
+		UserScriptsID:	 4711
 };
 
 
@@ -858,9 +859,9 @@ function createLinkToAgora(city_id)
 
 	var res = getCity(city_id);
 
-	if (res.island_id != undefined)
+	if (res.csrfToken != undefined)
 	{
-		rHTML += '<a href="?view=islandBoard&id='+res.island_id+'" title="View island agora"><img hspace="3" height="12" src="skin/board/schriftrolle_offen2.gif" align="absmiddle" /></a>';
+		rHTML += '<a href="?view=islandBoard&id='+res.csrfToken+'" title="View island agora"><img hspace="3" height="12" src="skin/board/schriftrolle_offen2.gif" align="absmiddle" /></a>';
 	}
 
 	return rHTML;
@@ -959,13 +960,13 @@ function createLinkToMap(city_id)
 		rHTML += '<a href="?view=worldmap_iso&islandX='+EmpireBoard.Str.To_Integer(cCoord[0],'')+'&islandY='+EmpireBoard.Str.To_Integer(cCoord[1],'')+'" title="' + res.city_coord + ' View world map"><img align="absmiddle" src="skin/layout/icon-world.gif" /></a>'; 
 	}
 
-	if ((res.island_id != undefined) && (res.city_coord != undefined))
+	if ((res.csrfToken != undefined) && (res.city_coord != undefined))
 	{
-		rHTML += '<a href="?view=island&id=' + res.island_id + '&selectCity='+city_id+'" title="' + res.city_coord + ' View island"><img align="absmiddle" src="skin/layout/icon-island.gif" /></a>'; 
+		rHTML += '<a href="?view=island&id=' + res.csrfToken + '&selectCity='+city_id+'" title="' + res.city_coord + ' View island"><img align="absmiddle" src="skin/layout/icon-island.gif" /></a>'; 
 	}
-	else if (res.island_id != undefined)
+	else if (res.csrfToken != undefined)
 	{
-		rHTML += '<a href="?view=island&id=' + res.island_id + '&selectCity='+city_id+'" title="View island"><img align="absmiddle" src="skin/layout/icon-island.gif" /></a>'; 
+		rHTML += '<a href="?view=island&id=' + res.csrfToken + '&selectCity='+city_id+'" title="View island"><img align="absmiddle" src="skin/layout/icon-island.gif" /></a>'; 
 	}
 
 	return rHTML;
@@ -1033,15 +1034,10 @@ EmpireBoard.Renders.IconTo_safehouseReports = function(currentCityId,Title)
 	if (Title == undefined) Title = "View espionage reports";
 	var rHTML = '';
 	var sCityId = 0;
-	var sCityPos = -1;
 
 	if (currentCityId > 0)	
 	{
-		sCityPos = getBuildingPosition(currentCityId, 'safehouse', -1);
-		if (sCityPos > 0)
-		{
 			sCityId = currentCityId;
-		}
 	}
 
 	if (sCityId == 0)
@@ -1049,22 +1045,18 @@ EmpireBoard.Renders.IconTo_safehouseReports = function(currentCityId,Title)
 		var Cities = this._Parent.DB.OwnCities;
 		for (CityId in Cities)
 		{
-			sCityPos = getBuildingPosition(CityId, 'safehouse', -1);
-			if (sCityPos > 0)
-			{
 				sCityId = CityId;
 				break;
-			}
 		}
 	}
 
-	if ((sCityId == 0) || (sCityPos <= 0))
+	if (sCityId == 0)
 	{
 		return '';
 	}
 	else
 	{
-		rHTML += '<a view="safehouse" tab="reports" cityid="'+sCityId+'" position="'+sCityPos+'" href="?view=safehouse&id='+sCityId+'&position='+sCityPos+'&tab=reports" title="'+Title+'"><img align="absmiddle" src="skin/buildings/x40_y40/safehouse.gif"/></a>';
+		rHTML += '<a view="safehouse" tab="reports" cityid="'+sCityId+'" href="?view=safehouse&id='+sCityId+'&tab=reports" title="'+Title+'"><img align="absmiddle" src="skin/buildings/x40_y40/safehouse.gif"/></a>';
 		// skin/img/city/building_safehouse.gif
 		return rHTML;
 	}
@@ -1310,31 +1302,19 @@ EmpireBoard.Renders.ArrivingGoods_Tooltip_Content = function(city_id, resName)
 	}
 	else if (resName == 'iron')
 	{
-		tradinggoods = city.tradewine;
-		var wineUsage = 0;
-		var cellarLevel = getBuildingLevel(city_id, "vineyard", "-");
-		if (city.wineUsageId != undefined)
-		{
-			wineUsage = tavernWineUsage[city.wineUsageId];
-			if (cellarLevel != '-')
-			{
-				wineSave = wineUsage * cellarLevel;
-				wineSave = Math.round(wineSave / 100);
-				wineUsage = wineUsage - wineSave;
-			}
-		}
-		hourlyprod = city.prodiron - wineUsage;
-		resAmount = getCurrentResourceAmount(_nowTime, city.prodtime, city.iron, city.prodiron - wineUsage);
+		tradinggoods = city.tradeiron;
+		hourlyprod = city.prodiron;
+		resAmount = getCurrentResourceAmount(_nowTime, city.prodtime, city.iron, city.prodiron);
 	}
 	else if (resName == 'stone')
 	{
-		tradinggoods = city.trademarble;
+		tradinggoods = city.tradestone;
 		hourlyprod = city.prodstone;
 		resAmount = getCurrentResourceAmount(_nowTime, city.prodtime, city.stone, city.prodstone);
 	}
 	else if (resName == 'favor')
 	{
-		tradinggoods = city.tradeglass;
+		tradinggoods = city.tradefav;
 		hourlyprod = city.prodfav;
 		resAmount = getCurrentResourceAmount(_nowTime, city.prodtime, city.favor, city.prodfav);
 	}
@@ -1532,7 +1512,9 @@ EmpireBoard.Grepolis.Language = function()
 		City.id			 = 0;
 		City.name		 = '';
 		City.playername	 = '';
-		City.islandid	 = 0;
+		City.csrfToken	 = '';
+		City.storage_volume	 = 0;
+		City.favor_max 	 = 0;
 
 		City.knownTime	 = new Date().getTime();
 
@@ -1581,6 +1563,9 @@ EmpireBoard.Grepolis.Language = function()
 			database[CityId].name = townName;
 			database[CityId].own = true;		
 			database[CityId].selected = true;
+			database[CityId].csrfToken = Game.csrfToken;;
+			database[CityId].storage_volume=uW.Layout.storage_volume;
+			database[CityId].max_favor=uW.Layout.max_favor;
 
 			this._Parent.Log.Add('Fetch select list: city ['+CityId+'], '+database[CityId].name+', selected='+database[CityId].selected);
 		}
@@ -1647,22 +1632,6 @@ EmpireBoard.Grepolis.Language = function()
 	EmpireBoard.Grepolis.Resource_Capacity = function(ResType, WarehouseLevel)
 	{
 		return uW.Layout.storage_volume;
-
-		if (ResType == undefined) ResType = 'iron';
-		if (WarehouseLevel == undefined) WarehouseLevel = 0;
-
-		var result = 0;
-
-		if (ResType == 'wood')
-		{
-			result = 3000;
-		}
-		else
-		{
-			result = 1500;
-		}
-		result = result + (WarehouseLevel * 8000);
-		return result;
 	};
 
 	EmpireBoard.Grepolis.Resource_SafeCapacity = function(ResType, WarehouseLevel, Bonus)
@@ -2916,8 +2885,8 @@ EmpireBoard.Grepolis.Language = function()
 					"carpentering"  : ["Zimmerei", "Zimmerei"],
 					"forester"      : ["Forsthaus", "Forsthaus"],
 					"stonemason"    : ["Steinmetz", "Steinmetz"],
-					"glassblowing"  : ["Glasbläserei", "Glasbläserei"],
-					"winegrower"    : ["Winzerei", "Winzerei"],
+					"favblowing"  : ["Glasbläserei", "Glasbläserei"],
+					"favgrower"    : ["Winzerei", "Winzerei"],
 					"alchemist"     : ["Alchimistenturm", "Alchimistenturm"],
 					"architect"     : ["Architekturbüro", "Architekturbüro"],
 					"optician"      : ["Optiker", "Optiker"],
@@ -2946,12 +2915,10 @@ EmpireBoard.Grepolis.Language = function()
 					"finishedBuilding"  : "Bau abgeschlossen",
 					"Incomes"           : "Einkommen",
 					"Trading"           : "Handel",
-					"Wood"              : "Baumaterial",
-					"Wine"              : "Wein",
-					"Marble"            : "Marmor",
-					"Crystal"           : "Kristallglas",
+					"wood"              : "Holz",
+					"fav"               : "Gunst",
 					"Sulfur"            : "Schwefel",
-					"lumber"			: "Holz",
+					"wood"			: "Holz",
 					"stone"				: "Stein",
 					"iron"				: "Eisen"
 			};
@@ -2978,8 +2945,8 @@ EmpireBoard.Grepolis.Language = function()
 					"carpentering" : ["Carpenter", "Carpenter"],
 					"forester" : ["Forester", "Forester"],
 					"stonemason" : ["Stone Mason", "Mason"],
-					"glassblowing" : ["Glass Blowing", "Blowing"],
-					"winegrower" : ["Wine Grower", "Grower"],
+					"favblowing" : ["Glass Blowing", "Blowing"],
+					"favgrower" : ["fav Grower", "Grower"],
 					"alchemist" : ["Alchemist", "Alchemist"],
 					"architect" : ["Architect", "Architect"],
 					"optician" : ["Optician", "Optician"],
@@ -2993,7 +2960,7 @@ EmpireBoard.Grepolis.Language = function()
 					"Population": "Population",
 					"Research": "Research",
 					"finishedBuilding": "Finished building","Incomes":"Incomes","Trading":"Trading",
-					"Wood": "Wood", "Wine": "Wine", "Marble": "Marble", "Crystal": "Crystal", "Sulfur": "Sulfur"
+					"wood": "wood", "fav": "fav", "stone": "stone", "Sulfur": "Sulfur"
 			};
 		}
 	}
@@ -3010,12 +2977,11 @@ EmpireBoard.Grepolis.Language = function()
 	EmpireBoard.Log.Add('Main view city_name = "'+city_name+'"');
 	if (city_name != undefined)
 	{
-		var island_id = Game.csrfToken;
-		// var island_id =
+		var csrfToken = Game.csrfToken;
+		// var csrfToken =
 		// EmpireBoard.DOM.Get_First_Node_TextContent("id('breadcrumbs')//a[@class='island']");
 		var city_idmainView = city_id;
-		EmpireBoard.Log.Add('city_idmainView['+EmpireBoard.Grepolis.TwoDigit_Coords(island_id)+' '+city_name+'] = '+city_idmainView);
-		var city_positionmainView = -1;
+		EmpireBoard.Log.Add('city_idmainView['+EmpireBoard.Grepolis.TwoDigit_Coords(csrfToken)+' '+city_name+'] = '+city_idmainView);
 
 		var a = EmpireBoard.DOM.Get_First_Node("//div[@id='breadcrumbs']/*[@class='island' and contains(text(), '[')]", "");
 		if (a == null) {
@@ -3025,17 +2991,17 @@ EmpireBoard.Grepolis.Language = function()
 			}
 		}
 		var city_coord = "";
-		var island_id = "";
+		var csrfToken = "";
 		if (a != null) {
 			if (/(\[[0-9:]+\])/.exec(a.innerHTML)) {
 				city_coord = RegExp.$1;
 				if (/[?&]id=([0-9]+)/.exec(a.href) != null) {
-					island_id = RegExp.$1;
+					csrfToken = RegExp.$1;
 				}
 			}
 		}
-		if (island_id == "" && (/view=island&id=([0-9]+)/.exec(document.URL) != null)) { 
-			island_id = RegExp.$1;
+		if (csrfToken == "" && (/view=island&id=([0-9]+)/.exec(document.URL) != null)) { 
+			csrfToken = RegExp.$1;
 		}
 	}
 	else
@@ -3043,7 +3009,7 @@ EmpireBoard.Grepolis.Language = function()
 		city_idmainView = 0;
 		city_name = '';
 		city_coord = '';
-		island_id = '';
+		csrfToken = '';
 	}
 
 	function getCity(city_id) {
@@ -3074,7 +3040,6 @@ EmpireBoard.Grepolis.Language = function()
 		res.prodiron=uW.Layout.production['iron'];
 		res.prodfav=uW.Layout.favor_production;
 		res.prodtime = EmpireBoard.StartTime; 
-		res.prodgood = 'iron';
 	}
 
 	function getCurrentResourceAmount(currenttime, startTime, startAmount, factPerHour) {
@@ -3082,7 +3047,7 @@ EmpireBoard.Grepolis.Language = function()
 		return Math.max(0, Math.floor(startAmount + elapsedhours * factPerHour));
 		/*
 		 * TODO: spendings: [{amount: 197, tickInterval: 1200}], valueElem:
-		 * "value_wine"
+		 * "value_fav"
 		 * this.currentRes=this.startRes+this.production*Math.floor((this.currenttime-this.startdate)/1000);
 		 * this.currentRes=this.currentRes-this.spendings[i]['amount']*Math.floor((this.currenttime-this.startdate)/1000/this.spendings[i]['tickInterval'])*this.spendings[i]['tickInterval']/3600;}
 		 * 197*floor(3600/1200)*1200/3600
@@ -3411,22 +3376,22 @@ EmpireBoard.Grepolis.Language = function()
 		var res = getCity(city_id);
 		var rHTML = '';
 
-		if (res.island_id != undefined)
+		if (res.csrfToken != undefined)
 		{
-			rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=resource&type=resource&id=' + res.island_id + '" title="View island saw mill"><img height="12" align="absmiddle" src="skin/resources/icon_wood.gif" /></a>';
+			rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=resource&type=resource&id=' + res.csrfToken + '" title="View island saw mill"><img height="12" align="absmiddle" src="skin/resources/icon_wood.gif" /></a>';
 			rHTML += '&nbsp;';
 
 			if (res.prodgood == 'iron')
 			{
-				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.island_id + '" title="View island vineyard"><img height="12" align="absmiddle" src="skin/resources/icon_wine.gif" /></a>';
+				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.csrfToken + '" title="View island vineyard"><img height="12" align="absmiddle" src="skin/resources/icon_fav.gif" /></a>';
 			}
 			else if (res.prodgood == 'stone')
 			{
-				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.island_id + '" title="View island quarry"><img height="12" align="absmiddle" src="skin/resources/icon_marble.gif" /></a>';
+				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.csrfToken + '" title="View island quarry"><img height="12" align="absmiddle" src="skin/resources/icon_stone.gif" /></a>';
 			}
 			else if (res.prodgood == 'favor')
 			{
-				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.island_id + '" title="View island crystal mine"><img height="12" align="absmiddle" src="skin/resources/icon_glass.gif" /></a>';
+				rHTML += '<a class="changeCity" cityid="'+city_id+'" href="?view=tradegood&type=tradegood&id=' + res.csrfToken + '" title="View island crystal mine"><img height="12" align="absmiddle" src="skin/resources/icon_fav.gif" /></a>';
 			}
 
 			rHTML += '&nbsp;';
@@ -3837,16 +3802,16 @@ EmpireBoard.Grepolis.Language = function()
 		return (report == true ? '!' : '');
 	}
 
-	function createLinkToResourceCond(condition, text, island_id, city_id, city_index) {
-		if (condition == true && island_id != undefined && island_id != "") {
-			return createLink(text, "?view=resource&type=resource&id="+island_id, "class=changeCity cityid="+city_id);
+	function createLinkToResourceCond(condition, text, csrfToken, city_id, city_index) {
+		if (condition == true && csrfToken != undefined && csrfToken != "") {
+			return createLink(text, "?view=resource&type=resource&id="+csrfToken, "class=changeCity cityid="+city_id);
 		}
 		return text;
 	}
 
-	function createLinkToTradegoodCond(condition, text, island_id, city_id, city_index) {
-		if (condition == true && island_id != undefined && island_id != "") {
-			return createLink(text, "?view=tradegood&type=tradegood&id="+island_id, "class=changeCity cityid="+city_id);
+	function createLinkToTradegoodCond(condition, text, csrfToken, city_id, city_index) {
+		if (condition == true && csrfToken != undefined && csrfToken != "") {
+			return createLink(text, "?view=tradegood&type=tradegood&id="+csrfToken, "class=changeCity cityid="+city_id);
 		}
 		return text;
 	}
@@ -4034,55 +3999,17 @@ EmpireBoard.Grepolis.Language = function()
 		return res;
 	}
 
-	function getBuildingLink(city_id, name, defaultValue, position)
+	function getBuildingLink(city_id, name, defaultValue)
 	{
 		if (defaultValue == undefined) defaultValue = '';
-		if (position == undefined)
-		{
-			position = -1;
-			if (name == 'townHall') position = 0;
-		}
 		var link = '';
 
-		if (position == -1)
-		{
 			// will deprecated
 			var city = getCity(city_id);
 			link = getArrValue(city.buildings[name], "link", defaultValue);
-		}
-		else
-		{
-			link = '?view='+name+'&id='+city_id+'&position='+position;
-		}
 
 		if (link == '') link = defaultValue;
 		return link;
-	}
-
-	function getBuildingPosition(city_id, name, defaultValue)
-	{
-		if (defaultValue == undefined) defaultValue = -1;
-		var position = -1;
-		var city = getCity(city_id);
-
-		if ((city.buildings == undefined) || (city.buildings[name] == undefined))
-		{
-			if (name == 'townHall') position = 0;
-		}
-		else if ((city.buildings[name].link != undefined) && (city.buildings[name].link != ''))
-		{
-			// will deprecated
-			var link = city.buildings[name].link;
-			position = parseInt(/position=([0-9]+)/.exec(link)[1]);
-		}
-		else if (city.buildings[name].position != undefined)
-		{
-			position = city.buildings[name].position;
-		}
-		else if (name == 'townHall') position = 0;
-
-		if (position == -1) position = defaultValue;
-		return position;
 	}
 
 	function getCityBuildingsCount(city_id, defaultValue)
@@ -4095,15 +4022,7 @@ EmpireBoard.Grepolis.Language = function()
 		{
 			for (name in city.buildings)
 			{
-				if (city.buildings[name].levels != undefined)
-				{
-					var p;
-					for (p in city.buildings[name].levels)
-					{
-						count++;
-					}
-				}
-				else if (city.buildings[name].level != undefined)
+			    if (city.buildings[name].level != undefined)
 				{
 					count++;
 				}
@@ -4130,10 +4049,9 @@ EmpireBoard.Grepolis.Language = function()
 	}
 
     // Get level instead building upgrading is finished
-	function getBuildingLevel(city_id, name, defaultValue, position)
+	function getBuildingLevel(city_id, name, defaultValue)
 	{
 		if (defaultValue == undefined) defaultValue = 0;
-		if (position == undefined) position = -1;
 		var level = 0;
 		var city = getCity(city_id);
 
@@ -4145,32 +4063,10 @@ EmpireBoard.Grepolis.Language = function()
 				if (city.underConstructionTime <= EmpireBoard.StartTime) level++;
 			}
 		}
-		else if (position == -1)
+		else 
 		{
-			if (city.buildings[name].levels != undefined)
-			{
-				var p;
-				for (p in city.buildings[name].levels)
-				{
-					level += city.buildings[name].levels[p];
-				}
-			}
-			else
-			{
-				// deprecated
 				level = getArrValue(city.buildings[name], "level", 0);
-			}
 			if (city.underConstructionName == name)
-			{
-				if (city.underConstructionTime <= EmpireBoard.StartTime) level++;
-			}
-		}
-		else if (city.buildings[name].levels != undefined)
-		{
-			level = city.buildings[name].levels[position];
-			// deprecated
-			if (level == undefined) level = getArrValue(city.buildings[name], "level", 0);
-			if ((city.underConstructionName == name) && (city.underConstructionPosition == position))
 			{
 				if (city.underConstructionTime <= EmpireBoard.StartTime) level++;
 			}
@@ -4221,9 +4117,9 @@ EmpireBoard.Grepolis.Language = function()
 		 * res.wood =
 		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_wood')"));
 		 * res.iron =
-		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_wine')"));
+		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_fav')"));
 		 * res.stone =
-		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_marble')"));
+		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_stone')"));
 		 * res.favor =
 		 * EmpireBoard.Str.To_Integer(EmpireBoard.DOM.Get_First_Node_TextContent("id('value_crystal')"));
 		 * res.wood = EmpireBoard.Grepolis.currentCity('wood','resources');
@@ -4235,6 +4131,8 @@ EmpireBoard.Grepolis.Language = function()
 		res.iron = uW.Layout.resources['iron'];
 		res.stone = uW.Layout.resources['stone'];
 		res.favor = uW.Layout.favor;
+		res.storage_volume = uW.Layout.storage_volume;
+		res.max_favor = uW.Layout.max_favor;
 
 		// Resources to sold
 		var wareNode = EmpireBoard.DOM.Get_First_Node_TextContent("//div[@id='cityResources']//li[@class='wood']/div[@class='tooltip']");
@@ -4249,29 +4147,29 @@ EmpireBoard.Grepolis.Language = function()
 		var wareNode = EmpireBoard.DOM.Get_First_Node_TextContent("//div[@id='cityResources']//li[@class='iron']/div[@class='tooltip']");
 		if (/: [0-9,.]+[^0-9]+: ([0-9,.]+)/.exec(wareNode) != null)
 		{
-			res.tradewine = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
+			res.tradefav = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
 		}
 		else
 		{
-			res.tradewine = 0;
+			res.tradefav = 0;
 		}
 		var wareNode = EmpireBoard.DOM.Get_First_Node_TextContent("//div[@id='cityResources']//li[@class='stone']/div[@class='tooltip']");
 		if (/: [0-9,.]+[^0-9]+: ([0-9,.]+)/.exec(wareNode) != null)
 		{
-			res.trademarble = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
+			res.tradestone = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
 		}
 		else
 		{
-			res.trademarble = 0;
+			res.tradestone = 0;
 		}
 		var wareNode = EmpireBoard.DOM.Get_First_Node_TextContent("//div[@id='cityResources']//li[@class='favor']/div[@class='tooltip']");
 		if (/: [0-9,.]+[^0-9]+: ([0-9,.]+)/.exec(wareNode) != null)
 		{
-			res.tradeglass = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
+			res.tradefav = parseInt((RegExp.$1).replace(/[^0-9]/g, ""));
 		}
 		else
 		{
-			res.tradeglass = 0;
+			res.tradefav = 0;
 		}
 
 		digProducedResources(res);
@@ -4367,9 +4265,11 @@ EmpireBoard.Grepolis.Language = function()
 		if (city_coord != "") {
 			res.city_coord = city_coord;
 		}
-		if (island_id != "") {
-			res.island_id = island_id;
+		if (csrfToken != "") {
+			res.csrfToken = csrfToken;
 		}
+		res.storage_volume = storage_volume;
+		res.max_favor = max_favor;
 
 		// Fetch levels & positions
 		if (EmpireBoard.Grepolis.View() == "building_main")
@@ -4378,15 +4278,12 @@ EmpireBoard.Grepolis.Language = function()
 			for (name in gtb) {
 				if (res.buildings[name] == undefined) {
 					res.buildings[name] = {};
-					res.buildings[name].position = -1;
 					res.buildings[name].level = 0;
-					res.buildings[name].levels = {};
 					res.buildings[name].link = '';
 					res.buildings[name].name = '';
 				}
 				res.buildings[name].level = gtb[name].level;
 				res.buildings[name].name = gtb[name].name;
-				res.buildings[name].levels[0] = gtb[name].level;
 
 				EmpireBoard.Log.Add('name='+name);
 			}
@@ -4403,9 +4300,7 @@ EmpireBoard.Grepolis.Language = function()
 				{
 					if (res.buildings[name] == undefined) {
 						res.buildings[name] = {};
-						res.buildings[name].position = -1;
 						res.buildings[name].level = 0;
-						res.buildings[name].levels = {};
 						res.buildings[name].link = '';
 						res.buildings[name].name = '';
 					}
@@ -4428,23 +4323,10 @@ EmpireBoard.Grepolis.Language = function()
 			var res = getCity(city_idmainView);
 
 			// Reset levels, links, and positions
-			for (name in res.buildings)
-			{
-				try
-				{
-					delete config[city_idmainView].buildings[name].levels;
-				}
-				catch (e)
-				{
-
-				}
-			}
 			var res = getCity(city_idmainView);
 			for (name in res.buildings)
 			{
-				res.buildings[name].position = -1;
 				res.buildings[name].level = 0;
-				res.buildings[name].levels = {};
 				res.buildings[name].link = '';
 				res.buildings[name].name = '';
 			}
@@ -4455,7 +4337,6 @@ EmpireBoard.Grepolis.Language = function()
 					EmpireBoard.Log.Add('name='+name);
 					// level
 					res.buildings[name].level = gtb[name].level;
-					res.buildings[name].levels[0] = gtb[name].level;
 					res.buildings[name].name = gtb[name].name;
 					// link, will deprecated
 					// res.buildings[name].link = node.href;
@@ -4467,7 +4348,6 @@ EmpireBoard.Grepolis.Language = function()
 			if (node.snapshotLength >= 1) {
 				res.underConstruction = node.snapshotItem(0).title;
 				res.underConstructionName = node.snapshotItem(0).parentNode.getAttribute("class");
-				res.underConstructionPosition = /position=([0-9]+)/.exec(node.snapshotItem(0).href)[1];
 
 				// Search cityCountdown
 				var scripts = document.getElementsByTagName("script");
@@ -4500,7 +4380,6 @@ EmpireBoard.Grepolis.Language = function()
 			} else {
 				res.underConstruction = "-";
 				res.underConstructionName = "";
-				res.underConstructionPosition = -1;
 				res.underConstructionTime = 0;
 			}
 
@@ -4575,52 +4454,18 @@ EmpireBoard.Grepolis.Language = function()
 				res.buildings[EmpireBoard.Grepolis.View()] = {};
 			}
 
-			// Fetch position
-			var position = -1;
-			var node = EmpireBoard.DOM.Get_Nodes("//*[@id='buildingUpgrade']//ul[@class='actions']//a[contains(@href, 'position=')]");
-			if (node.snapshotLength == 0)
-			{
-				node = EmpireBoard.DOM.Get_Nodes("//*[@id='buildingUpgrade']//a[@class='cancelUpgrade']");
-			}
-			if (node.snapshotLength >= 1)
-			{
-				var url_position = /position=([0-9]+)/.exec(node.snapshotItem(0).href);
-				if (url_position != null) position = parseInt(RegExp.$1);
-			}
-			else if ((res.buildings[EmpireBoard.Grepolis.View()].position != undefined) && (res.buildings[EmpireBoard.Grepolis.View()].position != -1))
-			{
-				position = res.buildings[EmpireBoard.Grepolis.View()].position;
-			}
-			else
-			{
-				var url_position = /[\?&]position=([0-9]+)/.exec(document.URL);
-				if (url_position != null) position = parseInt(RegExp.$1);
-			}
-			city_positionmainView = position;
-			// deprecated
-			res.buildings[EmpireBoard.Grepolis.View()].position = position;
-
 			// Fetch level & detect upgrading
 			var n = EmpireBoard.DOM.Get_First_Node("//*[@id='buildingUpgrade']//*[@class='buildingLevel']");
 			if (n != null)
 			{
-				if (position != -1)
-				{
-					// Fetch level
-					if (res.buildings[EmpireBoard.Grepolis.View()].levels == undefined) res.buildings[EmpireBoard.Grepolis.View()].levels = {};
-					res.buildings[EmpireBoard.Grepolis.View()].levels[position] = EmpireBoard.Str.To_Integer(n.innerHTML,0);
-				}
-
-				EmpireBoard.Log.Add('View '+EmpireBoard.Grepolis.View()+' building level '+EmpireBoard.Str.To_Integer(n.innerHTML,0)+' at position '+position);
+				EmpireBoard.Log.Add('View '+EmpireBoard.Grepolis.View()+' building level '+EmpireBoard.Str.To_Integer(n.innerHTML,0));
 
 				// Ignorer ancien upgrade du batiment
-				if (res.underConstructionPosition == undefined) res.underConstructionPosition = -1; // Deprecated
-				if ((res.underConstructionName == EmpireBoard.Grepolis.View()) && (res.underConstructionPosition == position))
+				if ((res.underConstructionName == EmpireBoard.Grepolis.View()))
 				{
 					res.underConstruction = '';
 					res.underConstructionName = '';
 					res.underConstructionTime = 0;
-					res.underConstructionPosition = -1;
 				}
 
 				// Search getCountdown()
@@ -4666,16 +4511,7 @@ EmpireBoard.Grepolis.Language = function()
 							}
 							else if ((res.buildings[res.underConstructionName].uptime != undefined) && (res.citytime != undefined))
 							{
-								if ((res.underConstructionPosition != undefined) && (res.underConstructionPosition != -1))
-								{
-									if (res.buildings[res.underConstructionName].levels == undefined) res.buildings[res.underConstructionName].levels = {};
-									res.buildings[res.underConstructionName].levels[res.underConstructionPosition] = parseInt(res.buildings[res.underConstructionName].levels[res.underConstructionPosition])+1;
-								}
-								else
-								{
-									// deprecated
 									res.buildings[res.underConstructionName].level = parseInt(res.buildings[res.underConstructionName].level)+1;
-								}
 							}
 						}
 
@@ -4685,7 +4521,6 @@ EmpireBoard.Grepolis.Language = function()
 						// new
 						// Date().getTime());
 						res.underConstructionName = EmpireBoard.Grepolis.View();
-						res.underConstructionPosition = position;
 						res.underConstructionTime = enddate - currentdate + new Date().getTime();
 					}
 				}
@@ -4839,19 +4674,19 @@ EmpireBoard.Grepolis.Language = function()
 
 		if (EmpireBoard.Grepolis.View() == "tavern")
 		{
-			function storeWineUsage()
+			function storefavUsage()
 			{
 				try
 				{
-					var city_id = EmpireBoard.DOM.Get_First_Node_Value("//form[@id='wineAssignForm']/input[@type='hidden' and @name='id']");
+					var city_id = EmpireBoard.DOM.Get_First_Node_Value("//form[@id='favAssignForm']/input[@type='hidden' and @name='id']");
 					var city = getCity(city_id);
-					var n = document.getElementById("wineAmount");
-					if (city.wineUsageId != n.selectedIndex)
+					var n = document.getElementById("favAmount");
+					if (city.favUsageId != n.selectedIndex)
 					{
 						setViewRqTime('townHall', city_id);
 					}
-					city.wineUsageId = n.selectedIndex;
-					city.wineUsage = tavernWineUsage[n.selectedIndex] - getSavedWine();
+					city.favUsageId = n.selectedIndex;
+					city.favUsage = tavernfavUsage[n.selectedIndex] - getSavedfav();
 					EmpireBoard.DB.Save();
 				}
 				catch (e)
@@ -4860,9 +4695,9 @@ EmpireBoard.Grepolis.Language = function()
 			}
 
 			// Fix for v3
-			function getSavedWine() {
+			function getSavedfav() {
 				try {
-					var n = document.getElementById("savedWine");
+					var n = document.getElementById("savedfav");
 					if ((n.innerHTML != '&nbsp;') && (EmpireBoard.Str.Trim(n.innerHTML) != ''))
 					{
 						return Math.round(parseFloat(n.innerHTML));
@@ -4872,12 +4707,12 @@ EmpireBoard.Grepolis.Language = function()
 					return 0;
 				}
 			}
-			var n = EmpireBoard.DOM.Get_First_Node("//form[@id='wineAssignForm']//*[@type='submit']");
-			n.addEventListener("click", storeWineUsage, false);
+			var n = EmpireBoard.DOM.Get_First_Node("//form[@id='favAssignForm']//*[@type='submit']");
+			n.addEventListener("click", storefavUsage, false);
 
-			var n = document.getElementById("wineAmount");
-			res.wineUsageId = n.selectedIndex;
-			res.wineUsage = tavernWineUsage[n.selectedIndex] - getSavedWine();
+			var n = document.getElementById("favAmount");
+			res.favUsageId = n.selectedIndex;
+			res.favUsage = tavernfavUsage[n.selectedIndex] - getSavedfav();
 		}
 
 		if (EmpireBoard.Grepolis.View() == 'academy')
@@ -5323,7 +5158,7 @@ EmpireBoard.Grepolis.Language = function()
 			orderedBuildings['barracks']			 = 'military';
 			orderedBuildings['docks']			 = 'military';
 
-			orderedBuildings['lumber']			 = 'wood';
+			orderedBuildings['wood']			 = 'wood';
 			orderedBuildings['stoner']		 = 'wood';
 			orderedBuildings['ironer']			 = 'wood';
 			
@@ -5379,7 +5214,7 @@ EmpireBoard.Grepolis.Language = function()
 				var res = getCity(CityId);
 
 				var trclass = (parseInt(current_city_id) == parseInt(CityId)) ? "current" : "";
-				s += "<tr class='"+trclass+"' cityid='"+CityId+"' islandid='"+res.island_id+"' coord='"+res.city_coord+"'>";
+				s += "<tr class='"+trclass+"' cityid='"+CityId+"' csrfToken='"+res.csrfToken+"' coord='"+res.city_coord+"'>";
 				var usedspaces = getCityBuildingsCount(CityId, 0);
 				s += "<td class='city_name' nowrap>"+createLinkToChangeCity(Cities[CityId].name, CityId, i, (usedspaces > 0) ? 15-usedspaces : '', 'Green', 'Available free spaces')+"</td>";
 				s += "<td class='actions' nowrap>"+createLinkToCityView(CityId)+"</td>";
@@ -5394,25 +5229,11 @@ EmpireBoard.Grepolis.Language = function()
 						var buildingCount = 0;
 						if (res.buildings[key] != undefined)
 						{
-							if (res.buildings[key].levels == undefined)
-							{
-								res.buildings[key].levels = {};
-								// deprecated
-								var position = getBuildingPosition(parseInt(CityId), key, -1);
-								var level = getBuildingLevel(parseInt(CityId), key, 0, position);
-								res.buildings[key].levels[position] = level;
-							}
+								var level = getBuildingLevel(parseInt(CityId), key, 0);
 
 							var position;
 							for (position in res.buildings[key].levels)
 							{
-								// var position =
-								// getArrValue(res.buildings[key],
-								// "position", -1);
-								// var position =
-								// getBuildingPosition(parseInt(CityId),
-								// key, -1);
-
 								var currentBuildingStyle = "";
 								if ((key == EmpireBoard.Grepolis.View()) && (parseInt(CityId) == city_idmainView) && (position == city_positionmainView))
 								{
@@ -5529,10 +5350,10 @@ EmpireBoard.Grepolis.Language = function()
 			"<th colspan=3 class='lf population'>"+texts["Population"]+"</th>"+
 			"<th colspan=1 class='lf research'>"+texts["Research"]+"</th>"+
 			"<th colspan=1 class='lf incomes'>"+texts["Incomes"]+"</th>"+
-			"<th colspan=2 class='lf wood'>"+texts["Wood"]+"</th>"+
-			"<th colspan=3 class='lf iron'>"+texts["Wine"]+"</th>"+
-			"<th colspan=2 class='lf stone'>"+texts["Marble"]+"</th>"+
-			"<th colspan=2 class='lf crystal'>"+texts["Crystal"]+"</th>";
+			"<th colspan=2 class='lf wood'>"+texts["wood"]+"</th>"+
+			"<th colspan=2 class='lf stone'>"+texts["stone"]+"</th>"+
+			"<th colspan=2 class='lf iron'>"+texts["iron"]+"</th>"+
+			"<th colspan=2 class='lf fav'>"+texts["fav"]+"</th>";
 			s += "</tr></thead>";
 
 			s += "<tbody>";
@@ -5544,7 +5365,6 @@ EmpireBoard.Grepolis.Language = function()
 			sumres.reservedGold = '';
 			sumres.Research = 0;
 			var sumProd = new Resource("");
-			sumProd.wineUsage = 0;
 			var sumArTr = new Resource("");
 
 			var CityId;
@@ -5555,41 +5375,15 @@ EmpireBoard.Grepolis.Language = function()
 				var curres = new Resource("");
 				var arrres = new Resource('');
 
-				var wineUsage;
-				var cellarLevel = getBuildingLevel(CityId, "vineyard", "-");
-				if (res.wineUsageId != undefined)
-				{
-					wineUsage = tavernWineUsage[res.wineUsageId];
-					if (cellarLevel != '-') {
-						wineSave = wineUsage * cellarLevel;
-						wineSave = Math.round(wineSave / 100);
-						wineUsage = wineUsage - wineSave;
-						// res.wineUsage = wineUsage ;
-					}
-				}
-				else if (res.wineUsage != undefined) {
-					wineUsage = res.wineUsage;
-				} else {
-					// on devrait laisser vide, à verifier...
-					var tavernLevel = getBuildingLevel(CityId, "tavern", "-");
-					wineUsage = (tavernLevel != '-' ? tavernWineUsage[tavernLevel] : 0);
-					if (cellarLevel != '-') {
-						wineSave = wineUsage * cellarLevel;
-						wineSave = Math.round(wineSave / 100);
-						wineUsage = wineUsage - wineSave;
-						// res.wineUsage = wineUsage ;
-					}
-				}
-
 				curres.wood = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.wood, res.prodwood);
-				curres.iron = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.iron, res.prodiron - wineUsage);
+				curres.iron = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.iron, res.prodiron);
 				curres.stone = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.stone, res.prodstone);
 				curres.favor = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.favor, res.prodfav);
 
 				if (res.tradewood == undefined) res.tradewood = 0;
-				if (res.tradewine == undefined) res.tradewine = 0;
-				if (res.trademarble == undefined) res.trademarble = 0;
-				if (res.tradeglass == undefined) res.tradeglass = 0;
+				if (res.tradefav == undefined) res.tradefav = 0;
+				if (res.tradestone == undefined) res.tradestone = 0;
+				if (res.tradefav == undefined) res.tradefav = 0;
 
 				arrres.wood = getArrivingGoodsSum(CityId, 'wood');
 				arrres.iron = getArrivingGoodsSum(CityId, 'iron');
@@ -5603,14 +5397,13 @@ EmpireBoard.Grepolis.Language = function()
 
 				sumProd.wood += res.prodwood;
 				sumProd.iron += res.prodiron;
-				sumProd.wineUsage += wineUsage;
 				sumProd.stone += res.prodstone;
 				sumProd.favor += res.prodfav;
 
 				sumArTr.wood += res.tradewood + arrres.wood;
-				sumArTr.iron += res.tradewine + arrres.iron;
-				sumArTr.stone += res.trademarble + arrres.stone;
-				sumArTr.favor += res.tradeglass + arrres.favor;
+				sumArTr.iron += res.tradefav + arrres.iron;
+				sumArTr.stone += res.tradestone + arrres.stone;
+				sumArTr.favor += res.tradefav + arrres.favor;
 
 				var Income = getArrValue(res.buildings["townHall"],"incomegold","?");
 				if (Income != "?")
@@ -5650,16 +5443,6 @@ EmpireBoard.Grepolis.Language = function()
 					{
 						sumres.Research += Research;
 					}
-				}
-
-				// var wineRemainingHours = undefined;
-				var wineUsageHtml = ''+wineUsage;
-				if (wineUsage > 0)
-				{
-					// wineRemainingHours =
-					// EmpireBoard.Str.FormatFloatNumber(curres.iron /
-					// wineUsage, 1) + " h";
-					wineUsageHtml = createSimpleProd(-1 * wineUsage);
 				}
 
 				var townHallLevel = getBuildingLevel(CityId, "townHall", "?", 0);
@@ -5715,38 +5498,18 @@ EmpireBoard.Grepolis.Language = function()
 
 				var townHallStyle = "";
 				var growthStyle = "";
-				if (parseInt(population) >= parseInt(spacetotal) + parseInt(bonusspace))
+				if (parseInt(population) < 5)
 				{
-					growthRemainingHours = '';
-					if (growth >= 1.20) 
-					{
 						townHallStyle = " DarkRed";
 					}
-					else if (growth >= 0.20) 
+					else if (parseInt(population) < 10) 
 					{
 						townHallStyle = " Brown";
 					}
 					else
 					{
 						townHallStyle = " Bold";
-					}
-				}
-				else if (growth >= 0.20)
-				{
-					growthStyle = " Green";
-				}
-				else if (growth >= 0)
-				{
-					growthStyle = "";
-				}
-				else if (growth <= -1)
-				{
-					growthStyle = " Red";
-				}
-				else if (growth <= -0.20)
-				{
-					growthStyle = " DarkRed";
-				}
+					}			
 
 				if (bonusspace != "?") {
 					if (sumres.spacetotal != '?') sumres.spacetotal += parseInt(spacetotal) + parseInt(bonusspace);
@@ -5771,10 +5534,11 @@ EmpireBoard.Grepolis.Language = function()
 				}
 
 				var warehouseLevel = getBuildingLevel(CityId,"warehouse", 0, -1);
-				var maxcwood = EmpireBoard.Grepolis.Resource_Capacity('wood',warehouseLevel);
-				var maxcother = EmpireBoard.Grepolis.Resource_Capacity('iron',warehouseLevel);
-				var maxsafewood = EmpireBoard.Grepolis.Resource_SafeCapacity('wood',warehouseLevel,savecapacityBonus);
-				var maxsafeother = EmpireBoard.Grepolis.Resource_SafeCapacity('iron',warehouseLevel,savecapacityBonus);
+				var maxcount = res.storage_volume;
+				var maxfavor = res.max_favor;
+				EmpireBoard.Log.Add('Storage volume of ' + CityId + ': ' +maxcount);
+
+				var maxsafe = EmpireBoard.Grepolis.Resource_SafeCapacity('wood',warehouseLevel,savecapacityBonus);
 
 				var cityLink = '';
 				if (reportViewToSurvey('',CityId) == '!')
@@ -5786,11 +5550,11 @@ EmpireBoard.Grepolis.Language = function()
 					cityLink = createLinkToChangeCity(Cities[CityId].name, CityId, i , res.actions, 'Green', 'Available action points');
 				}
 
-				s += "<tr class='"+trclass+"' cityid='"+CityId+"' islandid='"+res.island_id+"' coord='"+res.city_coord+"' tradegood='"+res.prodgood+"'>";
+				s += "<tr class='"+trclass+"' cityid='"+CityId+"' csrfToken='"+res.csrfToken+"' coord='"+res.city_coord+"' tradegood='"+res.prodgood+"'>";
 				s += "<td class='city_name' nowrap>"+cityLink+createTransports(CityId)+"</td>"+
 				"<td class='actions' nowrap>"+createLinkToMap(CityId)+createLinkToAgora(CityId)+"<br />"+createLinkToResources(CityId)+createLinkToTransportGoods(CityId)+"</td>"+
 				"<td class='lf"+townHallStyle+"'>"+
-				(population > 0 ? EmpireBoard.Str.FormatBigNumber(population) : '?')+
+				EmpireBoard.Str.FormatBigNumber(population)+
 				"</td>"+
 				"<td>"+spacetotal+"</td>"+
 				"<td class='"+growthStyle+"'>"+(growth != '?' ? '<img src="'+EmpireBoard.Grepolis.Get_Happiness_ImgSrc(growth)+'" align=left height=18 hspace=2 vspace=0>' : '')+createTooltip(EmpireBoard.Str.FormatFloatNumber(growth,2,true), growthRemainingHours)+"</td>"+
@@ -5800,28 +5564,27 @@ EmpireBoard.Grepolis.Language = function()
 				createReservedGold(reservedGold)+
 				"</td>"+
 				"<td class='lf' resource='wood'>"+
-				createLinkToResourceCond(true, createResCounter(res.prodtime, res.wood, res.prodwood, false, maxcwood, res.tradewood, maxsafewood), res.island_id, CityId, i)+
+				createLinkToResourceCond(true, createResCounter(res.prodtime, res.wood, res.prodwood, false, maxcount, res.tradewood, maxsafe), res.csrfToken, CityId, i)+
 				getArrivingGoods(CityId, "wood", res.tradewood, curres.wood, arrres.wood)+
-				createResProgressBar(res.prodtime, res.wood + arrres.wood, res.prodwood, maxcwood - res.tradewood, maxsafewood)+
+				createResProgressBar(res.prodtime, res.wood + arrres.wood, res.prodwood, maxcount - res.tradewood, maxsafe)+
 				"</td>"+
 				"<td>"+createProd(res.prodwood)+"</td>"+
-				"<td class='lf' resource='iron'>"+
-				createLinkToTradegoodCond((res.prodiron > 0) || (res.prodgood == 'iron'), createResCounter(res.prodtime, res.iron, res.prodiron - wineUsage, true, maxcother, res.tradewine, maxsafeother, arrres.iron), res.island_id, CityId, i)+
-				getArrivingGoods(CityId, "iron", res.tradewine, curres.iron, arrres.iron)+
-				createResProgressBar(res.prodtime, res.iron + arrres.iron, res.prodiron - wineUsage, maxcother - res.tradewine, maxsafeother)+
-				"</td>"+
-				"<td>"+createSimpleProd(res.prodiron)+"</td>"+
-				"<td>"+wineUsageHtml+"</td>"+
 				"<td class='lf' resource='stone'>"+
-				createLinkToTradegoodCond((res.prodstone > 0) || (res.prodgood == 'stone'), createResCounter(res.prodtime, res.stone, res.prodstone, false, maxcother, res.trademarble, maxsafeother), res.island_id, CityId, i)+
-				getArrivingGoods(CityId, "stone", res.trademarble, curres.stone, arrres.stone)+
-				createResProgressBar(res.prodtime, res.stone + arrres.stone, res.prodstone, maxcother - res.trademarble, maxsafeother)+
+				createLinkToTradegoodCond((res.prodstone > 0) || (res.prodgood == 'stone'), createResCounter(res.prodtime, res.stone, res.prodstone, false, maxcount, res.tradestone, maxsafe), res.csrfToken, CityId, i)+
+				getArrivingGoods(CityId, "stone", res.tradestone, curres.stone, arrres.stone)+
+				createResProgressBar(res.prodtime, res.stone + arrres.stone, res.prodstone, maxcount - res.tradestone, maxsafe)+
 				"</td>"+
 				"<td>"+createProd(res.prodstone)+"</td>"+
+				"<td class='lf' resource='iron'>"+
+				createLinkToTradegoodCond((res.prodiron > 0) || (res.prodgood == 'iron'), createResCounter(res.prodtime, res.iron, res.prodiron, true, maxcount, res.tradefav, maxsafe, arrres.iron), res.csrfToken, CityId, i)+
+				getArrivingGoods(CityId, "iron", res.tradefav, curres.iron, arrres.iron)+
+				createResProgressBar(res.prodtime, res.iron + arrres.iron, res.prodiron, maxcount - res.tradeiron, maxsafe)+
+				"</td>"+
+				"<td>"+createSimpleProd(res.prodiron)+"</td>"+
 				"<td class='lf' resource='favor'>"+
-				createLinkToTradegoodCond((res.prodfav > 0) || (res.prodgood == 'favor'), createResCounter(res.prodtime, res.favor, res.prodfav, false, maxcother, res.tradeglass, maxsafeother), res.island_id, CityId, i)+
-				getArrivingGoods(CityId, "favor", res.tradeglass, curres.favor, arrres.favor)+
-				createResProgressBar(res.prodtime, res.favor + arrres.favor, res.prodfav, maxcother - res.tradeglass, maxsafeother)+
+				createLinkToTradegoodCond((res.prodfav > 0) || (res.prodgood == 'favor'), createResCounter(res.prodtime, res.favor, res.prodfav, false, maxfavor, res.tradefav, maxfavor), res.csrfToken, CityId, i)+
+				getArrivingGoods(CityId, "favor", res.tradefav, curres.favor, arrres.favor)+
+				createResProgressBar(res.prodtime, res.favor + arrres.favor, res.prodfav, maxfavor - res.tradefav, maxfavor)+
 				"</td>"+
 				"<td>"+createProd(res.prodfav)+"</td>";
 				s += "</tr>";
@@ -5864,11 +5627,10 @@ EmpireBoard.Grepolis.Language = function()
 			"</td>"+
 			"<td>"+createProd(sumProd.wood)+"</td>"+
 			"<td class='lf'>"+
-			createResCounter(EmpireBoard.StartTime, sumres.iron, sumProd.iron - sumProd.wineUsage, true)+
+			createResCounter(EmpireBoard.StartTime, sumres.iron, sumProd.iron, true)+
 			createMoreGoods(sumArTr.iron)+
 			"</td>"+
 			"<td>"+createSimpleProd(sumProd.iron)+"</td>"+
-			"<td>"+createSimpleProd(-1 * sumProd.wineUsage)+"</td>"+
 			"<td class='lf'>"+
 			createResCounter(EmpireBoard.StartTime, sumres.stone, sumProd.stone)+
 			createMoreGoods(sumArTr.stone)+
@@ -6015,7 +5777,7 @@ EmpireBoard.Grepolis.Language = function()
 				var cityConstructionUpkeep = 0;
 
 				var trclass = (parseInt(current_city_id) == parseInt(CityId)) ? "current" : "";
-				s += "<tr class='"+trclass+"' cityid='"+CityId+"' islandid='"+res.island_id+"' coord='"+res.city_coord+"'>";
+				s += "<tr class='"+trclass+"' cityid='"+CityId+"' csrfToken='"+res.csrfToken+"' coord='"+res.city_coord+"'>";
 				s += "<td class='city_name' nowrap>"+
 				createLinkToChangeCity(Cities[CityId].name, CityId, i, res.actions, 'Green', 'Available action points')+
 				createMovements(CityId)+
