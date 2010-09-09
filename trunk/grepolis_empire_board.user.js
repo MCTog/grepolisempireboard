@@ -1,16 +1,17 @@
-//coding: utf-8
-//==UserScript==
-//@name		Grepolis Empire Board EC
-//@namespace	empire-board.grepolis
-//@version	001
-//@author		Inselk0enig
-//@description	Display population, resources, trading, transports, incomes, buildings, and army or fleet units overviews for each cities. Require Grepolis v.0.3.x server game. Support any countries/languages.
-//@require	http://userscripts.org/scripts/source/60774.user.js
-//@include	http://*.grepolis.*/game/*
-//@exclude	http://support.grepolis.*/*
-//==/UserScript==
-
-//format
+// ==UserScript==
+//
+// @name        Grepolis Empire Board EC
+// @namespace   empire-board.grepolis
+// @author      Inselk0enig
+// @description Display population, resources, trading, transports, incomes, buildings, and army or fleet units overviews for each cities.
+// @include     http://*.grepolis.*/game/*
+// @exclude     http://support.grepolis.*/*
+//
+// @version     0.0.1
+//
+// @history		0.0.1 Dev Version - Still growing
+//
+// ==/UserScript==
 
 /*******************************************************************************
  * 
@@ -48,10 +49,12 @@ LocalizationStrings['decimalPoint']               = ',';
 LocalizationStrings['thousandSeperator']     = '.';
 
 
-//Access to window object cross-browser
+// Access to window object cross-browser
 var uW;
 if (typeof unsafeWindow==='object')
-{uW=unsafeWindow;}else{uW=window;}
+  {uW=unsafeWindow;}
+else
+  {uW=window;}
 
 //Access jQuery
 var $=uW.jQuery;
@@ -61,12 +64,13 @@ var gt_version='0.0.1';
 
 //Basic game data
 var Game = uW.Game;
-var player=uW.Game.player_id;
 var town=uW.Game.townId;
 var ally=uW.Game.alliance_id;
+var servertime=uW.Game.server_time;
+
+var player=uW.Layout.player_id;
 var storage_volume=uW.Layout.storage_volume;
 var max_favor=uW.Layout.max_favor;
-var servertime=uW.Game.server_time;
 var res=[];
 res['wood']=uW.Layout.resources['wood'];
 res['stone']=uW.Layout.resources['stone'];
@@ -105,7 +109,7 @@ EmpireBoard =
 
 		/* Script metas */
 		ScriptName:		 'Grepolis Empire Board',
-		Version:		 001,
+		Version:		 "0.0.1",
 		HomePage:		 '',
 		ScriptURL:		 '',
 		UserScriptsID:	 75533
@@ -1630,38 +1634,41 @@ EmpireBoard.Grepolis.Fetch_CitiesSelect = function(database)
 	if (database == undefined)
 		database = {};
 
+	var townName = $("#town_name_href").html();
 	var townId = Game.townId;
 	if (database[townId] == undefined)
 	{
 		// the town is unknown, read all
 		// cities
 		database[townId] = new EmpireBoard.Grepolis.City_Object();
-		$.ajax({
-			timeout: 3000,
-			async: false,
-			dataType:"json",
-			url: "/game/town_group_overviews?action=get_towns_of_active_town_group&town_id="+townId,
-			error: function(){},
-			success: function(data){ 
-				$.each(data.towns,
-						function(nr) {
-					if (database[this.id] == undefined) database[this.id] =
-						new EmpireBoard.Grepolis.City_Object();
-					database[this.id].id = this.id;
-					database[this.id].townName = this.name;
-					database[this.id].points = this.points;
-					EmpireBoard.Log.Add('Fetch select list: town ['+database[this.id].id+'], '+database[this.id].townName); 
-				});
-			}
-		});
+//		$.ajax({
+//			timeout: 3000,
+//			async: false,
+//			dataType:"json",
+//			url: "/game/town_group_overviews?action=get_towns_of_active_town_group&town_id="+townId,
+//			error: function(){},
+//			success: function(data){ 
+//				$.each(data.towns,
+//						function(nr) {
+//					if (database[this.id] == undefined) database[this.id] =
+//						new EmpireBoard.Grepolis.City_Object();
+//					database[this.id].id = this.id;
+//					database[this.id].townName = this.name;
+//					database[this.id].points = this.points;
+//					EmpireBoard.Log.Add('Fetch select list: town ['+database[this.id].id+'], '+database[this.id].townName); 
+//				});
+//			}
+//		});
 	}
 
+	database[townId].townName = townName;
+	database[townId].id = townId;
 	database[townId].selected = true;
 	database[townId].storage_volume=uW.Layout.storage_volume;
 	database[townId].max_favor=uW.Layout.max_favor;
 	database[townId].research={};
 
-	this._Parent.Log.Add('Fetch select list: this town ['+townId+'], '+database[townId].townName+', selected='+database[townId].selected);
+	EmpireBoard.Log.Add('Fetch select list: this town ['+townId+'], '+database[townId].townName+', selected='+database[townId].selected);
 
 	return database;
 };
@@ -4310,6 +4317,9 @@ if (town_idmainView > 0)
 	if (EmpireBoard.Grepolis.View() == "building_main")
 	{
 		var gtb=uW.BuildingMain.buildings;
+		for (name in res.buildings) {
+		  res.buildings[name].level = undefined;
+		}
 		for (name in gtb) {
 			if (res.buildings[name] == undefined) {
 				res.buildings[name] = {};
@@ -4321,9 +4331,10 @@ if (town_idmainView > 0)
 			res.buildings[name].level = gtb[name].level;
 			res.buildings[name].name = gtb[name].name;
 			res.buildings[name].data = gtb[name];
-			buildings[name] = [gtb[name].name, gtb[name].name];
-			EmpireBoard.Log.Add('name='+name+", level="+gtb[name].level);
+			// res.buildings[name] = [gtb[name].name, gtb[name].name];
+			EmpireBoard.Log.Add('main: name='+res.buildings[name].name+", level="+res.buildings[name].level);
 		}
+		EmpireBoard.DB.Save();
 	}
 
 	// Vue ville
@@ -4331,6 +4342,9 @@ if (town_idmainView > 0)
 	{
 		// Add new buildings
 		var gtb=uW.buildings;
+		for (name in res.buildings) {
+		  res.buildings[name].level = undefined;
+		}
 		for (name in gtb) {
 			if (gtb[name] != undefined)
 			{
@@ -4342,18 +4356,16 @@ if (town_idmainView > 0)
 					res.buildings[name].name = '';
 					res.buildings[name].data = {};
 				}
-				if (gtb[name].level != undefined)
-					res.buildings[name].level = gtb[name].level;
+				res.buildings[name].level = gtb[name].level;
 				res.buildings[name].name = gtb[name].name;
 				res.buildings[name].data = gtb[name];
-				buildings[name] = [gtb[name].name, gtb[name].name];
-				// EmpireBoard.Log.Add('index name='+name+", level="+gtb[name].level);
+				// res.buildings[name] = [gtb[name].name, gtb[name].name];
+				EmpireBoard.Log.Add('index: name='+res.buildings[name].name+", level="+res.buildings[name].level);
 			}
 			else
 			{
 				if (res.buildings[name] != undefined) {
-					// fix if not
-					// building
+					// fix if not building
 					try
 					{
 						delete config[town_idmainView].buildings[name];
@@ -4362,13 +4374,7 @@ if (town_idmainView > 0)
 					{
 					}
 				}
-			}
-		}
-
-		if (EmpireBoard.Grepolis.View() == 'building_academy')
-		{
-			// res.research["xx"]=1;
-			// $(".academy_info is_researched:parent");
+			}			
 		}
 
 		// Nouvelle construction
@@ -5003,548 +5009,521 @@ function renderAcademyTable()
 	}
 }
 
-function renderTables()
+function renderBuildingsTable()
 {
 	var Cities = EmpireBoard.DB.OwnCities;
-	// TODO sort by townName
-
 	var s = "";
 
-	if (TABLE_BUILDINGS)
+	var orderedBuildings = {};
+
+	orderedBuildings['main']			 = 'growth';
+	orderedBuildings['place']				 = 'growth';
+	orderedBuildings['farm']				 = 'growth';
+
+	orderedBuildings['academy']				 = 'research';
+	orderedBuildings['temple']				 = 'research';
+
+	orderedBuildings['storage']			 = 'trading';
+	orderedBuildings['market']		 = 'trading';
+
+	orderedBuildings['wall']				 = 'military';
+	orderedBuildings['hide']			 = 'military';
+	orderedBuildings['barracks']			 = 'military';
+	orderedBuildings['docks']			 = 'military';
+
+	orderedBuildings['lumber']			 = 'resource';
+	orderedBuildings['stoner']		 = 'resource';
+	orderedBuildings['ironer']			 = 'resource';
+
+	orderedBuildings['theater']				 = 'additional1';
+	orderedBuildings['thermal']			 = 'additional1';
+	orderedBuildings['library']			 = 'additional1';
+	orderedBuildings['lighthouse']				 = 'additional1';
+
+	orderedBuildings['tower']				 = 'additional2';
+	orderedBuildings['statue']				 = 'additional2';
+	orderedBuildings['oracle']			 = 'additional2';
+	orderedBuildings['trade_office']			 = 'additional2';
+
+	var townId;
+	var i = 0;
+	s += "<div id='EmpireBoardBuildings' class='Table'><table class='Overview Buildings'>";
+	s += "<thead><tr><th class='townName' nowrap>"+texts["townName"]+"</th>";
+	s += "<th class='actions' nowrap>"+EmpireBoard.Renders.Buildings_HeaderIcons(current_town_id)+"</th>";
+	var firstStyle = "";
+	var buildsNum = 0;
+	var lastTopic = '';
+	for (key in orderedBuildings)
 	{
-		var orderedBuildings = {};
+		if (lastTopic != orderedBuildings[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
+		if (buildings[key] != undefined) {
+			s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(buildings[key][0])+'></th>';
+		}
+		else {
+			s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(key)+'></th>';
+		}
+		lastTopic = orderedBuildings[key];
+		buildsNum++;
+	}
+	if (buildsNum <= 1) s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th>";
+	s += "</tr></thead>";
 
-		orderedBuildings['main']			 = 'growth';
-		orderedBuildings['place']				 = 'growth';
-		orderedBuildings['farm']				 = 'growth';
+	s += "<tbody>";
 
-		orderedBuildings['academy']				 = 'research';
-		orderedBuildings['temple']				 = 'research';
+	var townId;
+	var i = 0;
+	for (townId in Cities)
+	{
+		var res = getCity(townId);
 
-		orderedBuildings['storage']			 = 'trading';
-		orderedBuildings['market']		 = 'trading';
-
-		orderedBuildings['wall']				 = 'military';
-		orderedBuildings['hide']			 = 'military';
-		orderedBuildings['barracks']			 = 'military';
-		orderedBuildings['docks']			 = 'military';
-
-		orderedBuildings['lumber']			 = 'resource';
-		orderedBuildings['stoner']		 = 'resource';
-		orderedBuildings['ironer']			 = 'resource';
-
-		orderedBuildings['theater']				 = 'additional1';
-		orderedBuildings['thermal']			 = 'additional1';
-		orderedBuildings['library']			 = 'additional1';
-		orderedBuildings['lighthouse']				 = 'additional1';
-
-		orderedBuildings['tower']				 = 'additional2';
-		orderedBuildings['statue']				 = 'additional2';
-		orderedBuildings['oracle']			 = 'additional2';
-		orderedBuildings['trade_office']			 = 'additional2';
-
-		var townId;
-		var i = 0;
-		s += "<div id='EmpireBoardBuildings' class='Table'><table class='Overview Buildings'>";
-		s += "<thead><tr><th class='townName' nowrap>"+texts["townName"]+"</th>";
-		s += "<th class='actions' nowrap>"+EmpireBoard.Renders.Buildings_HeaderIcons(current_town_id)+"</th>";
+		var trclass = (parseInt(current_town_id) == parseInt(townId)) ? "current" : "";
+		s += "<tr class='"+trclass+"' townid='"+townId+"'>";
+		var usedspaces = getCityBuildingsCount(townId, 0);
+		s += "<td class='townName' nowrap>"+createLinkToChangeCity(Cities[townId].name, townId, i)+"</td>";
+		s += "<td class='actions' nowrap>"+createLinkToBuildingMain(townId)+"</td>";
 		var firstStyle = "";
-		var buildsNum = 0;
 		var lastTopic = '';
 		for (key in orderedBuildings)
 		{
 			if (lastTopic != orderedBuildings[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
-			if (buildings[key] != undefined) {
-				s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(buildings[key][0])+'></th>';
-			}
-			else {
-				s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(key)+'></th>';
-			}
-			lastTopic = orderedBuildings[key];
-			buildsNum++;
-		}
-		if (buildsNum <= 1) s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th>";
-		s += "</tr></thead>";
-
-		s += "<tbody>";
-
-		var townId;
-		var i = 0;
-		for (townId in Cities)
-		{
-			var res = getCity(townId);
-
-			var trclass = (parseInt(current_town_id) == parseInt(townId)) ? "current" : "";
-			s += "<tr class='"+trclass+"' townid='"+townId+"'>";
-			var usedspaces = getCityBuildingsCount(townId, 0);
-			s += "<td class='townName' nowrap>"+createLinkToChangeCity(Cities[townId].name, townId, i)+"</td>";
-			s += "<td class='actions' nowrap>"+createLinkToBuildingMain(townId)+"</td>";
-			var firstStyle = "";
-			var lastTopic = '';
-			for (key in orderedBuildings)
+			if (res.buildings[key] != undefined)
 			{
-				if (lastTopic != orderedBuildings[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
-				if (res.buildings[key] != undefined)
+				var level = getBuildingLevel(parseInt(townId), key, 0);
+				var currentBuildingStyle = "";
+				if ((key == EmpireBoard.Grepolis.View()) && (parseInt(townId) == town_idmainView) && (position == town_positionmainView))
 				{
-					var level = getBuildingLevel(parseInt(townId), key, 0);
-					var currentBuildingStyle = "";
-					if ((key == EmpireBoard.Grepolis.View()) && (parseInt(townId) == town_idmainView) && (position == town_positionmainView))
-					{
-						currentBuildingStyle = " Bold";
-					}
+					currentBuildingStyle = " Bold";
+				}
 
-					if (level == undefined || level == "" || level == 0)
-					{
-						level = "-";
-					}
+				if (level == undefined || level == "" || level == 0)
+				{
+					level = "-";
+				}
 
-					var link = getBuildingLink(townId, key, 'index');
+				var link = getBuildingLink(townId, key, 'index');
 
-					if (res.underConstructionName == key)
+				if (res.underConstructionName == key)
+				{
+					if (level == "-") { level = 0; }
+					var underConstructionTime = res.underConstructionTime;
+					// deprecated
+					if (underConstructionTime == undefined)
+						underConstructionTime = res.underConstruction.split(",")[1];
+					var sdate = smartDateFormat(underConstructionTime);
+					if (underConstructionTime <= EmpireBoard.StartTime)
 					{
-						if (level == "-") { level = 0; }
-						var underConstructionTime = res.underConstructionTime;
-						// deprecated
-						if (underConstructionTime == undefined)
-							underConstructionTime = res.underConstruction.split(",")[1];
-						var sdate = smartDateFormat(underConstructionTime);
-						if (underConstructionTime <= EmpireBoard.StartTime)
-						{
-							var levellink = level;
-							if (link != "-")
-								levellink = "<a href='" + link + "' class=\"changeCity Green Bold\" townid="+townId+">"+level+"</a>";
-							levellink += '<sup class=Red title="Require attention">!</sup>';
-							levelUpgrading = createTooltip(levellink, sdate, texts["finishedBuilding"]+':' );
-						}
-						else
-						{
-							var counter = "<font id='mytimecounter' counter='"+Math.round(underConstructionTime)+"' class='time_counter'>__:__:__</font>";
-							var levellink =level+"&raquo;"+(level+1);
-							if (link != "-")
-								levellink = "<a href='" + link + "' class=\"changeCity Green Bold\" townid="+townId+">"+level+"&raquo;"+(level+1)+"</a>";
-							if ((level > 0) && (reportViewToSurvey(key, townId) == '!'))
-							{
-								levellink += '<sup class=Red title="Require attention">!</sup>';
-							}
-							else
-							{
-								levellink += '&nbsp;';
-							}
-							levelUpgrading = createTooltip(levellink, sdate +' ('+ counter+')', texts["currentlyBuilding"]+':');
-						}
-						s += "<td level='"+level+"' view='"+key+"' position='"+position+"' class='"+firstStyle+" "+key+" "+currentBuildingStyle+"'>"+levelUpgrading+"</td>";
+						var levellink = level;
+						if (link != "-")
+							levellink = "<a href='" + link + "' class=\"changeCity Green Bold\" townid="+townId+">"+level+"</a>";
+						levellink += '<sup class=Red title="Require attention">!</sup>';
+						levelUpgrading = createTooltip(levellink, sdate, texts["finishedBuilding"]+':' );
 					}
 					else
 					{
-						var levellink =level;
-						if (level != "-")
+						var counter = "<font id='mytimecounter' counter='"+Math.round(underConstructionTime)+"' class='time_counter'>__:__:__</font>";
+						var levellink =level+"&raquo;"+(level+1);
+						if (link != "-")
+							levellink = "<a href='" + link + "' class=\"changeCity Green Bold\" townid="+townId+">"+level+"&raquo;"+(level+1)+"</a>";
+						if ((level > 0) && (reportViewToSurvey(key, townId) == '!'))
 						{
-							levellink = "<a href='" + link + "' class=changeCity townid="+townId+">"+level+"</a>";
-
-							if (reportViewToSurvey(key, townId) == '!')
-							{
-								levellink += '<sup class=Red title="Require attention">!</sup>';
-							}
-							else
-							{
-								levellink += '&nbsp;';
-							}
+							levellink += '<sup class=Red title="Require attention">!</sup>';
 						}
 						else
 						{
 							levellink += '&nbsp;';
 						}
-						s += "<td level='"+level+"' view='"+key+"' class='"+firstStyle+" "+key+" "+currentBuildingStyle+"'>"+levellink+"</td>";
+						levelUpgrading = createTooltip(levellink, sdate +' ('+ counter+')', texts["currentlyBuilding"]+':');
 					}
-					firstStyle = '';
+					s += "<td level='"+level+"' view='"+key+"' position='"+position+"' class='"+firstStyle+" "+key+" "+currentBuildingStyle+"'>"+levelUpgrading+"</td>";
 				}
 				else
 				{
-					s += "<td level='0' view='"+key+"' class='"+firstStyle+" "+key+"'>-&nbsp;</td>";
-					firstStyle = '';
-				}
-				lastTopic = orderedBuildings[key];
-			}
-			if (buildsNum <= 1) s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td>";
-			s += "</tr>";
-			i++;
-		}
-
-		s += "</tbody>";
-
-		s += "<tfoot></tfoot></table>";
-		s += "<p class='Caption'>(<span class=Green>1-14</span>) available free spaces for new buildings. (<span class=Red>!</span>) require your attention to update overview's data.</p>";
-		s += "</div>";
-	}
-
-	if (TABLE_RESOURCES) {
-		s += "<div id='EmpireBoardResources' class='Table'><table class='Overview Resources'>";
-		s += "<thead><tr>";
-		s += "<th class='townName' nowrap>"+texts["townName"]+"</th>"+
-		"<th class='actions' nowrap>"+createLinkToFinanceNavyViews()+"</th>"+
-		"<th colspan=1 class='lf population'>"+texts["Population"]+"</th>"+
-		"<th colspan=2 class='lf wood'>"+texts["wood"]+"</th>"+
-		"<th colspan=2 class='lf stone'>"+texts["stone"]+"</th>"+
-		"<th colspan=2 class='lf iron'>"+texts["iron"]+"</th>"+
-		"<th colspan=2 class='lf fav'>"+texts["fav"]+"</th>";
-		s += "</tr></thead>";
-
-		s += "<tbody>";
-
-		var sumres = new EmpireBoard.Grepolis.City_Object();
-		sumres.spacetotal = 0;
-		sumres.growth = 0;
-		sumres.Income = 0;
-		sumres.Research = 0;
-		var sumProd = new EmpireBoard.Grepolis.City_Object();
-		var sumArTr = new EmpireBoard.Grepolis.City_Object();
-
-		var townId;
-		var i = 0;
-		for (townId in Cities)
-		{
-			var res = getCity(townId);
-			var curres = new EmpireBoard.Grepolis.City_Object();
-			var arrres = new EmpireBoard.Grepolis.City_Object();
-
-			curres.wood = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.wood, res.prodwood);
-			curres.iron = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.iron, res.prodiron);
-			curres.stone = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.stone, res.prodstone);
-			curres.favor = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.favor, res.prodfav);
-
-			if (res.tradewood == undefined) res.tradewood = 0;
-			if (res.tradeiron == undefined) res.tradeiron = 0;
-			if (res.tradestone == undefined) res.tradestone = 0;
-			if (res.tradefav == undefined) res.tradefav = 0;
-
-			arrres.wood = getArrivingGoodsSum(townId, 'wood');
-			arrres.iron = getArrivingGoodsSum(townId, 'iron');
-			arrres.stone = getArrivingGoodsSum(townId, 'stone');
-			arrres.favor = getArrivingGoodsSum(townId, 'favor');
-
-			sumres.wood += curres.wood;
-			sumres.iron += curres.iron;
-			sumres.stone += curres.stone;
-			sumres.favor += curres.favor;
-
-			sumProd.wood += res.prodwood;
-			sumProd.iron += res.prodiron;
-			sumProd.stone += res.prodstone;
-			sumProd.favor += res.prodfav;
-
-			sumArTr.wood += res.tradewood + arrres.wood;
-			sumArTr.iron += res.tradeiron + arrres.iron;
-			sumArTr.stone += res.tradestone + arrres.stone;
-			sumArTr.favor += res.tradefav + arrres.favor;
-
-			var population = res.population;
-
-			// EmpireBoard.Log.Add('population['+townId+']='+population);
-			sumres.population += population;
-
-			var trclass = "";
-			if (parseInt(current_town_id) == parseInt(townId)) {
-				trclass = "current";
-			}
-
-			var townHallStyle = "";
-			var growthStyle = "";
-			if (parseInt(population) < 5)
-			{
-				townHallStyle = " DarkRed";
-			}
-			else if (parseInt(population) < 10)
-			{
-				townHallStyle = " Brown";
-			}
-			else
-			{
-				townHallStyle = " Bold";
-			}
-
-			var warehouseLevel = getBuildingLevel(townId,"storage", 0, -1);
-			var maxcount = res.storage_volume;
-			var maxfavor = res.max_favor;
-			var maxsafe = EmpireBoard.Grepolis.Resource_Safecapacity('wood',warehouseLevel,0);
-			// EmpireBoard.Log.Add('Storage volume of ' + townId + ': ' +maxcount+" ("+maxsafe+")");
-
-			var townLink = '';
-			if (reportViewToSurvey('',townId) == '!')
-			{
-				townLink = createLinkToChangeCity(Cities[townId].name, townId, i, reportViewToSurvey('',townId),'Red', 'Require attention');
-			}
-			else
-			{
-				townLink = createLinkToChangeCity(Cities[townId].name, townId, i , res.actions, 'Green', 'Available action points');
-			}
-
-			s += "<tr class='"+trclass+"' townid='"+townId+"' tradegood='"+res.prodgood+"'>";
-			s += "<td class='townName' nowrap>"+
-			townLink+
-			createTransports(townId)+"</td>"+
-			"<td class='actions' nowrap>"+
-			createLinkToMap(townId)+
-			createLinkToAgora(townId)+"<br />"+
-			createLinkToTransportGoods(townId)+"</td>"+
-			"<td class='lf"+townHallStyle+"'>"+
-			EmpireBoard.Str.FormatBigNumber(population)+
-			"</td>"+
-			"<td class='lf' resource='wood'>"+
-			createResCounter(res.prodtime, res.wood, res.prodwood, false, maxcount, res.tradewood, maxsafe)+
-			getArrivingGoods(townId, "wood", res.tradewood, curres.wood, arrres.wood)+
-			createResProgressBar(res.prodtime, res.wood + arrres.wood, res.prodwood, maxcount - res.tradewood, maxsafe)+
-			"</td>"+
-			"<td>"+createProd(res.prodwood)+"</td>"+
-			"<td class='lf' resource='stone'>"+
-			createResCounter(res.prodtime, res.stone, res.prodstone, false, maxcount, res.tradestone, maxsafe)+
-			getArrivingGoods(townId, "stone", res.tradestone, curres.stone, arrres.stone)+
-			createResProgressBar(res.prodtime, res.stone + arrres.stone, res.prodstone, maxcount - res.tradestone, maxsafe)+
-			"</td>"+
-			"<td>"+createProd(res.prodstone)+"</td>"+
-			"<td class='lf' resource='iron'>"+
-			createResCounter(res.prodtime, res.iron, res.prodiron, true, maxcount, res.tradefav, maxsafe, arrres.iron)+
-			getArrivingGoods(townId, "iron", res.tradefav, curres.iron, arrres.iron)+
-			createResProgressBar(res.prodtime, res.iron + arrres.iron, res.prodiron, maxcount - res.tradeiron, maxsafe)+
-			"</td>"+
-			"<td>"+createSimpleProd(res.prodiron)+"</td>"+
-			"<td class='lf' resource='favor'>"+
-			createResCounter(res.prodtime, res.favor, res.prodfav, false, maxfavor, res.tradefav, maxfavor)+
-			getArrivingGoods(townId, "favor", res.tradefav, curres.favor, arrres.favor)+
-			createResProgressBar(res.prodtime, res.favor + arrres.favor, res.prodfav, maxfavor - res.tradefav, maxfavor)+
-			"</td>"+
-			"<td>"+createProd(res.prodfav)+"</td>";
-			s += "</tr>";
-			i++;
-		}
-
-		s += "</tbody>";
-
-		s += "<tfoot class='Summary'><tr>";
-		s += "<td nowrap colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>"+
-		"<td class='lf'>"+EmpireBoard.Str.FormatBigNumber(sumres.population)+"</td>"+
-		"</td>"+
-		"<td class='lf'>"+
-		createResCounter(EmpireBoard.StartTime, sumres.wood, sumProd.wood)+
-		createMoreGoods(sumArTr.wood)+
-		"</td>"+
-		"<td>"+createProd(sumProd.wood)+"</td>"+
-		"<td class='lf'>"+
-		createResCounter(EmpireBoard.StartTime, sumres.stone, sumProd.stone)+
-		createMoreGoods(sumArTr.stone)+
-		"</td>"+
-		"<td>"+createProd(sumProd.stone)+"</td>"+
-		"<td class='lf'>"+
-		createResCounter(EmpireBoard.StartTime, sumres.iron, sumProd.iron, true)+
-		createMoreGoods(sumArTr.iron)+
-		"</td>"+
-		"<td>"+createSimpleProd(sumProd.iron)+"</td>"+
-		"<td class='lf'>"+
-		createResCounter(EmpireBoard.StartTime, sumres.favor, sumProd.favor)+
-		createMoreGoods(sumArTr.favor)+
-		"</td>"+
-		"<td>"+createProd(sumProd.favor)+"</td>";
-		s += "</tr></tfoot>";
-		s += "</table>";
-		s += "<p class='Caption'>(<span class=Green>1-9</span>) available action points. (<span class=Red>!</span>) require your attention to update overview's data. (<img src='http://s2.de.ikariam.com/skin/layout/icon-wall.gif' class='Safe' />) resources safe against pillaging. (<span class=Green>*</span>) some resources delivered.</p>";
-		s += "</div>";
-	}
-
-	if (TABLE_ARMYFLEET)
-	{
-		var FleetUpkeepBonus = 0;
-		if (config["research"].FleetUpkeepBonus != undefined) FleetUpkeepBonus = config["research"].FleetUpkeepBonus;
-
-		var ArmyUpkeepBonus = 0;
-		if (config["research"].ArmyUpkeepBonus != undefined) ArmyUpkeepBonus = config["research"].ArmyUpkeepBonus;
-
-		function applyUpkeepBonus(value, bonus)
-		{
-			if ((value == '-') || (value == '?') || (value == 0) || (bonus == 0))
-			{
-				return value;
-			}
-			else
-			{
-				return (value - (value/100*bonus));
-			}
-		}
-
-		var orderedUnits = {}; // And
-		// type
-		// value
-
-		orderedUnits['militia']="army XXX";
-		orderedUnits['sword']="army XXX";
-		orderedUnits['slinger']="army XXX";
-		orderedUnits['archer']="army XXX";
-		orderedUnits['hoplite']="army XXX";
-		orderedUnits['rider']="army XXX";
-		orderedUnits['chariot']="army XXX";
-		orderedUnits['catapult']="army XXX";
-		orderedUnits['centaur']="army XXX";
-		orderedUnits['harpy']="army XXX";
-		orderedUnits['manticore']="army XXX";
-		orderedUnits['medusa']="army XXX";
-		orderedUnits['minotaur']="army XXX";
-		orderedUnits['pegasus']="army XXX";
-		orderedUnits['sea_monster']="ship XXX";
-		orderedUnits['zyklop']="army XXX";
-		orderedUnits['small_transporter']="ship XXX";
-		orderedUnits['bireme']="ship XXX";
-		orderedUnits['attack_ship']="ship XXX";
-		orderedUnits['demolition_ship']="ship XXX";
-		orderedUnits['big_transporter']="ship XXX";
-		orderedUnits['trireme']="ship XXX";
-		orderedUnits['colonize_ship']="ship XXX";
-
-		function isArmy(key)
-		{
-			var arrayClassNames = orderedUnits[key].split(' ');
-			if (arrayClassNames[0] == 'army')
-				return true;
-			else
-				return false;
-		}
-
-		var usedIndexes = [];
-		var usedIndexesCount = 0;
-		if (config["unitnames"] != undefined)
-		{
-			var names = config["unitnames"];
-
-			var townId;
-			var i = 0;
-			for (townId in Cities)
-			{
-				var res = getCity(townId);
-
-				for(key in orderedUnits)
-				{
-					if (parseInt(getArrValue(getArrValue(res.units, key), "count", 0)) > 0)
+					var levellink =level;
+					if (level != "-")
 					{
-						usedIndexes[key] = 1;
-						usedIndexesCount++;
-					}
-					else if (parseInt(getArrValue(getArrValue(res.units, key), "construction", 0)) > 0)
-					{
-						usedIndexes[key] = 1;
-						usedIndexesCount++;
-					}
-				}
-				i++;
-			}
-		}
+						levellink = "<a href='" + link + "' class=changeCity townid="+townId+">"+level+"</a>";
 
-		s += "<div id='EmpireBoardArmy' class='Table'><table class='Overview Army'>";
-		s += "<thead><tr><th class='townName' nowrap>"+texts["townName"]+"</th>";
-		s += "<th class='actions' nowrap>"+EmpireBoard.Renders.Army_HeaderIcons(current_town_id)+"</th>";
-		if (usedIndexesCount > 0)
-		{
-			var firstStyle = "";
-			var lastTopic = '';
-			for(key in orderedUnits)
-			{
-				var name = names[key];
-				if (usedIndexes[key] == 1)
-				{
-					if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
-
-					s += "<th unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" unit_name "+EmpireBoard.Grepolis.Trim_Unit(key)+"' nowrap "+createTooltipAttribute(name)+'style="background-image: url(&quot;http://static.grepolis.com/images/game/units/'+key+'_25x25.png&quot;);"></th>';
-					firstStyle = "";
-
-					lastTopic = orderedUnits[key];
-				}
-			}
-		}
-		else s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th><th></th>";
-		s += "</tr></thead>";
-
-		s += "<tbody>";
-
-		var sum = [];
-		var sumConstruction = [];
-		var townId;
-		var i = 0;
-		for (townId in Cities)
-		{
-			var res = getCity(townId);
-
-			var trclass = (parseInt(current_town_id) == parseInt(townId)) ? "current" : "";
-			s += "<tr class='"+trclass+"' townid='"+townId+"'>";
-			s += "<td class='townName' nowrap>"+
-			createLinkToChangeCity(Cities[townId].name, townId, i)+
-			createMovements(townId)+
-			createAttacks(townId)+
-			"</td>";
-			s += "<td class='actions' nowrap>"+createLinkToArmyView(townId)+createLinkToDeployArmy(townId)+"<br />"+
-			createLinkToFleetView(townId)+createLinkToDeployFleet(townId)+"</td>";
-			if (usedIndexesCount > 0)
-			{
-				var firstStyle = "";
-				var lastTopic = '';
-				for(key in orderedUnits)
-				{
-					var uKey = EmpireBoard.Grepolis.Trim_Unit(key);
-					if (usedIndexes[key] == 1)
-					{
-						if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
-
-						var unitCount = EmpireBoard.Str.To_Integer(getArrValue(getArrValue(res.units, key), "count", "0"), 0);
-
-						if (unitCount == 0)
+						if (reportViewToSurvey(key, townId) == '!')
 						{
-							unitCount = "-";
+							levellink += '<sup class=Red title="Require attention">!</sup>';
 						}
 						else
 						{
-							sum[key] = (sum[key] == undefined) ? unitCount : sum[key] + unitCount;
+							levellink += '&nbsp;';
 						}
-
-						var unitConstructionHTML = '<font class="More">-</font>';
-						var unitConstruction = EmpireBoard.Str.To_Integer(getArrValue(getArrValue(res.units, key), "construction", "0"), 0);
-
-						if (unitConstruction > 0)
-						{
-							unitConstructionHTML = '<font class="More" title="'+texts["currentlyBuilding"]+'">'+EmpireBoard.Str.FormatBigNumber(unitConstruction, true)+'</font>';
-							sumConstruction[key] = (sumConstruction[key] == undefined) ? unitConstruction : sumConstruction[key] + unitConstruction;
-						}
-
-						s += "<td unit='"+uKey+"' class='"+firstStyle+" "+uKey+"'>"+
-						EmpireBoard.Str.FormatBigNumber(unitCount)+
-						unitConstructionHTML+
-						"</td>";
-
-						lastTopic = orderedUnits[key];
 					}
+					else
+					{
+						levellink += '&nbsp;';
+					}
+					s += "<td level='"+level+"' view='"+key+"' class='"+firstStyle+" "+key+" "+currentBuildingStyle+"'>"+levellink+"</td>";
 				}
+				firstStyle = '';
 			}
-			else s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+			else
+			{
+				s += "<td level='0' view='"+key+"' class='"+firstStyle+" "+key+"'>-&nbsp;</td>";
+				firstStyle = '';
+			}
+			lastTopic = orderedBuildings[key];
+		}
+		if (buildsNum <= 1) s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td>";
+		s += "</tr>";
+		i++;
+	}
 
-			s += "</tr>";
-			i++;
+	s += "</tbody>";
+
+	s += "<tfoot></tfoot></table>";
+	s += "<p class='Caption'>(<span class=Green>1-14</span>) available free spaces for new buildings. (<span class=Red>!</span>) require your attention to update overview's data.</p>";
+	s += "</div>";
+	
+	return s;
+}
+
+function renderResourcesTable()
+{
+	var Cities = EmpireBoard.DB.OwnCities;
+	var s = "";
+
+	s += "<div id='EmpireBoardResources' class='Table'><table class='Overview Resources'>";
+	s += "<thead><tr>";
+	s += "<th class='townName' nowrap>"+texts["townName"]+"</th>"+
+	"<th class='actions' nowrap>"+createLinkToFinanceNavyViews()+"</th>"+
+	"<th colspan=1 class='lf population'>"+texts["Population"]+"</th>"+
+	"<th colspan=2 class='lf wood'>"+texts["wood"]+"</th>"+
+	"<th colspan=2 class='lf stone'>"+texts["stone"]+"</th>"+
+	"<th colspan=2 class='lf iron'>"+texts["iron"]+"</th>"+
+	"<th colspan=2 class='lf fav'>"+texts["fav"]+"</th>";
+	s += "</tr></thead>";
+
+	s += "<tbody>";
+
+	var sumres = new EmpireBoard.Grepolis.City_Object();
+	sumres.spacetotal = 0;
+	sumres.growth = 0;
+	sumres.Income = 0;
+	sumres.Research = 0;
+	var sumProd = new EmpireBoard.Grepolis.City_Object();
+	var sumArTr = new EmpireBoard.Grepolis.City_Object();
+
+	var townId;
+	var i = 0;
+	for (townId in Cities)
+	{
+		var res = getCity(townId);
+		var curres = new EmpireBoard.Grepolis.City_Object();
+		var arrres = new EmpireBoard.Grepolis.City_Object();
+
+		curres.wood = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.wood, res.prodwood);
+		curres.iron = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.iron, res.prodiron);
+		curres.stone = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.stone, res.prodstone);
+		curres.favor = getCurrentResourceAmount(EmpireBoard.StartTime, res.prodtime, res.favor, res.prodfav);
+
+		if (res.tradewood == undefined) res.tradewood = 0;
+		if (res.tradeiron == undefined) res.tradeiron = 0;
+		if (res.tradestone == undefined) res.tradestone = 0;
+		if (res.tradefav == undefined) res.tradefav = 0;
+
+		arrres.wood = getArrivingGoodsSum(townId, 'wood');
+		arrres.iron = getArrivingGoodsSum(townId, 'iron');
+		arrres.stone = getArrivingGoodsSum(townId, 'stone');
+		arrres.favor = getArrivingGoodsSum(townId, 'favor');
+
+		sumres.wood += curres.wood;
+		sumres.iron += curres.iron;
+		sumres.stone += curres.stone;
+		sumres.favor += curres.favor;
+
+		sumProd.wood += res.prodwood;
+		sumProd.iron += res.prodiron;
+		sumProd.stone += res.prodstone;
+		sumProd.favor += res.prodfav;
+
+		sumArTr.wood += res.tradewood + arrres.wood;
+		sumArTr.iron += res.tradeiron + arrres.iron;
+		sumArTr.stone += res.tradestone + arrres.stone;
+		sumArTr.favor += res.tradefav + arrres.favor;
+
+		var population = res.population;
+
+		// EmpireBoard.Log.Add('population['+townId+']='+population);
+		sumres.population += population;
+
+		var trclass = "";
+		if (parseInt(current_town_id) == parseInt(townId)) {
+			trclass = "current";
 		}
 
-		s += "</tbody>";
+		var townHallStyle = "";
+		var growthStyle = "";
+		if (parseInt(population) < 5)
+		{
+			townHallStyle = " DarkRed";
+		}
+		else if (parseInt(population) < 10)
+		{
+			townHallStyle = " Brown";
+		}
+		else
+		{
+			townHallStyle = " Bold";
+		}
 
-		s += "<tfoot class='Summary'><tr class='Units'>";
-		s += "<td colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>";
+		var warehouseLevel = getBuildingLevel(townId,"storage", 0, -1);
+		var maxcount = res.storage_volume;
+		var maxfavor = res.max_favor;
+		var maxsafe = EmpireBoard.Grepolis.Resource_Safecapacity('wood',warehouseLevel,0);
+		// EmpireBoard.Log.Add('Storage volume of ' + townId + ': ' +maxcount+" ("+maxsafe+")");
+
+		var townLink = '';
+		if (reportViewToSurvey('',townId) == '!')
+		{
+			townLink = createLinkToChangeCity(Cities[townId].name, townId, i, reportViewToSurvey('',townId),'Red', 'Require attention');
+		}
+		else
+		{
+			townLink = createLinkToChangeCity(Cities[townId].name, townId, i , res.actions, 'Green', 'Available action points');
+		}
+
+		s += "<tr class='"+trclass+"' townid='"+townId+"' tradegood='"+res.prodgood+"'>";
+		s += "<td class='townName' nowrap>"+
+		townLink+
+		createTransports(townId)+"</td>"+
+		"<td class='actions' nowrap>"+
+		createLinkToMap(townId)+
+		createLinkToAgora(townId)+"<br />"+
+		createLinkToTransportGoods(townId)+"</td>"+
+		"<td class='lf"+townHallStyle+"'>"+
+		EmpireBoard.Str.FormatBigNumber(population)+
+		"</td>"+
+		"<td class='lf' resource='wood'>"+
+		createResCounter(res.prodtime, res.wood, res.prodwood, false, maxcount, res.tradewood, maxsafe)+
+		getArrivingGoods(townId, "wood", res.tradewood, curres.wood, arrres.wood)+
+		createResProgressBar(res.prodtime, res.wood + arrres.wood, res.prodwood, maxcount - res.tradewood, maxsafe)+
+		"</td>"+
+		"<td>"+createProd(res.prodwood)+"</td>"+
+		"<td class='lf' resource='stone'>"+
+		createResCounter(res.prodtime, res.stone, res.prodstone, false, maxcount, res.tradestone, maxsafe)+
+		getArrivingGoods(townId, "stone", res.tradestone, curres.stone, arrres.stone)+
+		createResProgressBar(res.prodtime, res.stone + arrres.stone, res.prodstone, maxcount - res.tradestone, maxsafe)+
+		"</td>"+
+		"<td>"+createProd(res.prodstone)+"</td>"+
+		"<td class='lf' resource='iron'>"+
+		createResCounter(res.prodtime, res.iron, res.prodiron, true, maxcount, res.tradefav, maxsafe, arrres.iron)+
+		getArrivingGoods(townId, "iron", res.tradefav, curres.iron, arrres.iron)+
+		createResProgressBar(res.prodtime, res.iron + arrres.iron, res.prodiron, maxcount - res.tradeiron, maxsafe)+
+		"</td>"+
+		"<td>"+createSimpleProd(res.prodiron)+"</td>"+
+		"<td class='lf' resource='favor'>"+
+		createResCounter(res.prodtime, res.favor, res.prodfav, false, maxfavor, res.tradefav, maxfavor)+
+		getArrivingGoods(townId, "favor", res.tradefav, curres.favor, arrres.favor)+
+		createResProgressBar(res.prodtime, res.favor + arrres.favor, res.prodfav, maxfavor - res.tradefav, maxfavor)+
+		"</td>"+
+		"<td>"+createProd(res.prodfav)+"</td>";
+		s += "</tr>";
+		i++;
+	}
+
+	s += "</tbody>";
+
+	s += "<tfoot class='Summary'><tr>";
+	s += "<td nowrap colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>"+
+	"<td class='lf'>"+EmpireBoard.Str.FormatBigNumber(sumres.population)+"</td>"+
+	"</td>"+
+	"<td class='lf'>"+
+	createResCounter(EmpireBoard.StartTime, sumres.wood, sumProd.wood)+
+	createMoreGoods(sumArTr.wood)+
+	"</td>"+
+	"<td>"+createProd(sumProd.wood)+"</td>"+
+	"<td class='lf'>"+
+	createResCounter(EmpireBoard.StartTime, sumres.stone, sumProd.stone)+
+	createMoreGoods(sumArTr.stone)+
+	"</td>"+
+	"<td>"+createProd(sumProd.stone)+"</td>"+
+	"<td class='lf'>"+
+	createResCounter(EmpireBoard.StartTime, sumres.iron, sumProd.iron, true)+
+	createMoreGoods(sumArTr.iron)+
+	"</td>"+
+	"<td>"+createSimpleProd(sumProd.iron)+"</td>"+
+	"<td class='lf'>"+
+	createResCounter(EmpireBoard.StartTime, sumres.favor, sumProd.favor)+
+	createMoreGoods(sumArTr.favor)+
+	"</td>"+
+	"<td>"+createProd(sumProd.favor)+"</td>";
+	s += "</tr></tfoot>";
+	s += "</table>";
+	s += "<p class='Caption'>(<span class=Green>1-9</span>) available action points. (<span class=Red>!</span>) require your attention to update overview's data. (<img src='http://s2.de.ikariam.com/skin/layout/icon-wall.gif' class='Safe' />) resources safe against pillaging. (<span class=Green>*</span>) some resources delivered.</p>";
+	s += "</div>";
+
+	return s;
+}
+
+function renderArmyTable()
+{
+	var Cities = EmpireBoard.DB.OwnCities;
+	var s = "";
+
+	var FleetUpkeepBonus = 0;
+	if (config["research"].FleetUpkeepBonus != undefined) FleetUpkeepBonus = config["research"].FleetUpkeepBonus;
+
+	var ArmyUpkeepBonus = 0;
+	if (config["research"].ArmyUpkeepBonus != undefined) ArmyUpkeepBonus = config["research"].ArmyUpkeepBonus;
+
+	function applyUpkeepBonus(value, bonus)
+	{
+		if ((value == '-') || (value == '?') || (value == 0) || (bonus == 0))
+		{
+			return value;
+		}
+		else
+		{
+			return (value - (value/100*bonus));
+		}
+	}
+
+	var orderedUnits = {}; // And
+	// type
+	// value
+
+	orderedUnits['militia']="army XXX";
+	orderedUnits['sword']="army XXX";
+	orderedUnits['slinger']="army XXX";
+	orderedUnits['archer']="army XXX";
+	orderedUnits['hoplite']="army XXX";
+	orderedUnits['rider']="army XXX";
+	orderedUnits['chariot']="army XXX";
+	orderedUnits['catapult']="army XXX";
+	orderedUnits['centaur']="army XXX";
+	orderedUnits['harpy']="army XXX";
+	orderedUnits['manticore']="army XXX";
+	orderedUnits['medusa']="army XXX";
+	orderedUnits['minotaur']="army XXX";
+	orderedUnits['pegasus']="army XXX";
+	orderedUnits['sea_monster']="ship XXX";
+	orderedUnits['zyklop']="army XXX";
+	orderedUnits['small_transporter']="ship XXX";
+	orderedUnits['bireme']="ship XXX";
+	orderedUnits['attack_ship']="ship XXX";
+	orderedUnits['demolition_ship']="ship XXX";
+	orderedUnits['big_transporter']="ship XXX";
+	orderedUnits['trireme']="ship XXX";
+	orderedUnits['colonize_ship']="ship XXX";
+
+	function isArmy(key)
+	{
+		var arrayClassNames = orderedUnits[key].split(' ');
+		if (arrayClassNames[0] == 'army')
+			return true;
+		else
+			return false;
+	}
+
+	var usedIndexes = [];
+	var usedIndexesCount = 0;
+	if (config["unitnames"] != undefined)
+	{
+		var names = config["unitnames"];
+
+		var townId;
+		var i = 0;
+		for (townId in Cities)
+		{
+			var res = getCity(townId);
+
+			for(key in orderedUnits)
+			{
+				if (parseInt(getArrValue(getArrValue(res.units, key), "count", 0)) > 0)
+				{
+					usedIndexes[key] = 1;
+					usedIndexesCount++;
+				}
+				else if (parseInt(getArrValue(getArrValue(res.units, key), "construction", 0)) > 0)
+				{
+					usedIndexes[key] = 1;
+					usedIndexesCount++;
+				}
+			}
+			i++;
+		}
+	}
+
+	s += "<div id='EmpireBoardArmy' class='Table'><table class='Overview Army'>";
+	s += "<thead><tr><th class='townName' nowrap>"+texts["townName"]+"</th>";
+	s += "<th class='actions' nowrap>"+EmpireBoard.Renders.Army_HeaderIcons(current_town_id)+"</th>";
+	if (usedIndexesCount > 0)
+	{
+		var firstStyle = "";
+		var lastTopic = '';
+		for(key in orderedUnits)
+		{
+			var name = names[key];
+			if (usedIndexes[key] == 1)
+			{
+				if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
+
+				s += "<th unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" unit_name "+EmpireBoard.Grepolis.Trim_Unit(key)+"' nowrap "+createTooltipAttribute(name)+'style="background-image: url(&quot;http://static.grepolis.com/images/game/units/'+key+'_25x25.png&quot;);"></th>';
+				firstStyle = "";
+
+				lastTopic = orderedUnits[key];
+			}
+		}
+	}
+	else s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th><th></th>";
+	s += "</tr></thead>";
+
+	s += "<tbody>";
+
+	var sum = [];
+	var sumConstruction = [];
+	var townId;
+	var i = 0;
+	for (townId in Cities)
+	{
+		var res = getCity(townId);
+
+		var trclass = (parseInt(current_town_id) == parseInt(townId)) ? "current" : "";
+		s += "<tr class='"+trclass+"' townid='"+townId+"'>";
+		s += "<td class='townName' nowrap>"+
+		createLinkToChangeCity(Cities[townId].name, townId, i)+
+		createMovements(townId)+
+		createAttacks(townId)+
+		"</td>";
+		s += "<td class='actions' nowrap>"+createLinkToArmyView(townId)+createLinkToDeployArmy(townId)+"<br />"+
+		createLinkToFleetView(townId)+createLinkToDeployFleet(townId)+"</td>";
 		if (usedIndexesCount > 0)
 		{
 			var firstStyle = "";
 			var lastTopic = '';
 			for(key in orderedUnits)
 			{
+				var uKey = EmpireBoard.Grepolis.Trim_Unit(key);
 				if (usedIndexes[key] == 1)
 				{
 					if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
 
-					var unitConstructionHTML = '<font class="More">-</font>';
-					if (sumConstruction[key] > 0)
+					var unitCount = EmpireBoard.Str.To_Integer(getArrValue(getArrValue(res.units, key), "count", "0"), 0);
+
+					if (unitCount == 0)
 					{
-						unitConstructionHTML = '<font class="More">'+EmpireBoard.Str.FormatBigNumber(sumConstruction[key], true)+'</font>';
+						unitCount = "-";
 					}
-					s += "<td unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" "+EmpireBoard.Grepolis.Trim_Unit(key)+"'>"+
-					EmpireBoard.Str.FormatBigNumber(sum[key])+
+					else
+					{
+						sum[key] = (sum[key] == undefined) ? unitCount : sum[key] + unitCount;
+					}
+
+					var unitConstructionHTML = '<font class="More">-</font>';
+					var unitConstruction = EmpireBoard.Str.To_Integer(getArrValue(getArrValue(res.units, key), "construction", "0"), 0);
+
+					if (unitConstruction > 0)
+					{
+						unitConstructionHTML = '<font class="More" title="'+texts["currentlyBuilding"]+'">'+EmpireBoard.Str.FormatBigNumber(unitConstruction, true)+'</font>';
+						sumConstruction[key] = (sumConstruction[key] == undefined) ? unitConstruction : sumConstruction[key] + unitConstruction;
+					}
+
+					s += "<td unit='"+uKey+"' class='"+firstStyle+" "+uKey+"'>"+
+					EmpireBoard.Str.FormatBigNumber(unitCount)+
 					unitConstructionHTML+
 					"</td>";
 
@@ -5554,10 +5533,69 @@ function renderTables()
 		}
 		else s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td><td></td>";
 
-		s += "</tr></tfoot>";
-		s += "</table>";
-		s += "<p class='Caption'>(<span class=Green>1-9</span>) available action points. (<span class=Red>!</span>) require your attention to update overview's data.</p>";
-		s + "</div>";
+		s += "</tr>";
+		i++;
+	}
+
+	s += "</tbody>";
+
+	s += "<tfoot class='Summary'><tr class='Units'>";
+	s += "<td colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>";
+	if (usedIndexesCount > 0)
+	{
+		var firstStyle = "";
+		var lastTopic = '';
+		for(key in orderedUnits)
+		{
+			if (usedIndexes[key] == 1)
+			{
+				if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
+
+				var unitConstructionHTML = '<font class="More">-</font>';
+				if (sumConstruction[key] > 0)
+				{
+					unitConstructionHTML = '<font class="More">'+EmpireBoard.Str.FormatBigNumber(sumConstruction[key], true)+'</font>';
+				}
+				s += "<td unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" "+EmpireBoard.Grepolis.Trim_Unit(key)+"'>"+
+				EmpireBoard.Str.FormatBigNumber(sum[key])+
+				unitConstructionHTML+
+				"</td>";
+
+				lastTopic = orderedUnits[key];
+			}
+		}
+	}
+	else s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+
+	s += "</tr></tfoot>";
+	s += "</table>";
+	s += "<p class='Caption'>(<span class=Green>1-9</span>) available action points. (<span class=Red>!</span>) require your attention to update overview's data.</p>";
+	s + "</div>";
+
+	return s;
+}
+
+function renderTables()
+{
+	var Cities = EmpireBoard.DB.OwnCities;
+	// TODO sort by townName
+
+	var s = "";
+
+	if (TABLE_RESOURCES) 
+	{
+		s += renderResourcesTable();
+	}
+
+	if (TABLE_ARMYFLEET)
+	{
+		s += renderArmyTable();
+
+	}
+
+	if (TABLE_BUILDINGS)
+	{
+		s += renderBuildingsTable();
 	}
 
 	var body = EmpireBoard.DOM.Get_First_Node("//body");
