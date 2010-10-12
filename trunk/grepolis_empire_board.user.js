@@ -35,7 +35,6 @@ var PROGRESS_BAR_MODE; // have to be a global variable
 var language;
 var langtype;
 var texts;
-var buildings;
 
 var LocalizationStrings = {};
 LocalizationStrings['timeunits'] = {};
@@ -104,7 +103,7 @@ EmpireBoard =
 
 		StartTime:		 0,
 		EndTime:		 0,
-		LogEnabled:		 true,
+		LogEnabled:		 false,
 		MainID:			 'EmpireBoard',
 
 		/* Script metas */
@@ -112,7 +111,7 @@ EmpireBoard =
 		Version:		 "0.0.1",
 		HomePage:		 '',
 		ScriptURL:		 '',
-		UserScriptsID:	 75533
+		UserScriptsID:	 75533,
 };
 
 
@@ -142,6 +141,10 @@ EmpireBoard.Init = function()
 	this.Handlers.Init(this);
 	// this.Updater.Init(this);
 
+    // catch the resource updates
+	this.grepolisUpdateBar = uW.Layout.updateBar;
+    uW.Layout.updateBar = function (bar) { EmpireBoard.grepolisUpdateBar(bar); realtimeSyncResources(); };
+
 	// Always create main div for add-ons which need to check version
 	this.Log.Add('Create main div...');
 	var body = EmpireBoard.DOM.Get_First_Node("//body");
@@ -153,6 +156,11 @@ EmpireBoard.Init = function()
 	this.Log.Add('DB.Load...');
 	this.DB.Load();
 	this.Grepolis.Fetch_CitiesSelect(this.DB.OwnCities);
+	
+	if (uW.GameData.buildings != undefined)
+	{
+		config['buildings'] = uW.GameData.buildings;
+	}
 	this.Log.Add('DB.Save...');
 	this.DB.Save();
 
@@ -527,13 +535,13 @@ EmpireBoard.DB.Load = function()
 
 	// Check if main arrays exists
 	if (config.cfg == undefined) { config.cfg = new Object(); }
-	if (config["unitnames"] == undefined) { config["unitnames"] = {}; }
 	if (config["upkeeps"] == undefined) { config["upkeeps"] = {}; }
 	if (config["arrivinggoods"] == undefined) config["arrivinggoods"] = {};
 	if (config["movements"] == undefined) config["movements"] = {};
 	if (config["attacks"] == undefined) config["attacks"] = {};
 	if (config["transports"] == undefined) config["transports"] = {};
 	if (config["research"] == undefined) config["research"] = {};
+	if (config["buildings"] == undefined) config["buildings"] = {};
 };
 
 EmpireBoard.DB.Save = function()
@@ -1407,7 +1415,7 @@ EmpireBoard.Renders.ArrivingGoods_Tooltip_Content = function(town_id, resName)
 		tooltip += "<tbody><tr>"+
 		"<td>+</td>"+
 		"<td align=right><b>"+this._Parent.Str.FormatBigNumber(parseInt(tradinggoods)) + "</b>&nbsp;</td>"+
-		"<td align=left>&laquo;&nbsp;<i>" + buildings['branchOffice'][0] + "</i></td>"+
+		"<td align=left>&laquo;&nbsp;<i>" + config.buildings['branchOffice'].name + "</i></td>"+
 		"</tr></tbody>";
 	}
 
@@ -1416,7 +1424,7 @@ EmpireBoard.Renders.ArrivingGoods_Tooltip_Content = function(town_id, resName)
 		tooltip += "<tbody><tr>"+
 		"<td>+</td>"+
 		"<td align=right><b>"+this._Parent.Str.FormatBigNumber(resAmount) + "</b>&nbsp;</td>"+
-		"<td align=left>&laquo;&nbsp;<i>" + buildings['warehouse'][0] + "</i></td>"+
+		"<td align=left>&laquo;&nbsp;<i>" + config.buildings['warehouse'].name + "</i></td>"+
 		"</tr></tbody>";
 	}
 
@@ -2605,7 +2613,6 @@ EmpireBoard.Handlers.Start_Timers = function()
 	// Real-time counters
 	window.setInterval(myTimeCounterF, 1000);
 	// window.setInterval(realtimeFactDisplayF, 5000); 
-	window.setInterval(realtimeSyncResources, 5000);
 };
 
 function myTimeCounterF()
@@ -3015,30 +3022,6 @@ function setLanguage() {
 function getLocalizedTexts() {
 	if (language == "de") {
 		langtype = "";
-		buildings = {
-				"temple"      : ["Tempel", "Tempel"],
-				"wall"          : ["Stadtmauer", "Mauer"],
-				"barracks"      : ["Kaserne", "Kaserne"],
-				"statue"  : ["Götterstatue", "Statue"],
-				"thermal"      : ["Therme", "Therme"],
-				"docks"    : ["Hafen", "Hafen"],
-				"market"    : ["Marktplatz", "Markt"],
-				"ironer"     : ["Bergwerk", "Bergwerk"],
-				"stoner"     : ["Steinbruch", "Steinbruch"],
-				"lumber"     : ["Sägewerk", "Sägewerk"],
-				"place"      : ["Agora", "Agora"],
-				"hide"      	: ["Höhle", "Höhle"],
-				"farm"    	    : ["Bauernhof", "Bauernhof"],
-				"main"			: ["Senat", "Senat"],
-				"barracks"		: ["Kaserne", "Kaserne"],
-				"academy"		: ["Akademie", "Akademie"],
-				"docks"			: ["Hafen", "Hafen"],
-				"place"			: ["Agora", "Agora"],
-				"sim"			: ["Simulator", "Sim"],
-				"oracle"			: ["Orakel", "Orakel"],
-				"theater"			: ["Theater", "Theater"],
-				"storage"		: ["Lager", "Lager"]
-		};
 		texts = {
 				"Upkeep"			: "Upkeep",
 				"townName"          : "Stadtname",
@@ -3065,34 +3048,6 @@ function getLocalizedTexts() {
 		// languages,
 		// or leave
 		// blank
-		buildings = {
-				"townHall"      : ["Town Hall", "T. Hall"],
-				"temple"      : ["Temple", "Temple"],
-				"academy"       : ["Academy", "Academy"],
-				"port"          : ["Trading Port", "Port"],
-				"docks"      : ["Docks", "Docks"],
-				"warehouse"     : ["Warehouse", "Warehouse"],
-				"wall"          : ["Wall", "Wall"],
-				"tavern"        : ["Tavern", "Tavern"],
-				"museum"        : ["Museum", "Museum"],
-				"palace"        : ["Palace", "Palace"],
-				"palaceColony"  : ["Governor's Residence", "Governor"],
-				"embassy"       : ["Embassy", "Embassy"],
-				"branchOffice"  : ["Trading Post", "Trading"],
-				"safehouse"     : ["Hideout", "Hideout"],
-				"barracks"      : ["Barracks", "Barracks"],
-				"workshop" 	  : ["Workshop", "Workshop"],
-				"carpentering" : ["Carpenter", "Carpenter"],
-				"forester" : ["Forester", "Forester"],
-				"stonemason" : ["Stone Mason", "Mason"],
-				"favblowing" : ["Glass Blowing", "Blowing"],
-				"favgrower" : ["fav Grower", "Grower"],
-				"alchemist" : ["Alchemist", "Alchemist"],
-				"architect" : ["Architect", "Architect"],
-				"optician" : ["Optician", "Optician"],
-				"vineyard" : ["Vine Yard", "Yard"],
-				"fireworker" : ["Fireworker", "Fireworker"]
-		};
 		texts = {
 				"Upkeep"			:"Upkeep",
 				"townName": "Cities", "currentlyBuilding": "Currently building", "summary": "Summary:",
@@ -3811,8 +3766,6 @@ function reportViewToSurvey(view, town_id)
 		}
 
 		// Any buildings
-		if (buildings[view] != undefined)
-		{
 			if (town.buildings[view] != undefined)
 			{
 				if (view == 'townHall')
@@ -3876,7 +3829,6 @@ function reportViewToSurvey(view, town_id)
 					}
 				}
 			}
-		}
 	}
 
 	return (report == true ? '!' : '');
@@ -4329,9 +4281,8 @@ if (town_idmainView > 0)
 				res.buildings[name].data = {};
 			}
 			res.buildings[name].level = gtb[name].level;
-			res.buildings[name].name = gtb[name].name;
+			res.buildings[name].name = config.buildings[name].name;
 			res.buildings[name].data = gtb[name];
-			// res.buildings[name] = [gtb[name].name, gtb[name].name];
 			EmpireBoard.Log.Add('main: name='+res.buildings[name].name+", level="+res.buildings[name].level);
 		}
 		EmpireBoard.DB.Save();
@@ -4357,9 +4308,8 @@ if (town_idmainView > 0)
 					res.buildings[name].data = {};
 				}
 				res.buildings[name].level = gtb[name].level;
-				res.buildings[name].name = gtb[name].name;
+				res.buildings[name].name = config.buildings[name].name;
 				res.buildings[name].data = gtb[name];
-				// res.buildings[name] = [gtb[name].name, gtb[name].name];
 				EmpireBoard.Log.Add('index: name='+res.buildings[name].name+", level="+res.buildings[name].level);
 			}
 			else
@@ -4423,8 +4373,11 @@ if (town_idmainView > 0)
 	// military-army and fleet unit counts
 	if ((EmpireBoard.Grepolis.View() == "index"))
 	{
-		if (config["unitnames"] == undefined) { config["unitnames"] = {}; }
 		if (res.units == undefined) { res.units = {}; }
+
+		for (name in res.units) {
+		    res.units[name].count = undefined;
+		}
 
 		$("#units_land .index_unit").add("#units_sea .index_unit").each(function(index) {
 			var name=$(this).attr("id");
@@ -4439,7 +4392,6 @@ if (town_idmainView > 0)
 			if (count != undefined)
 				res.units[name].count = count;
 			res.units[name].name = name;
-			// TODO config["unitnames"][name] = gtb[name].name;
 
 			EmpireBoard.Log.Add('name='+name+", count="+count);
 		})
@@ -4459,9 +4411,18 @@ if (town_idmainView > 0)
 	// military-army unit counts
 	if ((EmpireBoard.Grepolis.View() == "building_barracks") || (EmpireBoard.Grepolis.View() == "building_docks"))
 	{
-		if (config["unitnames"] == undefined) { config["unitnames"] = {}; }
 		if (config["upkeeps"] == undefined) { config["upkeeps"] = {}; }
 		if (res.units == undefined) { res.units = {}; }
+
+/*		var gameUnits=uW.UnitOrder.units;
+		for (name in gameUnits) {
+			if (gameUnits[name] != undefined)
+			{
+				res.units[name].name = name;
+				res.units[name].count = gameUnits[name].count;
+				EmpireBoard.Log.Add('unit='+unitId+", construction="+gameUnits[index].construction);
+			}
+		}
 
 		var gameUnitsOrders=uW.UnitOrder.orders;
 		for (index in gameUnitsOrders) {
@@ -4472,7 +4433,7 @@ if (town_idmainView > 0)
 				EmpireBoard.Log.Add('order='+unitId+", construction="+gameUnitsOrders[index].construction);
 			}
 		}
-
+*/
 		$("#unit_order > #units .black").each(function(index) {
 			var name=$(this).parent().parent().parent().attr("id");
 			var count=$(this).text();
@@ -4483,28 +4444,32 @@ if (town_idmainView > 0)
 				res.units[name].name = '';
 				res.units[name].data = {};
 			}
-			if (count != undefined)
-				res.units[name].count = count;
+			res.units[name].count = count;
 			res.units[name].name = name;
-			// TODO config["unitnames"][name] = gtb[name].name;
 
 			EmpireBoard.Log.Add('unit='+name+", count="+count);
 		});
 
 		$("#unit_order #tasks .unit_order_task").each(function(index) {
-			var name=$(this).find(".unit_order_task_unit").attr("src");
-			var count=$(this).find(".unit_order_task_value").text();
+			var src=$(this).find(".unit_order_task_unit").attr("src");
+			var name = undefined;
+			var result = src.match(/.*units\.(.+)_50x50.png/);
+			if (result)
+			{
+				name = RegExp.$1;
+			}
+			var count=$(this).find(".unit_order_task_value").html();
+
 			if (res.units[name] == undefined)
 			{
 				res.units[name] = {};
 				res.units[name].count = undefined;
+				res.units[name].construction = undefined;
 				res.units[name].name = '';
 				res.units[name].data = {};
 			}
-			if (count != undefined)
-				res.units[name].count = count;
+			res.units[name].construction = count;
 			res.units[name].name = name;
-			// TODO config["unitnames"][name] = gtb[name].name;
 
 			EmpireBoard.Log.Add('order='+name+", count="+count);
 		});
@@ -5056,12 +5021,7 @@ function renderBuildingsTable()
 	for (key in orderedBuildings)
 	{
 		if (lastTopic != orderedBuildings[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
-		if (buildings[key] != undefined) {
-			s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(buildings[key][0])+'></th>';
-		}
-		else {
-			s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(key)+'></th>';
-		}
+		s += '<th id="building_main" class="overviews_building regular" style="background-image: url(&quot;http://static.grepolis.com/images/game/main/'+key+'.png&quot;);" '+createTooltipAttribute(config.buildings[key].name)+'></th>';
 		lastTopic = orderedBuildings[key];
 		buildsNum++;
 	}
@@ -5382,10 +5342,7 @@ function renderArmyTable()
 		}
 	}
 
-	var orderedUnits = {}; // And
-	// type
-	// value
-
+	var orderedUnits = {}; 
 	orderedUnits['militia']="army XXX";
 	orderedUnits['sword']="army XXX";
 	orderedUnits['slinger']="army XXX";
@@ -5421,10 +5378,7 @@ function renderArmyTable()
 
 	var usedIndexes = [];
 	var usedIndexesCount = 0;
-	if (config["unitnames"] != undefined)
 	{
-		var names = config["unitnames"];
-
 		var townId;
 		var i = 0;
 		for (townId in Cities)
@@ -5457,7 +5411,7 @@ function renderArmyTable()
 		var lastTopic = '';
 		for(key in orderedUnits)
 		{
-			var name = names[key];
+			var name = uW.GameData.units[key].name;
 			if (usedIndexes[key] == 1)
 			{
 				if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
