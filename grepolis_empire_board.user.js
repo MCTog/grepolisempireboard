@@ -26,7 +26,7 @@
  * 
  ******************************************************************************/
 
-//Old global vars
+// Old global vars
 var config;
 var TABLE_RESOURCES; // overview table for resources
 var TABLE_BUILDINGS; // overview table for buildings
@@ -55,13 +55,13 @@ if (typeof unsafeWindow==='object')
 else
   {uW=window;}
 
-//Access jQuery
+// Access jQuery
 var $=uW.jQuery;
 
-//Script Data
+// Script Data
 var gt_version='0.0.1';
 
-//Basic game data
+// Basic game data
 var Game = uW.Game;
 var town=uW.Game.townId;
 var ally=uW.Game.alliance_id;
@@ -85,7 +85,7 @@ $(window).load(function () {
 	EmpireBoard.Log.Add('UnitOverview=' + uW.UnitOverview);
 });
 
-//New unique object
+// New unique object
 if (!EmpireBoard) var EmpireBoard = {};
 
 EmpireBoard =
@@ -796,7 +796,7 @@ var default_style = <><![CDATA[
 	color: #542C0F;
 	}
 
-/****************** progress bar styles *******************/
+/** **************** progress bar styles ****************** */
 #EmpireBoard table.Overview table.myPercent {
 	height: 4px !important;
 	width: 92%;
@@ -816,7 +816,7 @@ var default_style = <><![CDATA[
 #EmpireBoard table.Overview table.myPercent td.Warning { background-color: #8F1D1A;}
 #EmpireBoard table.Overview table.myPercent td.AlmostFull { background-color: #B42521;}
 #EmpireBoard table.Overview table.myPercent td.Full { background-color: #ff0000;}
-/****************** alerts *******************/
+/** **************** alerts ****************** */
 #EmpireBoard sup {
 	vertical-align: top !important;
 	font-size: 10px;
@@ -834,7 +834,7 @@ var default_style = <><![CDATA[
 #EmpireBoard img.Safe { height: 11px; }
 #EmpireBoard table.Overview td img.Safe {float: left; margin-left: 1px; margin-right: 1px;}
 
-/****************** footer *******************/
+/** **************** footer ****************** */
 
 #EmpireBoard p {text-align: left; display: block;  }
 #EmpireBoard.RtoL p {text-align: right;}
@@ -853,7 +853,7 @@ var default_style = <><![CDATA[
 #EmpireBoard.RtoL p.Footer {text-align: left;}
 #EmpireBoard p.Footer .button {}
 
-/****************** tooltip *******************/
+/** **************** tooltip ****************** */
 #EmpireBoardTooltip {
 	position:absolute;
 	z-index: 2000;
@@ -1187,12 +1187,10 @@ EmpireBoard.Renders.Buildings_HeaderIcons = function(currentCityId)
 {
 	var rHTML = '';
 	/*
-	 * rHTML +=
-	 * this.IconTo_researchAdvisor(); if
-	 * (reportViewToSurvey('researchAdvisor') ==
-	 * '!') { rHTML += '<sup class=Red
-	 * title="Require attention">!</sup>'; }
-	 * else { rHTML += '&nbsp;'; }
+	 * rHTML += this.IconTo_researchAdvisor(); if
+	 * (reportViewToSurvey('researchAdvisor') == '!') { rHTML += '<sup
+	 * class=Red title="Require attention">!</sup>'; } else { rHTML +=
+	 * '&nbsp;'; }
 	 */
 	return rHTML;
 };
@@ -1279,13 +1277,9 @@ EmpireBoard.Renders.Attacks_Tooltip_Content = function(townID)
 				var tCityId = config["attacks"][townID][key].oCityId;
 				var tCity ='';
 				/*
-				 * if
-				 * ((this.DB.OwnCities[tCityId] !=
-				 * undefined) &&
-				 * (this.DB.OwnCities[tCityId].own !=
-				 * false)) { tCity =
-				 * config["attacks"][townID][key].ttownName; }
-				 * else { tCity =
+				 * if ((this.DB.OwnCities[tCityId] != undefined) &&
+				 * (this.DB.OwnCities[tCityId].own != false)) { tCity =
+				 * config["attacks"][townID][key].ttownName; } else { tCity =
 				 * config["attacks"][townID][key].ttownName+"
 				 * ("+config["attacks"][townID][key].tPlayerName+")"; }
 				 */
@@ -1649,24 +1643,26 @@ EmpireBoard.Grepolis.Fetch_CitiesSelect = function(database)
 		// the town is unknown, read all
 		// cities
 		database[townId] = new EmpireBoard.Grepolis.City_Object();
-//		$.ajax({
-//			timeout: 3000,
-//			async: false,
-//			dataType:"json",
-//			url: "/game/town_group_overviews?action=get_towns_of_active_town_group&town_id="+townId,
-//			error: function(){},
-//			success: function(data){ 
-//				$.each(data.towns,
-//						function(nr) {
-//					if (database[this.id] == undefined) database[this.id] =
-//						new EmpireBoard.Grepolis.City_Object();
-//					database[this.id].id = this.id;
-//					database[this.id].townName = this.name;
-//					database[this.id].points = this.points;
-//					EmpireBoard.Log.Add('Fetch select list: town ['+database[this.id].id+'], '+database[this.id].townName); 
-//				});
-//			}
-//		});
+// $.ajax({
+// timeout: 3000,
+// async: false,
+// dataType:"json",
+// url:
+// "/game/town_group_overviews?action=get_towns_of_active_town_group&town_id="+townId,
+// error: function(){},
+// success: function(data){
+// $.each(data.towns,
+// function(nr) {
+// if (database[this.id] == undefined) database[this.id] =
+// new EmpireBoard.Grepolis.City_Object();
+// database[this.id].id = this.id;
+// database[this.id].townName = this.name;
+// database[this.id].points = this.points;
+// EmpireBoard.Log.Add('Fetch select list: town ['+database[this.id].id+'],
+// '+database[this.id].townName);
+// });
+// }
+// });
 	}
 
 	database[townId].townName = townName;
@@ -2182,7 +2178,7 @@ EmpireBoard.DOM.Get_First_Node_TextContent = function(path, defaultValue)
 	else return defaultValue;
 };
 
-//get node's title attribute
+// get node's title attribute
 function getNodeTitle(path, defaultValue) {
 	var value = EmpireBoard.DOM.Get_First_Node(path);
 	// Fix for v3
@@ -2289,7 +2285,7 @@ EmpireBoard.Str.To_Integer = function(str, defaultValue)
 	return temp;
 };
 
-//decimalPoint = '.' or ','
+// decimalPoint = '.' or ','
 EmpireBoard.Str.To_Float = function(str, defaultValue, decimalPoint)
 {
 	if (decimalPoint == undefined) decimalPoint = this._decimalPoint;
@@ -2612,7 +2608,7 @@ EmpireBoard.Handlers.Start_Timers = function()
 {
 	// Real-time counters
 	window.setInterval(myTimeCounterF, 1000);
-	// window.setInterval(realtimeFactDisplayF, 5000); 
+	// window.setInterval(realtimeFactDisplayF, 5000);
 };
 
 function myTimeCounterF()
@@ -2729,8 +2725,8 @@ EmpireBoard.Updater.Init = function(parent)
 	this._Parent = parent;
 };
 
-//CallBackFct function receive available version number (or null value if
-//		failed) as argument
+// CallBackFct function receive available version number (or null value if
+// failed) as argument
 EmpireBoard.Updater.Check = function(ScriptURL, CallBackFct)
 {
 	this._availableVersion	 = 0;
@@ -2767,7 +2763,7 @@ EmpireBoard.Updater._ParseScript = function(response, CallBackFct)
 	}
 };
 
-//the tooltip object
+// the tooltip object
 EmpireBoard.Tooltip =
 {
 		// setup properties of
@@ -2872,7 +2868,7 @@ EmpireBoard.Tooltip.hide = function(e)
 	}
 };
 
-//Moves the tooltip element
+// Moves the tooltip element
 EmpireBoard.Tooltip.mouseMove = function(e)
 {
 	// we don't use "this" because
@@ -2905,15 +2901,10 @@ EmpireBoard.Tooltip.mouseMove = function(e)
 			this._y = e.clientY + document.body.scrollTop;
 		}
 		/*
-		 * } else if(event !=
-		 * undefined && event.x !=
-		 * undefined) { // IE6, IE7,
-		 * IE5.5 tooltip.x = event.x + (
-		 * document.documentElement.scrollLeft ||
-		 * document.body.scrollLeft);
-		 * tooltip.y = event.y + (
-		 * document.documentElement.scrollTop ||
-		 * document.body.scrollTop);
+		 * } else if(event != undefined && event.x != undefined) { // IE6, IE7,
+		 * IE5.5 tooltip.x = event.x + ( document.documentElement.scrollLeft ||
+		 * document.body.scrollLeft); tooltip.y = event.y + (
+		 * document.documentElement.scrollTop || document.body.scrollTop);
 		 */
 	}
 	else
@@ -2993,7 +2984,7 @@ EmpireBoard.Tooltip.GetScrollY = function()
 	return (window.pageYOffset || (tt_db ? (tt_db.scrollTop || 0) : 0));
 };
 
-//Move the tooltip element
+// Move the tooltip element
 EmpireBoard.Tooltip.moveTo = function(xL,yL)
 {
 	if (this._tooltipElement.style)
@@ -3067,8 +3058,9 @@ function getCity(town_id) {
 	return EmpireBoard.DB.OwnCities[town_id];
 }
 
-//// lots of code to get the town id. The code trys to find the town id no matter
-//// which "town dropdown view" the user has chosen.
+// // lots of code to get the town id. The code trys to find the town id no
+// matter
+// // which "town dropdown view" the user has chosen.
 
 var town_id = Game.townId;
 var current_town_id = town_id;
@@ -3393,7 +3385,7 @@ function createLink(text, href, attrs) {
 	return "<a href=\""+href+"\" "+attrs+">"+text+"</a>";
 }
 
-//From kChen script with some fixes
+// From kChen script with some fixes
 function changeCity(town_id) {
 	var postdata = getFormInput("//form[@id='changeCityForm']//input");
 	postdata = postdata + "&town_id="+town_id+"&view=town";
@@ -3679,16 +3671,10 @@ function reportViewToSurvey(view, town_id)
 				report = true;
 			}
 			/*
-			 * else if
-			 * ((town.underConstructionName !=
-			 * '') &&
-			 * (town.underConstructionTime <=
-			 * EmpireBoard.StartTime)) {
-			 * report = true; } else
-			 * if (town.towntime <=
-			 * (EmpireBoard.StartTime -
-			 * 1000*60*60*24*7)) {
-			 * report = true; }
+			 * else if ((town.underConstructionName != '') &&
+			 * (town.underConstructionTime <= EmpireBoard.StartTime)) { report =
+			 * true; } else if (town.towntime <= (EmpireBoard.StartTime -
+			 * 1000*60*60*24*7)) { report = true; }
 			 */
 		}
 		else if ((view == 'townMilitary-army') || (view == 'building_barracks'))
@@ -3750,17 +3736,11 @@ function reportViewToSurvey(view, town_id)
 			}
 
 			/*
-			 * if ((view ==
-			 * 'townMilitary-fleet') &&
-			 * (town.townMilitaryfleetrqtime !=
-			 * undefined) &&
-			 * (town.townMilitaryfleetrqtime >
-			 * EmpireBoard.StartTime)) {
-			 * EmpireBoard.Log.Add("Will
-			 * request attention at
-			 * townMilitary-fleet of
-			 * town["+town_id+"]
-			 * remaining
+			 * if ((view == 'townMilitary-fleet') &&
+			 * (town.townMilitaryfleetrqtime != undefined) &&
+			 * (town.townMilitaryfleetrqtime > EmpireBoard.StartTime)) {
+			 * EmpireBoard.Log.Add("Will request attention at townMilitary-fleet
+			 * of town["+town_id+"] remaining
 			 * "+((town.townMilitaryfleetrqtime-EmpireBoard.StartTime)/1000)+"s"); }
 			 */
 		}
@@ -4125,7 +4105,7 @@ function getGrowthRemainingHours(population, maxPopulation, startTime, happiness
 }
 
 
-//Current selected town
+// Current selected town
 if (current_town_id > 0)
 {
 	var res = getCity(current_town_id);
@@ -4265,7 +4245,7 @@ if (town_idmainView > 0)
 	res.storage_volume = storage_volume;
 	res.max_favor = max_favor;
 
-	// Fetch levels 
+	// Fetch levels
 	if (EmpireBoard.Grepolis.View() == "building_main")
 	{
 		var gtb=uW.BuildingMain.buildings;
@@ -4414,26 +4394,19 @@ if (town_idmainView > 0)
 		if (config["upkeeps"] == undefined) { config["upkeeps"] = {}; }
 		if (res.units == undefined) { res.units = {}; }
 
-/*		var gameUnits=uW.UnitOrder.units;
-		for (name in gameUnits) {
-			if (gameUnits[name] != undefined)
-			{
-				res.units[name].name = name;
-				res.units[name].count = gameUnits[name].count;
-				EmpireBoard.Log.Add('unit='+unitId+", construction="+gameUnits[index].construction);
-			}
-		}
-
-		var gameUnitsOrders=uW.UnitOrder.orders;
-		for (index in gameUnitsOrders) {
-			if (gameUnitsOrders[index] != undefined)
-			{
-				unitId = gameUnitsOrders[index].unit_id;
-				res.units[unitId].construction += gameUnitsOrders[index].units_left;
-				EmpireBoard.Log.Add('order='+unitId+", construction="+gameUnitsOrders[index].construction);
-			}
-		}
-*/
+/*
+ * var gameUnits=uW.UnitOrder.units; for (name in gameUnits) { if
+ * (gameUnits[name] != undefined) { res.units[name].name = name;
+ * res.units[name].count = gameUnits[name].count;
+ * EmpireBoard.Log.Add('unit='+unitId+",
+ * construction="+gameUnits[index].construction); } }
+ * 
+ * var gameUnitsOrders=uW.UnitOrder.orders; for (index in gameUnitsOrders) { if
+ * (gameUnitsOrders[index] != undefined) { unitId =
+ * gameUnitsOrders[index].unit_id; res.units[unitId].construction +=
+ * gameUnitsOrders[index].units_left; EmpireBoard.Log.Add('order='+unitId+",
+ * construction="+gameUnitsOrders[index].construction); } }
+ */
 		$("#unit_order > #units .black").each(function(index) {
 			var name=$(this).parent().parent().parent().attr("id");
 			var count=$(this).text();
@@ -4480,67 +4453,37 @@ if (town_idmainView > 0)
 		/*
 		 * var currentUnit =
 		 * EmpireBoard.DOM.Get_First_Node("//div[@id='unitConstructionList']//div[contains(@class,
-		 * 'currentUnit')]"); if
-		 * (currentUnit != null) {
-		 * var currentUnit_id =
-		 * 'unit
-		 * '+EmpireBoard.Grepolis.Trim_Unit(currentUnit.className);
-		 * res.units[currentUnit_id].construction =
-		 * 1; // Fetch queue var
+		 * 'currentUnit')]"); if (currentUnit != null) { var currentUnit_id =
+		 * 'unit '+EmpireBoard.Grepolis.Trim_Unit(currentUnit.className);
+		 * res.units[currentUnit_id].construction = 1; // Fetch queue var
 		 * simUnits = 0; var Amounts =
 		 * EmpireBoard.DOM.Get_Nodes("//div[@id='unitConstructionList']//li/div[@class='amount']");
-		 * if
-		 * (Amounts.snapshotLength >=
-		 * 1) { for (var i = 0; i <
-		 * Amounts.snapshotLength;
-		 * i++) { var Amount =
-		 * Amounts.snapshotItem(i);
-		 * var AmountInt =
-		 * EmpireBoard.Str.To_Integer(Amount.textContent,
-		 * 1); var unit_id = 'unit
+		 * if (Amounts.snapshotLength >= 1) { for (var i = 0; i <
+		 * Amounts.snapshotLength; i++) { var Amount = Amounts.snapshotItem(i);
+		 * var AmountInt = EmpireBoard.Str.To_Integer(Amount.textContent, 1);
+		 * var unit_id = 'unit
 		 * '+EmpireBoard.Grepolis.Trim_Unit(Amount.parentNode.className);
 		 * 
-		 * res.units[unit_id].construction =
-		 * res.units[unit_id].construction +
-		 * AmountInt; if (unit_id ==
-		 * currentUnit_id) {
-		 * simUnits = simUnits +
+		 * res.units[unit_id].construction = res.units[unit_id].construction +
+		 * AmountInt; if (unit_id == currentUnit_id) { simUnits = simUnits +
 		 * AmountInt; } } }
 		 * 
 		 * var found = false;
 		 * 
-		 * var scripts =
-		 * document.getElementsByTagName("script");
-		 * for (var j =
-		 * scripts.length-1; j >= 0;
-		 * j--) { // search
-		 * getCountdown var nScript =
-		 * scripts[j]; var sCode =
-		 * nScript.innerHTML; if
-		 * (sCode.indexOf('buildProgress') >
-		 * 0) { found = true; break; } }
-		 * if (found == true) { var
-		 * enddate = 0; if
-		 * (/enddate[^0-9]*([0-9]+)/.exec(sCode) !=
-		 * null) { enddate =
-		 * parseFloat(RegExp.$1) *
-		 * 1000; } var currentdate =
-		 * 0; if
-		 * (/currentdate[^0-9]*([0-9]+)/.exec(sCode) !=
-		 * null) { currentdate =
-		 * parseFloat(RegExp.$1) *
-		 * 1000; } var startdate =
-		 * 0; if
-		 * (/startdate[^0-9]*([0-9]+)/.exec(sCode) !=
-		 * null) { startdate =
-		 * parseFloat(RegExp.$1) *
-		 * 1000; }
+		 * var scripts = document.getElementsByTagName("script"); for (var j =
+		 * scripts.length-1; j >= 0; j--) { // search getCountdown var nScript =
+		 * scripts[j]; var sCode = nScript.innerHTML; if
+		 * (sCode.indexOf('buildProgress') > 0) { found = true; break; } } if
+		 * (found == true) { var enddate = 0; if
+		 * (/enddate[^0-9]*([0-9]+)/.exec(sCode) != null) { enddate =
+		 * parseFloat(RegExp.$1) * 1000; } var currentdate = 0; if
+		 * (/currentdate[^0-9]*([0-9]+)/.exec(sCode) != null) { currentdate =
+		 * parseFloat(RegExp.$1) * 1000; } var startdate = 0; if
+		 * (/startdate[^0-9]*([0-9]+)/.exec(sCode) != null) { startdate =
+		 * parseFloat(RegExp.$1) * 1000; }
 		 * 
-		 * setViewRqTime(EmpireBoard.Grepolis.View(),
-		 * town_idmainView,
-		 * EmpireBoard.StartTime +
-		 * (enddate - currentdate) +
-		 * simUnits * (enddate -
+		 * setViewRqTime(EmpireBoard.Grepolis.View(), town_idmainView,
+		 * EmpireBoard.StartTime + (enddate - currentdate) + simUnits * (enddate -
 		 * startdate), true); } }
 		 */
 	}
@@ -4936,9 +4879,9 @@ if (town_idmainView > 0)
 
 }
 
-/***********************************
+/*******************************************************************************
  * Render tables
- **********************************/
+ ******************************************************************************/
 function renderAcademyTable()
 {
 	var Cities = EmpireBoard.DB.OwnCities;
@@ -5150,11 +5093,10 @@ function renderResourcesTable()
 	s += "<thead><tr>";
 	s += "<th class='townName' nowrap>"+texts["townName"]+"</th>"+
 	"<th class='actions' nowrap>"+createLinkToFinanceNavyViews()+"</th>"+
-	"<th colspan=1 class='lf population'>"+texts["Population"]+"</th>"+
-	"<th colspan=2 class='lf wood'>"+texts["wood"]+"</th>"+
-	"<th colspan=2 class='lf stone'>"+texts["stone"]+"</th>"+
-	"<th colspan=2 class='lf iron'>"+texts["iron"]+"</th>"+
-	"<th colspan=2 class='lf fav'>"+texts["fav"]+"</th>";
+	"<th colspan=2 class='lf wood' style='background-image:url(\"http://static.grepolis.com/images/game/layout/resources.png\");  background-repeat:no-repeat; background-position:center 0px;'></th>"+
+	"<th colspan=2 class='lf stone' style='background-image:url(\"http://static.grepolis.com/images/game/layout/resources.png\");  background-repeat:no-repeat; background-position:center -30px;'></th>"+
+	"<th colspan=2 class='lf iron' style='background-image:url(\"http://static.grepolis.com/images/game/layout/resources.png\");  background-repeat:no-repeat; background-position:center -60px;'></th>"+
+	"<th colspan=2 class='lf fav' style='background-image:url(\"http://static.grepolis.com/images/game/layout/resources.png\");  background-repeat:no-repeat; background-position:center -150px;'></th>";
 	s += "</tr></thead>";
 
 	s += "<tbody>";
@@ -5215,26 +5157,13 @@ function renderResourcesTable()
 			trclass = "current";
 		}
 
-		var townHallStyle = "";
 		var growthStyle = "";
-		if (parseInt(population) < 5)
-		{
-			townHallStyle = " DarkRed";
-		}
-		else if (parseInt(population) < 10)
-		{
-			townHallStyle = " Brown";
-		}
-		else
-		{
-			townHallStyle = " Bold";
-		}
-
 		var warehouseLevel = getBuildingLevel(townId,"storage", 0, -1);
 		var maxcount = res.storage_volume;
 		var maxfavor = res.max_favor;
 		var maxsafe = EmpireBoard.Grepolis.Resource_Safecapacity('wood',warehouseLevel,0);
-		// EmpireBoard.Log.Add('Storage volume of ' + townId + ': ' +maxcount+" ("+maxsafe+")");
+		// EmpireBoard.Log.Add('Storage volume of ' + townId + ': ' +maxcount+"
+		// ("+maxsafe+")");
 
 		var townLink = '';
 		if (reportViewToSurvey('',townId) == '!')
@@ -5254,9 +5183,6 @@ function renderResourcesTable()
 		createLinkToMap(townId)+
 		createLinkToAgora(townId)+"<br />"+
 		createLinkToTransportGoods(townId)+"</td>"+
-		"<td class='lf"+townHallStyle+"'>"+
-		EmpireBoard.Str.FormatBigNumber(population)+
-		"</td>"+
 		"<td class='lf' resource='wood'>"+
 		createResCounter(res.prodtime, res.wood, res.prodwood, false, maxcount, res.tradewood, maxsafe)+
 		getArrivingGoods(townId, "wood", res.tradewood, curres.wood, arrres.wood)+
@@ -5289,7 +5215,6 @@ function renderResourcesTable()
 
 	s += "<tfoot class='Summary'><tr>";
 	s += "<td nowrap colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>"+
-	"<td class='lf'>"+EmpireBoard.Str.FormatBigNumber(sumres.population)+"</td>"+
 	"</td>"+
 	"<td class='lf'>"+
 	createResCounter(EmpireBoard.StartTime, sumres.wood, sumProd.wood)+
@@ -5405,6 +5330,8 @@ function renderArmyTable()
 	s += "<div id='EmpireBoardArmy' class='Table'><table class='Overview Army'>";
 	s += "<thead><tr><th class='townName' nowrap>"+texts["townName"]+"</th>";
 	s += "<th class='actions' nowrap>"+EmpireBoard.Renders.Army_HeaderIcons(current_town_id)+"</th>";
+	s += "<th colspan=1 class='lf population' style='background-image:url(\"http://static.grepolis.com/images/game/layout/resources.png\");  background-repeat:no-repeat; background-position:center -120px;'></th>";
+
 	if (usedIndexesCount > 0)
 	{
 		var firstStyle = "";
@@ -5416,14 +5343,14 @@ function renderArmyTable()
 			{
 				if (lastTopic != orderedUnits[key]) { firstStyle = "lf"; } else { firstStyle = ""; }
 
-				s += "<th unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" unit_name "+EmpireBoard.Grepolis.Trim_Unit(key)+"' nowrap "+createTooltipAttribute(name)+'style="background-image: url(&quot;http://static.grepolis.com/images/game/units/'+key+'_25x25.png&quot;);"></th>';
+				s += "<th unit='"+EmpireBoard.Grepolis.Trim_Unit(key)+"' class='"+firstStyle+" unit_name "+EmpireBoard.Grepolis.Trim_Unit(key)+"' nowrap "+createTooltipAttribute(name)+'style="background-image: url(&quot;http://static.grepolis.com/images/game/units/'+key+'_25x25.png&quot;); background-repeat:no-repeat; background-position:center;"></th>';
 				firstStyle = "";
 
 				lastTopic = orderedUnits[key];
 			}
 		}
 	}
-	else s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th><th></th>";
+	else s += "<th class='lf'></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>";
 	s += "</tr></thead>";
 
 	s += "<tbody>";
@@ -5436,6 +5363,21 @@ function renderArmyTable()
 	{
 		var res = getCity(townId);
 
+		var townHallStyle = "";
+		var growthStyle = "";
+		if (parseInt(res.population) < 5)
+		{
+			townHallStyle = " DarkRed";
+		}
+		else if (parseInt(res.population) < 10)
+		{
+			townHallStyle = " Brown";
+		}
+		else
+		{
+			townHallStyle = " Bold";
+		}
+
 		var trclass = (parseInt(current_town_id) == parseInt(townId)) ? "current" : "";
 		s += "<tr class='"+trclass+"' townid='"+townId+"'>";
 		s += "<td class='townName' nowrap>"+
@@ -5445,6 +5387,8 @@ function renderArmyTable()
 		"</td>";
 		s += "<td class='actions' nowrap>"+createLinkToArmyView(townId)+createLinkToDeployArmy(townId)+"<br />"+
 		createLinkToFleetView(townId)+createLinkToDeployFleet(townId)+"</td>";
+		s += "<td class='lf"+townHallStyle+"'>"+EmpireBoard.Str.FormatBigNumber(res.population)+"</td>";
+		sum["population"] += res.population;
 		if (usedIndexesCount > 0)
 		{
 			var firstStyle = "";
@@ -5495,6 +5439,7 @@ function renderArmyTable()
 
 	s += "<tfoot class='Summary'><tr class='Units'>";
 	s += "<td colspan=2><img vspace=2 hspace=5 src='http://s2.de.ikariam.com/skin/layout/sigma.gif'></td>";
+	s += "<td class='lf'>"+EmpireBoard.Str.FormatBigNumber(sum["population"])+"</td>";
 	if (usedIndexesCount > 0)
 	{
 		var firstStyle = "";
@@ -5519,7 +5464,7 @@ function renderArmyTable()
 			}
 		}
 	}
-	else s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+	else s += "<td class='lf'></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
 
 	s += "</tr></tfoot>";
 	s += "</table>";
