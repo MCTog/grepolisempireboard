@@ -230,4 +230,4 @@ $(window).resize(function () {
 });
 
 GM_registerMenuCommand('Grepolis HD Options', Config.show, undefined, undefined, undefined);
-ScriptUpdater.check(92444, "0.0.2");
+ScriptUpdater.check(93521, "0.0.2");
