@@ -82,9 +82,9 @@ function AdjustBaseLayout(width, height) {
     $(this).width(width);
     $(this).height(height);
   });
-  if (Config.get('debug')) {
-    $("#content_box").css("background", "#00FF00");
-  }
+// if (Config.get('debug')) {
+// $("#content_box").css("background", "#00FF00");
+// }
   $("#content").css("left", "0");
 
   SetWH($("#main_area"), width, height);
@@ -99,12 +99,10 @@ function ShiftLeft() {
   $(document.body).width("99%");
   $(document.body).height("99%");
 
-  if (Config.get('debug')) {
-    $(document.body).css("background", "#FF0000");
-  }
-  else {
-    $(document.body).css("background", "#FFE09D");
-  }
+  $(document.body).css("background", "#FFE09D");
+// if (Config.get('debug')) {
+// $(document.body).css("background", "#FF0000");
+// }
 }
 
 function AdjustContent() {
