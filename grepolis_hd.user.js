@@ -77,17 +77,15 @@ function SetCssLT(tgt, left, top) {
 
 function AdjustBaseLayout(width, height) {
   SetWH($("#box"), '100%', '100%');
-  // SetWH($("#box"), width, height);
 
   $("#content_box,#content,#table_wrapper").each(function () {
     $(this).width(width);
     $(this).height(height);
   });
-  $("#content_box").css("background", "#00FF00");
-
-  var content=$("#content");
-  SetWH($(content), width, height);
-  $(content).css("left", "0");
+  if (Config.get('debug')) {
+    $("#content_box").css("background", "#00FF00");
+  }
+  $("#content").css("left", "0");
 
   SetWH($("#main_area"), width, height);
 
@@ -232,4 +230,4 @@ $(window).resize(function () {
 });
 
 GM_registerMenuCommand('Grepolis HD Options', Config.show, undefined, undefined, undefined);
-// ScriptUpdater.check(92444, "0.0.2");
+ScriptUpdater.check(92444, "0.0.2");
