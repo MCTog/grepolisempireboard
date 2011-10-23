@@ -1,10 +1,11 @@
-//==UserScript==
-//@name           grepoReportAnalyser
-//@namespace      reportanalyser.grepolis
-//@include        http://*.grepolis.com/game/report*
-//@version        0.0.1
-//@history		     0.0.1 Dev Version - Still growing
-//==/UserScript==
+// ==UserScript==
+// @name           grepoReportAnalyser
+// @namespace      reportanalyser.grepolis
+// @include        http://*.grepolis.com/game/report*
+// @include        http://zz3.grepolis.com/game/*
+// @version        0.0.1
+// @history		     0.0.1 Dev Version - Still growing
+// ==/UserScript==
 
 (function () {
 

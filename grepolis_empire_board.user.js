@@ -107,7 +107,7 @@ EmpireBoard =
     Version:     "0.0.1",
     HomePage:    '',
     ScriptURL:     '',
-    UserScriptsID:   75533,
+    UserScriptsID:   75533
 };
 
 
@@ -490,7 +490,7 @@ EmpireBoard.DB =
     Prefix:        '',
     OwnCities:       {},
     FleetMovements:    {},
-    Options:       {},
+    Options:       {}
 };
 
 EmpireBoard.DB.Init = function(parent, host)
