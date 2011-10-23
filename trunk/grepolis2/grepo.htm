@@ -1,0 +1,1474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="description" content="Grepolis - the browser game set in Antiquity. Build magnificent cities, forge mighty alliances, utilize the power of the gods, conquer the world!"
+        />
+        <title>
+            Grepolis - 66-06-3 Axioleas
+        </title>
+        <link rel="shortcut icon" href="http://static.grepolis.com/images/game/start/favicon.ico"
+        type="image/x-icon" />
+        <link href="/cache/merged.css?1309453119" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="/cache/merged.js?1309453107">
+        </script>
+        <script type="text/javascript" src="/cache/game/bbcodes.js?1309453107">
+        </script>
+    </head>
+    
+    <body>
+        <script type="text/javascript">
+            //<![CDATA[
+            var TempBarData = null; //Temporary storage for layout bar data between layout and loader
+            var LocalStore = null;
+            var Game = {};
+            var Award;
+            Game.csrfToken = 'd97ba66ab1f';
+            Game.autoOpenTownIndex = false;
+            Game.img = function(want_static) {
+                return false === want_static ? '/images' : 'http://static.grepolis.com/images';
+            }
+            Game.controller = 'index';
+            Game.townId = '28896';
+            Game.townName = "66-06-3 Axioleas";
+            Game.alliance_id = '2128';
+            Game.player_id = '18258';
+            Game.player_name = 'Inselk0enig';
+            Game.server_time = '1309539834';
+            Game.locale_lang = 'en_DK';
+            Game.locale_gmt_offset = '-7200'; // server gmt offset from settings
+            Game.server_gmt_offset = '-7200'; // player gmt offset from settings
+            Game.map_chunks_poll_time = 480000;
+            Game.gfx_level = 1;
+            Game.map_arrow_show_always = true;
+            Game.notification_last_requested_id = 0;
+
+            $(document).ready(function() {
+
+                // Global 'Local Store'
+                LocalStore = new GPLocalStore(18258, true);
+
+                // Global Layout Object
+                var _dates = {
+                    buildings: 1308575315,
+                    powers: 1309261168,
+                    units: 1308830758
+                };
+
+                GameLoader = new GPGameLoader(_dates);
+
+                GameLoader.addFinishLoadedHook(layoutOnFinishLoading);
+            });
+
+
+            function layoutOnFinishLoading() {
+
+                Tutorial = new gpTutorial(0, false);
+
+                Layout = new GPLayout({
+                    playerID: 18258,
+                    maxFavor: 500,
+                    wndMaxConcurrent: 5,
+                    onInit: null
+                });
+
+                ITowns.initialize({
+                    "groups": [],
+                    "towns": [{
+                        "id": 28225,
+                        "name": "-=A00=-",
+                        "island_x": 610,
+                        "island_y": 690,
+                        "group_id": null
+                    }, {
+                        "id": 28171,
+                        "name": "-=A002=-",
+                        "island_x": 610,
+                        "island_y": 690,
+                        "group_id": null
+                    }, {
+                        "id": 26659,
+                        "name": "66-10-1 Manitowoc",
+                        "island_x": 671,
+                        "island_y": 624,
+                        "group_id": null
+                    }, {
+                        "id": 25400,
+                        "name": "66-08-1 Geller",
+                        "island_x": 607,
+                        "island_y": 675,
+                        "group_id": null
+                    }, {
+                        "id": 30068,
+                        "name": "66-07-2 Axiomede",
+                        "island_x": 654,
+                        "island_y": 668,
+                        "group_id": null
+                    }, {
+                        "id": 28830,
+                        "name": "66-06-1 Axioma",
+                        "island_x": 648,
+                        "island_y": 666,
+                        "group_id": null
+                    }, {
+                        "id": 23891,
+                        "name": "66-03-2 Afterlife",
+                        "island_x": 608,
+                        "island_y": 663,
+                        "group_id": null
+                    }, {
+                        "id": 23261,
+                        "name": "66-02-2 Delthizaar",
+                        "island_x": 607,
+                        "island_y": 658,
+                        "group_id": null
+                    }, {
+                        "id": 23944,
+                        "name": "66-03-1 Sparta",
+                        "island_x": 608,
+                        "island_y": 663,
+                        "group_id": null
+                    }, {
+                        "id": 30182,
+                        "name": "66-07-1 Axiomium",
+                        "island_x": 654,
+                        "island_y": 668,
+                        "group_id": null
+                    }, {
+                        "id": 29349,
+                        "name": "66-09-1 Karalio",
+                        "island_x": 632,
+                        "island_y": 682,
+                        "group_id": null
+                    }, {
+                        "id": 28896,
+                        "name": "66-06-3 Axioleas",
+                        "island_x": 648,
+                        "island_y": 666,
+                        "group_id": null
+                    }, {
+                        "id": 34685,
+                        "name": "66-05-1 Albanian",
+                        "island_x": 637,
+                        "island_y": 677,
+                        "group_id": null
+                    }, {
+                        "id": 23195,
+                        "name": "66-02-1 Tau",
+                        "island_x": 607,
+                        "island_y": 658,
+                        "group_id": null
+                    }, {
+                        "id": 28168,
+                        "name": "66-11-1 Mykene",
+                        "island_x": 610,
+                        "island_y": 690,
+                        "group_id": null
+                    }, {
+                        "id": 29432,
+                        "name": "66-09-2 Argos",
+                        "island_x": 632,
+                        "island_y": 682,
+                        "group_id": null
+                    }, {
+                        "id": 29041,
+                        "name": "66-06-2 Axiome",
+                        "island_x": 648,
+                        "island_y": 666,
+                        "group_id": null
+                    }, {
+                        "id": 21090,
+                        "name": "66-04-1 Shinpachi",
+                        "island_x": 615,
+                        "island_y": 633,
+                        "group_id": null
+                    }, {
+                        "id": 24214,
+                        "name": "66-01-1 Nostromo",
+                        "island_x": 611,
+                        "island_y": 664,
+                        "group_id": null
+                    }, {
+                        "id": 30165,
+                        "name": "66-07-3 Axiomare",
+                        "island_x": 654,
+                        "island_y": 668,
+                        "group_id": null
+                    }],
+                    "tmpl": "<div class=\"submenu_left\"><\/div>\n<div class=\"submenu_right\"><\/div>\n<div class=\"submenu_bottom_alpha\">\n\t<div class=\"submenu_bottom\"><\/div>\n<\/div>\n<%\n\tvar active_group_id = ITowns.getActiveTownGroup().id;\n\tfor(var id in groups){\n\t    if(id == 0) continue;\n\t    var group = groups[id];\n\t    var sorted_map = ITowns.getSortedTownGroupMapByName(id);\n%>\n\t<fieldset class=\"<%= group.id == active_group_id ? 'active' : '' %>\">\n\t\t<legend>\n\t\t\t<a href=\"#\" class=\"group_link\">\n\t\t\t\t<%= (id === 'null' ? 'No group' : group.name ) %>\n\t\t\t<\/a>\n\t\t\t<a href=\"#\" class=\"toggle\"><\/a>\n\t\t<\/legend>\n\t\t<ul id=\"g<%= id %>\" class=\"town_group\">\n\t\t\t<% for(var i=0;i < sorted_map.length;i++){\n\t\t\t\tvar town = group.towns[sorted_map[i]]; %>\n\t\t\t\t<li class=\"town\" id=\"t<%= town.id +'_g'+ (town.group_id || null) %>\">\n\t\t\t\t\t<a class=\"town_link\" href=\"#\" ><%= ITowns.getTown(town.id).name %><\/a>\n\t\t\t\t\t<span class=\"handle\"><\/span>\n\t\t\t\t\t<% if(id !== 'null'){ %>\n\t\t\t\t\t\t<a href=\"#\" class=\"delete\"><\/a>\n\t\t\t\t\t<% } %>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<\/fieldset>\n<% } %>\n"
+                });
+                //TODO:
+                Layout.favor = {
+                    "zeus": {
+                        "current": 500,
+                        "production": 26.3,
+                        "god": "Zeus"
+                    },
+                    "poseidon": {
+                        "current": 454,
+                        "production": 23.7,
+                        "god": "Poseidon"
+                    },
+                    "hera": {
+                        "current": 113,
+                        "production": 43,
+                        "god": "Hera"
+                    },
+                    "athena": {
+                        "current": 500,
+                        "production": 16,
+                        "god": "Athena"
+                    },
+                    "hades": {
+                        "current": 500,
+                        "production": 26.3,
+                        "god": "Hades"
+                    }
+                };
+                Layout.player_hint_settings = {
+                    "phoenician_salesman_hint": false,
+                    "age_of_wonder_hint": false,
+                    "militia_hint": true,
+                    "player_protection_finished_hint": true,
+                    "build_time_reduction_hint": false
+                };
+                Layout.militia_hint_shown = false;
+
+                Layout.displayServerTime();
+                Layout.requestNotifications(true);
+                Award = new gpAward();
+
+
+                GameData.add({
+                    map_size: 1000
+                });
+                GameData.add({
+                    resources: {
+                        "wood": "Wood",
+                        "stone": "Rock",
+                        "iron": "Silver coins"
+                    }
+                });
+                GameData.add({
+                    farm_town_time_values: {
+                        "normal": [300, 1200, 5400, 14400],
+                        "booty": [300, 1200, 5400, 14400, 600, 2400, 10800, 28800]
+                    }
+                });
+                GameData.add({
+                    unit_order_refund_factor: 0.5
+                });
+                GameData.add({
+                    'FarmMouseOverTemplate': "<h4><%= name %><\/h4>\n<span class=\"small\"><%= player_relation_message %><\/span>\n<div class=\"popup_table_inside small\">\n\t<div class=\"clearfix\">\n\t\t<div class=\"fp_icon fp_mood\"><\/div>\n\t\t<div class=\"fp_property\">\n\t\t\t<div>Mood:<\/div>\n\t\t\t<div class=\"farm_popup_progress_wrapper\">\n\t\t\t\t<div class=\"fp_progress\" style=\"width:<%= mood %>%\"><\/div>\n\t\t\t\t<div class=\"fp_text\"><%= mood %>%<\/div>\n\t\t\t<\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"clearfix\">\n\t\t<div class=\"fp_icon fp_exp\"><\/div>\n\t\t<div class=\"fp_property\">\n\t\t\t<div>Expansion level: <%= expansion_stage %><\/div>\n\t\t\t<div class=\"farm_popup_progress_wrapper expansion\">\n\t\t\t\t<div class=\"fp_expansion\" style=\"width:<%= expansion_stage\/6*100 %>%\"><\/div>\n\t\t\t<\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"clearfix\">\n\t\t<div class=\"fp_icon fp_trade\"><\/div>\n\t\t<div class=\"fp_property\">\n\t\t\t<div>Trade:<\/div>\n\t\t\t\t<span class=\"resource_<%= demand %>_icon\"><\/span>\n\t\t\t\t<span class=\"popup_ratio\">1:<%= ratio %><\/span>\n\t\t\t\t<span class=\"resource_<%= offer %>_icon\"><\/span>\n\t\t<\/div>\n\t<\/div>\n\n\t<% if(loot > Timestamp.now() && Game.gfx_level > 0 ){ %>\n\t<div class=\"clearfix\">\n\t\t<div class=\"fp_icon fp_loot\"><\/div>\n\t\t<div class=\"fp_property\">\n\t\t\tNext demand:<br \/>\n\t\t\t<%= lootable_human %>\n\t\t<\/div>\n\t\t<\/div>\n\t<\/div>\n\t<% } %>\n <\/div>"
+                });
+                //GameData.add({'CaptchaTemplate' : });
+                PopupFactory.addTexts({
+                    curator_info: 'The administrator supports you during the development and organization of a huge empire. You can place more construction orders and he will prepare many overviews for you.',
+                    trader_info: 'The merchant optimizes your economic cycles. He increases your base resource production by 30%.',
+                    priest_info: 'The High Priestess has an especially good relationship with the gods. She increases your favor production by 50% and supports your mythical units. Your mythical units fight 20% stronger.',
+                    commander_info: 'The commander enjoys the highest regard among your troops. He is able to increase your troops\' motivation even further. The land units fight 20% stronger.',
+                    captain_info: 'The captain is an experienced seafarer who has already defeated many enemy fleets. His experience allows your naval units to fight 20% stronger and your trade products reach other islands twice as fast. He also makes it possible for you to use the attack planner.'
+                });
+
+                PopupFactory.init();
+
+                PopupFactory.updateProductionPopup('wood', {
+                    'wood': 1432,
+                    'storage_volume': 22541,
+                    'resource_rare': 'wood',
+                    'resource_plenty': 'stone'
+                });
+
+                PopupFactory.updateProductionPopup('stone', {
+                    'stone': 2220,
+                    'storage_volume': 22541,
+                    'resource_rare': 'wood',
+                    'resource_plenty': 'stone'
+                });
+
+                PopupFactory.updateProductionPopup('iron', {
+                    'iron': 1823,
+                    'storage_volume': 22541,
+                    'resource_rare': 'wood',
+                    'resource_plenty': 'stone'
+                });
+
+                PopupFactory.updateProductionPopup('favor', {
+                    'favors': {
+                        "zeus": {
+                            "current": 500,
+                            "production": 26.3,
+                            "god": "Zeus"
+                        },
+                        "poseidon": {
+                            "current": 454,
+                            "production": 23.7,
+                            "god": "Poseidon"
+                        },
+                        "hera": {
+                            "current": 113,
+                            "production": 43,
+                            "god": "Hera"
+                        },
+                        "athena": {
+                            "current": 500,
+                            "production": 16,
+                            "god": "Athena"
+                        },
+                        "hades": {
+                            "current": 500,
+                            "production": 26.3,
+                            "god": "Hades"
+                        }
+                    }
+                });
+
+                //TODO: clean this mess up
+                $("#wood").setPopup("wood_production");
+                $("#stone").setPopup("stone_production");
+                $("#iron").setPopup("iron_production");
+                $("#favor").setPopup("favor_production");
+                $('#pop').setPopup("population_info");
+
+                $("#curator").setPopup("curator_info");
+                $("#commander").setPopup("commander_info");
+                $('#captain').setPopup("captain_info");
+                $('#priest').setPopup("priest_info");
+                $('#trader').setPopup("trader_info");
+
+                $('#prev_city').setPopup('prev_city');
+                $('#next_city').setPopup('next_city');
+                $('#save_town_name').setPopup('save_city_name');
+
+                $('#toggle_powers').setPopup('cast_spell_on_own_town');
+
+                $('#city_index').mousePopup(new MousePopup('City overview'));
+
+                $('#server_time').mousePopup(new MousePopup('Server time' + ': <span id="server_time_popup"></span>'));
+                $('#memo_icon').mousePopup(new MousePopup('Notes'));
+                $('#delete_all_notifications').mousePopup(new MousePopup('Delete all'));
+                $('#close_all_windows').mousePopup(new MousePopup('Close all windows'));
+                $('#town_name_link').mousePopup(new MousePopup('Selected city. Double-click to change the name.'));
+
+                $('#hidden_notification_count').mousePopup(new MousePopup('Further notifications are available.'));
+
+
+
+                Quickbar.layoutInitializeQuickbar();
+
+                Layout.setResources({
+                    wood: 14915,
+                    stone: 15973,
+                    iron: 16929,
+                    favor: 454,
+                    population: 1054,
+                    storage: 22541
+                });
+
+                Layout.setProduction({
+                    wood: 1432,
+                    stone: 2220,
+                    iron: 1823,
+                    favor: 23.7
+                });
+
+                Layout.setGod('poseidon');
+
+                Layout.initializeResourcesProductionCounter();
+
+
+
+                initializeMenuBubbles({
+                    "commands_count": 0,
+                    "attack_commands_count": 0,
+                    "orders_count": 0,
+                    "trade_count": 0,
+                    "json": {
+                        "trade": {
+                            "trades": []
+                        },
+                        "troops": {
+                            "orders": [],
+                            "units": {
+                                "sword": {
+                                    "id": "sword",
+                                    "name": "Swordsman",
+                                    "count": 300,
+                                    "total": 300,
+                                    "attack_type": "hack",
+                                    "limitter": "",
+                                    "max_build": 157,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 95,
+                                        "stone": 0,
+                                        "iron": 85
+                                    },
+                                    "favor": 0,
+                                    "population": 1,
+                                    "attack": 5,
+                                    "speed": 12,
+                                    "booty": 16,
+                                    "def_hack": 14,
+                                    "def_pierce": 8,
+                                    "def_distance": 30,
+                                    "build_time": 216
+                                },
+                                "slinger": {
+                                    "id": "slinger",
+                                    "name": "Slinger",
+                                    "count": 0,
+                                    "total": 0,
+                                    "attack_type": "distance",
+                                    "limitter": "",
+                                    "max_build": 159,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 55,
+                                        "stone": 100,
+                                        "iron": 40
+                                    },
+                                    "favor": 0,
+                                    "population": 1,
+                                    "attack": 23,
+                                    "speed": 21,
+                                    "booty": 8,
+                                    "def_hack": 7,
+                                    "def_pierce": 8,
+                                    "def_distance": 2,
+                                    "build_time": 240
+                                },
+                                "archer": {
+                                    "id": "archer",
+                                    "name": "Archer",
+                                    "count": 300,
+                                    "total": 300,
+                                    "attack_type": "distance",
+                                    "limitter": "",
+                                    "max_build": 124,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 120,
+                                        "stone": 0,
+                                        "iron": 75
+                                    },
+                                    "favor": 0,
+                                    "population": 1,
+                                    "attack": 8,
+                                    "speed": 18,
+                                    "booty": 24,
+                                    "def_hack": 6,
+                                    "def_pierce": 25,
+                                    "def_distance": 12,
+                                    "build_time": 228
+                                },
+                                "hoplite": {
+                                    "id": "hoplite",
+                                    "name": "Hoplite",
+                                    "count": 395,
+                                    "total": 395,
+                                    "attack_type": "pierce",
+                                    "limitter": "",
+                                    "max_build": 112,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 0,
+                                        "stone": 75,
+                                        "iron": 150
+                                    },
+                                    "favor": 0,
+                                    "population": 1,
+                                    "attack": 16,
+                                    "speed": 9,
+                                    "booty": 8,
+                                    "def_hack": 18,
+                                    "def_pierce": 12,
+                                    "def_distance": 7,
+                                    "build_time": 276
+                                },
+                                "rider": {
+                                    "id": "rider",
+                                    "name": "Horseman",
+                                    "count": 0,
+                                    "total": 0,
+                                    "attack_type": "hack",
+                                    "limitter": "",
+                                    "max_build": 47,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 240,
+                                        "stone": 120,
+                                        "iron": 360
+                                    },
+                                    "favor": 0,
+                                    "population": 3,
+                                    "attack": 55,
+                                    "speed": 33,
+                                    "booty": 72,
+                                    "def_hack": 18,
+                                    "def_pierce": 1,
+                                    "def_distance": 24,
+                                    "build_time": 865
+                                },
+                                "chariot": {
+                                    "id": "chariot",
+                                    "name": "Chariot",
+                                    "count": 0,
+                                    "total": 0,
+                                    "attack_type": "pierce",
+                                    "limitter": "research_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": ["Chariot"],
+                                    "resources": {
+                                        "wood": 200,
+                                        "stone": 440,
+                                        "iron": 320
+                                    },
+                                    "favor": 0,
+                                    "population": 4,
+                                    "attack": 56,
+                                    "speed": 27,
+                                    "booty": 64,
+                                    "def_hack": 76,
+                                    "def_pierce": 16,
+                                    "def_distance": 56,
+                                    "build_time": 1154
+                                },
+                                "catapult": {
+                                    "id": "catapult",
+                                    "name": "Catapult",
+                                    "count": 0,
+                                    "total": 0,
+                                    "attack_type": "distance",
+                                    "limitter": "research_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": ["Catapult"],
+                                    "resources": {
+                                        "wood": 1200,
+                                        "stone": 1200,
+                                        "iron": 1200
+                                    },
+                                    "favor": 0,
+                                    "population": 15,
+                                    "attack": 100,
+                                    "speed": 1.5,
+                                    "booty": 400,
+                                    "def_hack": 30,
+                                    "def_pierce": 30,
+                                    "def_distance": 30,
+                                    "build_time": 4328
+                                },
+                                "zyklop": {
+                                    "id": "zyklop",
+                                    "name": "Cyclop",
+                                    "count": 0,
+                                    "total": 0,
+                                    "attack_type": "distance",
+                                    "limitter": "",
+                                    "max_build": 1,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 2000,
+                                        "stone": 4200,
+                                        "iron": 3360
+                                    },
+                                    "favor": 360,
+                                    "population": 40,
+                                    "attack": 756,
+                                    "speed": 12,
+                                    "booty": 320,
+                                    "def_hack": 945,
+                                    "def_pierce": 10,
+                                    "def_distance": 1310,
+                                    "build_time": 5746
+                                },
+                                "big_transporter": {
+                                    "id": "big_transporter",
+                                    "name": "Transport boat",
+                                    "count": 50,
+                                    "total": 50,
+                                    "capacity": 20,
+                                    "limitter": "",
+                                    "max_build": 33,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 450,
+                                        "stone": 450,
+                                        "iron": 360
+                                    },
+                                    "favor": 0,
+                                    "population": 7,
+                                    "attack": 20,
+                                    "defense": 1,
+                                    "transport": null,
+                                    "speed": 12,
+                                    "build_time": 1605
+                                },
+                                "bireme": {
+                                    "id": "bireme",
+                                    "name": "Bireme",
+                                    "count": 21,
+                                    "total": 21,
+                                    "capacity": 0,
+                                    "limitter": "",
+                                    "max_build": 20,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 720,
+                                        "stone": 630,
+                                        "iron": 162
+                                    },
+                                    "favor": 0,
+                                    "population": 8,
+                                    "attack": 24,
+                                    "defense": 160,
+                                    "transport": null,
+                                    "speed": 22.5,
+                                    "build_time": 1655
+                                },
+                                "attack_ship": {
+                                    "id": "attack_ship",
+                                    "name": "Light ship",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 0,
+                                    "limitter": "",
+                                    "max_build": 12,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 1170,
+                                        "stone": 270,
+                                        "iron": 720
+                                    },
+                                    "favor": 0,
+                                    "population": 10,
+                                    "attack": 200,
+                                    "defense": 60,
+                                    "transport": null,
+                                    "speed": 19.5,
+                                    "build_time": 2408
+                                },
+                                "demolition_ship": {
+                                    "id": "demolition_ship",
+                                    "name": "Fire ship",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 0,
+                                    "limitter": "research_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": ["Fire ship"],
+                                    "resources": {
+                                        "wood": 450,
+                                        "stone": 675,
+                                        "iron": 135
+                                    },
+                                    "favor": 0,
+                                    "population": 8,
+                                    "attack": 20,
+                                    "defense": 1,
+                                    "transport": null,
+                                    "speed": 7.5,
+                                    "build_time": 669
+                                },
+                                "small_transporter": {
+                                    "id": "small_transporter",
+                                    "name": "Fast transport ship",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 10,
+                                    "limitter": "research_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": ["Fast transport boat"],
+                                    "resources": {
+                                        "wood": 720,
+                                        "stone": 0,
+                                        "iron": 360
+                                    },
+                                    "favor": 0,
+                                    "population": 5,
+                                    "attack": 20,
+                                    "defense": 1,
+                                    "transport": null,
+                                    "speed": 22.5,
+                                    "build_time": 1204
+                                },
+                                "trireme": {
+                                    "id": "trireme",
+                                    "name": "Trireme",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 0,
+                                    "limitter": "research_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": ["Trireme"],
+                                    "resources": {
+                                        "wood": 1800,
+                                        "stone": 1170,
+                                        "iron": 810
+                                    },
+                                    "favor": 0,
+                                    "population": 16,
+                                    "attack": 180,
+                                    "defense": 250,
+                                    "transport": null,
+                                    "speed": 13.5,
+                                    "build_time": 2408
+                                },
+                                "colonize_ship": {
+                                    "id": "colonize_ship",
+                                    "name": "Colony ship",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 0,
+                                    "limitter": "",
+                                    "max_build": 1,
+                                    "missing_building_dependencies": [],
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 9000,
+                                        "stone": 9000,
+                                        "iron": 9000
+                                    },
+                                    "favor": 0,
+                                    "population": 170,
+                                    "attack": 0,
+                                    "defense": 500,
+                                    "transport": null,
+                                    "speed": 4.5,
+                                    "build_time": 10835
+                                },
+                                "sea_monster": {
+                                    "id": "sea_monster",
+                                    "name": "Hydra",
+                                    "count": 0,
+                                    "total": 0,
+                                    "capacity": 0,
+                                    "limitter": "building_dependency",
+                                    "max_build": 0,
+                                    "missing_building_dependencies": {
+                                        "Temple": 22
+                                    },
+                                    "missing_research_dependencies": [],
+                                    "resources": {
+                                        "wood": 4860,
+                                        "stone": 2520,
+                                        "iron": 3420
+                                    },
+                                    "favor": 400,
+                                    "population": 50,
+                                    "attack": 1000,
+                                    "defense": 715,
+                                    "transport": null,
+                                    "speed": 12,
+                                    "build_time": 7022
+                                }
+                            }
+                        },
+                        "movement": {
+                            "movements": [],
+                            "spying": [],
+                            "colonization_commands": [],
+                            "conqueror_units": [],
+                            "revolts": {
+                                "in_current_town": {
+                                    "arising": [],
+                                    "running": []
+                                },
+                                "beyond": {
+                                    "arising": [],
+                                    "running": []
+                                },
+                                "count": 0
+                            }
+                        }
+                    },
+                    "tmpl": {
+                        "movement": "<div class=\"box top left\">\n\t\t<div class=\"box top right\">\n\t\t\t<div class=\"box top center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box middle left\">\n\t\t<div class=\"box middle right\">\n\t\t\t<div class=\"box middle center\" style=\"white-space: nowrap;\">\n<div class=\"tab_content tab_content_scrollable menu_bubble\">\n\n    <% var nothing = true;%>\n\t<% if (movements && movements.length > 0){ %>\n\t <% nothing = false;%>\n\t\t<ul id=\"unit_movements\" style=\"position:relative;\">\n\t\t\t<% for(var i=0;i< movements.length;i++){\n\t\t\t    var command = movements[i];\n\t\t\t%>\n\t\t\t\t<li id=\"cmd_movement_<%= command['id'] %>\" class=\"menu_bubble_entry v<%= command['type'] %> <%= command['incoming'] ? 'incoming':'outgoing' %> \">\n\t\t\t\t\t\t\t\t\t\t<% var town_name = (command['town']['name'] == undefined ? '' : command['town']['name']); %>\n\t\t\t\t\t<div class=\"unit_movements_arrow\" <%= command['incoming'] ? 'style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_left.png)\"' : '' %>><\/div>\n\t\t\t\t\t<a style=\"float: left;\" href=\"#\" onclick=\"Layout.wnd.Create(Layout.wnd.TYPE_ATK_COMMAND, '<%= addslashes(command['command_name']) + ' ' + (command['incoming']?'\\u25ba':'\\u2192') + ' ' + addslashes(town_name) %>', {},  <%=command['id']%>);\">\n\t\t\t\t\t<img alt=\"<%= command['command_name'] + ': ' + command['arrived_human'] %>\" src=\"<%= Game.img() %>\/game\/unit_overview\/<%= command['type'] + (command['type'] == 'attack' ? '_incoming' : '') + '.png' %>\" style=\"float: left;\" \/>\n\t\t\t\t\t<\/a>\n\t\t\t\t\t<div class=\"unit_movements_arrow\" <%= !command['incoming'] ? 'style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_right.png)\"' : '' %>><\/div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t<div class=\"unit_movements_time\" style=\"text-align:left;\">\n\t\t\t\t\t\t<span class=\"eta\" id=\"eta-command-<%= command['id'] %>\"><%= readableDate(new Date(command['arrival_eta'] * 1E3)) %><\/span>\n\t\t\t\t\t\t<br \/>\n\t\t\t\t\t\t<%= command['town']['town_link'] %>\n\t\t\t\t\t<\/div>\n\t\t\t\t\t<div class=\"menu_bubble_cancelable\"  style=\"<%= command['type'] == 'farm_attack' ? 'top: -1px' : '' %>\">\n\t\t\t\t\t    <% if( !command['incoming'] && command['cancelable']){ %>\n\t\t\t\t\t\t<a  class=\"game_arrow_delete\" href=\"#\" onclick=\"MenuBubbleMovement.cancelCommand(<%= command['id'] %>);return false;\"><\/a>\n\t\t\t\t\t\t<% } %>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<% } %>\n\n\t<% if (spying && spying.length == undefined){ %>\n\t<% nothing = false;%>\n\t\t<ul id=\"spy_movements\" style=\"position:relative;\">\n\t\t\t<% for(var spy_id in spying){\n\t\t\t    if(typeof parseInt(spy_id) != 'number')continue;\n\t\t\t    var espionage = spying[spy_id];\n\t\t\t%>\n\t\t\t\t<li id=\"spy_movement_<%= spy_id %>\" class=\"menu_bubble_entry\">\n\n\t\t\t\t\t<div class=\"spy_movements_arrow\"><\/div>\n\t\t\t\t\t<img src=\"http:\/\/static.grepolis.com\/images\/game\/unit_overview\/spying.png\" alt=\"<%= 'Espionage' + ' ' + readableDate(new Date(espionage['arrival_at'] * 1E3)) %>\" style=\"float: left;\" \/>\n\t\t\t\t\t<div class=\"spy_movements_arrow\" style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_right.png)\"><\/div>\n\t\t\t\t\t<div class=\"unit_movements_time\" style=\"text-align:left;\">\n\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(espionage['arrival_eta'] * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\t<span>\n\t\t\t\t\t\t\t<%= espionage.town_link %>\n\t\t\t\t\t\t<\/span>\n\t\t\t\t\t<\/div>\n\t\t\t\t\t<div class=\"menu_bubble_cancelable\">\n\t\t\t\t\t    <% if(espionage['cancelable']){ %>\n\t\t\t\t\t\t\t<a  class=\"game_arrow_delete\" href=\"#\" onclick=\"MenuBubbleMovement.cancelEspionage(<%= spy_id %>);return false;\"><\/a>\n\t\t\t\t\t\t<% } %>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<% } %>\n\n\t\n\t<% if (colonization_commands && colonization_commands.length > 0){ %>\n\t<% nothing = false;%>\n\t\t<ul id=\"colonization_commands\" style=\"position:relative;\">\n\t\t\t<% for(var i=0;i< colonization_commands.length;i++){\n\t\t\t    var colonization_command = colonization_commands[i];\n\t\t\t%>\n\t\t\t\t<li class=\"menu_bubble_entry\">\n\t\t\t\t\t<div class=\"unit_movements_arrow\"><\/div>\n\t\t\t\t\t<img alt=\"<%= (colonization_command['colonization_finished_eta']) ? 'Colonization has begun' : 'The colony ship is on its way' %>\" src=\"http:\/\/static.grepolis.com\/images\/game\/unit_overview\/colonization.png\" style=\"float: left;\" \/>\n\t\t\t\t\t<div class=\"unit_movements_arrow\" style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_right.png)\"><\/div>\n\t\t\t\t\t<div class=\"unit_movements_time\" style=\"text-align:left;\">\n\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(colonization_command['arrival_eta'] * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\tCity foundation\t\t\t\t\t<\/div>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<% } %>\n\n\n\t<% if(revolts.count > 0){ %>\n\t<% nothing = false;%>\n\t\t<ul id=\"revolts_in_current_town\">\n\t\t\t<% for(var key in revolts.in_current_town){\n\t\t\t    if(!revolts.in_current_town.hasOwnProperty(key))continue;\n\t\t\t    var revolts_in_current_town = revolts.in_current_town[key];\n\t\t\t%>\n\t\t\t    <% for(var j=0;j< revolts_in_current_town.length;j++){\n\t\t\t\t    var revolt = revolts_in_current_town[j];\n\t\t\t\t%>\n\t\t\t\t\t<% var timestamp_index = ('arising' == key) ? 'started_eta' : 'finished_eta'; %>\n\t\t\t\t\t<li class=\"<%= key %> menu_bubble_entry\">\n\t\t\t\t\t\t<img class=\"command_type\" alt=\"\" src=\"<%= Game.img() %>\/game\/unit_overview\/revolt_<%= key %>.png\" style=\"float: left;\" \/>\n\t\t\t\t\t\t<div class=\"<%= key %>\" style=\"position:absolute;left:55px;\">\n\t\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(revolt[timestamp_index] * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\t\t<%= revolt['town_link'] %>\n\t\t\t\t\t\t<\/div>\n\t\t\t\t\t<\/li>\n\t\t\t\t<% } %>\n\t\t\t<% } %>\n\t\t<\/ul>\n\n\t\t<ul id=\"revolts_beyond\">\n\n\t\t    <% for(var key in revolts.beyond){\n\t\t\t    if(!revolts.beyond.hasOwnProperty(key))continue;\n\t\t\t    var revolts_beyond = revolts.beyond[key];\n\t\t\t%>\n\t\t\t    <% for(var j=0;j< revolts_beyond.length;j++){\n\t\t\t\t    var revolt = revolts_beyond[j];\n\t\t\t\t%>\n\t\t\t\t\t<% var timestamp_index = ('arising' == key) ? 'started_eta' : 'finished_eta'; %>\n\t\t\t\t\t<li class=\"<%= key %> menu_bubble_entry\">\n\t\t\t\t\t\t<img class=\"command_type\" alt=\"\" src=\"<%= Game.img() %>\/game\/unit_overview\/revolt_<%= key %>.png\" style=\"float: left;\" \/>\n\t\t\t\t\t\t<div class=\"<%= key %>\" style=\"position:absolute;left:55px;\">\n\t\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(revolt[timestamp_index] * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\t\t<%= revolt['town_link'] %>\n\t\t\t\t\t\t<\/div>\n\t\t\t\t\t<\/li>\n\t\t\t    <% } %>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t\t\n\t<% } %>\n\n\t<% if (conqueror_units && conqueror_units.length > 0){ %>\n\t<% nothing = false;%>\n\t\t<div id=\"conqueror_units\">\n\t\t\t <% for(var key in conqueror_units){\n\t\t\t    if(!conqueror_units.hasOwnProperty(key))continue;\n\t\t\t    var units = conqueror_units[key];\n\t\t\t%>\n\t\t\t\t<div>\n\t\t\t\t\t<a href=\"#\" onclick=\"Layout.wnd.Create(Layout.wnd.TYPE_CONQUEROR, '<%= 'Conquest information' %>', {}, <%=units['id'] %>, <%=units['town_id']%>);\">\n\t\t\t\t\t<img alt=\"\" src=\"http:\/\/static.grepolis.com\/images\/game\/unit_overview\/conqueror.png\" style=\"float: left;margin-right:17px;\" \/>\n\t\t\t\t\t<\/a>\n\t\t\t\t\t<div class=\"unit_movements_time\">\n\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(units.conquest_finished_at * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\t<%= units['town_link'] %>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/div>\n\t\t\t<% } %>\n\t\t<\/div>\n\t<% } %>\n\n\n\t<% if(nothing){ %>\n\t    No movements\t<% } %>\n<\/div>\n\n\t\t\t    <\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box bottom left\">\n\t\t<div class=\"box bottom right\">\n\t\t\t<div class=\"box bottom center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n<script type=\"text\/javascript\">\n\tMenuBubbleMovement.initPopups();\n\tMenuBubbleMovement.startCountdown();\n<\/script>\n",
+                        "trade": "<script type=\"text\/javascript\">\n\t$(document).ready(function() {\n\t\tMenuBubbleTrade.startCountdown();\n\t});\n<\/script>\n<div class=\"box top left\">\n\t\t<div class=\"box top right\">\n\t\t\t<div class=\"box top center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box middle left\">\n\t\t<div class=\"box middle right\">\n\t\t\t<div class=\"box middle center\" style=\"white-space: nowrap;\">\n<div class=\"tab_content tab_content_scrollable menu_bubble\">\n\t<% if (trades && trades.length > 0){ %>\n\t\t<ul id=\"trades\" style=\"position:relative;\">\n\t\t\t<% for(var i=0;i< trades.length;i++){\n\t\t\t    var trade = trades[i];\n\t\t\t    var trade_img = 'http:\/\/static.grepolis.com\/images\/game\/unit_overview\/trade.png';\n\t\t\t    if(trade.hasOwnProperty('wonder_type')){\n\t\t\t\ttrade_img = Game.img() + '\/game\/wonders\/icon_' + trade.wonder_type + '.png';\n\t\t\t    }\n\t\t\t%>\n\t\t\t\t<li id=\"trade_<%= trade['id'] %>\" class=\"menu_bubble_entry\">\n\n\t\t\t\t\t<div class=\"unit_movements_arrow\" <%= trade['return'] ? 'style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_left.png)\"' : '' %>><\/div>\n\t\t\t\t\t<img alt=\"\" src=\"<%= trade_img %>\" style=\"float: left;\" \/>\n\t\t\t\t\t<div class=\"unit_movements_arrow\" <%= !trade['return'] ? 'style=\"background-image: url(http:\/\/static.grepolis.com\/images\/game\/unit_overview\/arrow_right.png)\"' : '' %>><\/div>\n\t\t\t\t\t<div class=\"unit_movements_time\" style=\"text-align:left;\">\n\t\t\t\t\t\t<span class=\"eta\"><%= readableDate(new Date(trade['seconds_left'] * 1E3)) %><\/span><br \/>\n\t\t\t\t\t\t<%= trade['town_link'] %>\n\t\t\t\t\t<\/div>\n\t\t\t\t\t<div class=\"menu_bubble_cancelable\">\n\t\t\t\t\t   <% if(trade['cancelable']){ %>\n\t\t\t\t\t\t\t<a class=\"game_arrow_delete\" href=\"#\" onclick=\"MenuBubbleTrade.cancelTrade(<%= trade['id'] %>);return false;\"><\/a>\n\t\t\t\t\t\t<% } %>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<% }else{ %>\n\t    No trade\t<% } %>\n<\/div>\n\t\t\t    <\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box bottom left\">\n\t\t<div class=\"box bottom right\">\n\t\t\t<div class=\"box bottom center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n\n",
+                        "troops": "<script type=\"text\/javascript\">\n\t$(document).ready(function() {\n\t\tMenuBubbleOrders.startCountdown();\n\t});\n<\/script>\n<div class=\"box top left\">\n\t\t<div class=\"box top right\">\n\t\t\t<div class=\"box top center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box middle left\">\n\t\t<div class=\"box middle right\">\n\t\t\t<div class=\"box middle center\" style=\"white-space: nowrap;\">\n<div class=\"tab_content tab_content_scrollable menu_bubble\">\n    \n\t<% if (orders && orders.length > 0){%>\n\t\t<ul id=\"orders\" style=\"margin-left:5px;position:relative;\">\n\t\t\t<% for(var i=0;i< orders.length;i++){\n\t\t\t    var order = orders[i];\n\t\t\t%>\n\t\t\t\t<li class=\"menu_bubble_entry troops\" id=\"order_<%= order['type']%><%= order['to_be_completed_at'] %>\">\n\t\t\t\t\t<div class=\"menu_bubble_orders_left\"><%= order['units_left'] %><\/div>\n\t\t\t\t\t<div class=\"unit_movements_arrow menu_bubble_troops_bg\" style=\"background-image: url(<%= Game.img() %>\/game\/units\/<%= order['unit_id'] %>_40x40.png);\"><\/div>\n\t\t\t\t\t<span class=\"eta menu_bubble_troops\"><%= readableSeconds(Math.max(order['seconds_left'], 0)) %><\/span>\n\t\t\t\t\t\n\t\t\t\t\t<% if(order['refund'] != undefined){ %>\n\t\t\t\t\t<div class=\"menu_bubble_cancelable orders\">\n\t\t\t\t\t\t<a class=\"game_arrow_delete\" href=\"#\" onclick=\"MenuBubbleOrders.cancelOrder('<%= order['type'] %>');return false;\"><\/a>\n\t\t\t\t\t<\/div>\n\t\t\t\t\t<% } %>\n\t\t\t\t<\/li>\n\t\t\t<% } %>\n\t\t<\/ul>\n\t<% }else{ %>\n\t    No recruiting\t<% } %>\n<\/div>\n\n\t\t\t    <\/div>\n\t\t<\/div>\n\t<\/div>\n\t<div class=\"box bottom left\">\n\t\t<div class=\"box bottom right\">\n\t\t\t<div class=\"box bottom center\"><\/div>\n\t\t<\/div>\n\t<\/div>\n\n"
+                    }
+                });
+                GameData.add({
+                    'DailyRewardTemplate': "<% var pos = step \/ 5 * 100; %><div id=\"daily_reward\"><p class=\"reward_text\"><%= description %><\/p>\t\r\t<div class=\"game_border\">\r\t\t<div class=\"game_border_top\"><\/div>\r\t\t<div class=\"game_border_bottom\"><\/div>\r\t\t<div class=\"game_border_left\"><\/div>\r\t\t<div class=\"game_border_right\"><\/div>\r\t\t<div class=\"game_border_corner corner1\"><\/div>\r\t\t<div class=\"game_border_corner corner2\"><\/div>\r\t\t<div class=\"game_border_corner corner3\"><\/div>\r\t\t<div class=\"game_border_corner corner4\"><\/div>\r\t\t\r\t\t\t<div id=\"daily_reward_rewards\" class=\"clearfix game_body\">\t\t\t<% if(data.resources){ %>\t\t\t\t<div class=\"reward_icons bold\">\t\t\t\t\t<div class=\"res_large wood\">\t\t\t\t\t\t<span><%= data.resources.wood %><\/span>\t\t\t\t\t<\/div>\t\t\t\t\t<div class=\"res_large stone\">\t\t\t\t\t\t<span><%= data.resources.stone %><\/span>\t\t\t\t\t<\/div>\t\t\t\t\t<div class=\"res_large iron\">\t\t\t\t\t\t<span><%= data.resources.iron %><\/span>\t\t\t\t\t<\/div>\t\t\t\t\t<a class=\"confirm resources\" href=\"#\"><\/a>\t\t\t\t<\/div>\t\t\t<% } %>\t\t\t<% if(data.resources && data.favor){ %>\t\t\t\t<div class=\"reward_icons bold\">or<\/div>\t\t\t<% } %>\t\t\t<% if(data.favor){ %>\t\t\t\t<div class=\"reward_icons bold\">\t\t\t\t\t<div class=\"res_large favor\">\t\t\t\t\t\t<span><%= data.favor %><\/span>\t\t\t\t\t<\/div>\t\t\t\t\t<a class=\"confirm favor\" href=\"#\"><\/a>\t\t\t\t<\/div>\t\t\t<% } %>\t\t\t<div id=\"daily_reward_level_indicator\" style=\"left:<%= pos %>%\"><\/div>\t\t<\/div>\t\r\t\t<\/div>\r\t\t<div id=\"daily_reward_progress_wrapper\">\t\t<div id=\"daily_reward_progress_bar\">\t\t\t<div id=\"daily_reward_progress\" style=\"width:<%= pos %>%\"><\/div>\t\t<\/div>\t\t<div id=\"daily_reward_progress_labels\" class=\"bold\">\t\t\t\t\t\t\t<div style=\"left:0%\">0<\/div>\t\t\t\t\t\t\t<div style=\"left:20%\">1<\/div>\t\t\t\t\t\t\t<div style=\"left:40%\">2<\/div>\t\t\t\t\t\t\t<div style=\"left:60%\">3<\/div>\t\t\t\t\t\t\t<div style=\"left:80%\">4<\/div>\t\t\t\t\t\t\t<div style=\"left:100%\">5<\/div>\t\t\t\t\t<\/div>\t<\/div><\/div>"
+                });
+
+                Layout.updateBar(TempBarData);
+                TempBarData = null;
+
+                // display age of wonder hint if reached
+                if (Layout.player_hint_settings.age_of_wonder_hint) {}
+
+                // display build time reduction campaign hint
+                if (Layout.player_hint_settings.build_time_reduction_hint) {}
+
+                if (Game.gfx_level > 0) FarmTownBars.initialize();
+
+                1;
+
+
+
+                if (window.location.hash == '#settings') {
+                    Layout.wnd.Create(Layout.wnd.TYPE_PLAYER_SETTINGS, _('Einstellungen'));
+                    window.location.hash = '';
+                }
+
+                //AB Test Example Code
+                //debug('Group A');
+                //debug('Group B');
+            }
+            //]]>
+        </script>
+        <div id="box">
+            <div id="header">
+                <div id="top_bar">
+                    <div id="town_control_wrapper">
+                        <div id="town_controls">
+                            <a id="city_index" class="town_control" href="#"></a>
+                            <a id="prev_city" class="town_control" href="#"></a>
+                            <a id="next_city" class="town_control" href="#"></a>
+                            <a id="memo_icon" class="town_control" href="#"></a>
+                            <div id="city_overview" class="town_control">
+                                <a id="city_overview_link" href="#"></a>
+                                <div id="overviews_link_hover_menu">
+                                    <div class="box top left">
+                                        <div class="box top right">
+                                            <div class="box top center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box middle left">
+                                        <div class="box middle right">
+                                            <div class="box middle center">
+                                                <a id="trade_overview_icon" name="trade_overview" href="#">Trade</a>
+                                                <a id="command_overview_icon" name="command_overview" href="#">Commands</a>
+                                                <a id="recruit_overview_icon" name="recruit_overview" href="#">Recruiting</a>
+                                                <a id="unit_overview_icon" name="unit_overview" href="#">Troop overview</a>
+                                                <a id="outer_unit_overview_icon" name="outer_units" href="#">Troops outside</a>
+                                                <a id="building_overview_icon" name="building_overview" href="#">Buildings</a>
+                                                <a id="culture_overview_icon" name="culture_overview" href="#">Culture</a>
+                                                <a id="gods_overview_icon" name="gods_overview" href="#">Gods</a>
+                                                <a id="hides_overview_icon" name="hides_overview" href="#">Caves</a>
+                                                <a id="town_group_overview_icon" name="town_group_overview" href="#">City groups</a>
+                                                <a id="towns_overview_icon" name="towns_overview" href="#">City list</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box bottom left">
+                                        <div class="box bottom right">
+                                            <div class="box bottom center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="town_name" class="bold" action="javascript:void(0)">
+                                <a id="town_name_link" href="#">
+                                66-06-3 Axioleas								</a>
+                                <div id="town_name_span_input">
+                                    <input type="text" id="town_name_input" value="66-06-3 Axioleas" maxlength="20"
+                                    />
+                                    <a href="#" id="save_town_name"></a>
+                                </div>
+                                <div class="town_powers">
+                                </div>
+                            </form>
+                            <div id="town_list">
+                            </div>
+                        </div>
+                    </div>
+                    <ul id="toolbar" class="toolbar">
+                        <li>
+                            <a href="javascript:Layout.buildingWindow.open(&#039;main&#039;)">
+                            <img  src="http://static.grepolis.com/images/game/toolbar/main.png" alt="" width="16" height="16" />										Senate				</a>
+                        </li>
+                        <li>
+                            <a href="javascript:Layout.buildingWindow.open(&#039;barracks&#039;)">
+                            <img  src="http://static.grepolis.com/images/game/toolbar/barracks.png" alt="" width="16" height="16" />										Barracks				</a>
+                        </li>
+                        <li>
+                            <a href="javascript:Layout.buildingWindow.open(&#039;docks&#039;)">
+                            <img  src="http://static.grepolis.com/images/game/toolbar/docks.png" alt="" width="16" height="16" />										Harbor				</a>
+                        </li>
+                        <li>
+                            <a href="javascript:Layout.buildingWindow.open(&#039;place&#039;)">
+                            <img  src="http://static.grepolis.com/images/game/toolbar/place.png" alt="" width="16" height="16" />										Agora				</a>
+                        </li>
+                        <li class="toolbar_toggle_menu">
+                            <a href="#">Miscellaneous</a>
+                            <div id="quickbar_submenu">
+                                <div class="submenu_left">
+                                </div>
+                                <div class="submenu_right">
+                                </div>
+                                <div class="submenu_bottom_alpha">
+                                    <div class="submenu_bottom">
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:Layout.buildingWindow.open(&#039;temple&#039;)">Temple</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:Layout.buildingWindow.open(&#039;academy&#039;)">Academy</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:Layout.buildingWindow.open(&#039;market&#039;)">Market place</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:Layout.buildingWindow.open(&#039;hide&#039;)">Cave</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li style="width:16px" id="quickbar_properties">
+                            <a href="javascript:void(0)" onclick="Layout.wnd.Create(Layout.wnd.TYPE_PLAYER_SETTINGS,'Settings',{},'quickbar');"><img  src="http://static.grepolis.com/images/game/layout/toolbar_edit.png" alt="Edit quick bar" /></a>
+                        </li>
+                    </ul>
+                    <div id="res_wrapper">
+                        <div id="res" class="bold ">
+                            <a href="#" id="wood">
+                            <span class="wood_img"><span class="res_rare"></span></span><span id="wood_count">14915</span></a>
+                            <a href="#" id="stone">
+                            <span class="stone_img"><span class="res_plenty"></span></span><span id="stone_count">15973</span></a>
+                            <a href="#" id="iron">
+                            <span class="iron_img"></span><span id="iron_count">16929</span></a>
+                            <a href="#" id="pop">
+                            <span class="pop_img"></span><span id="pop_current">1054</span></a>
+                            <a href="#" id="favor">
+                            <span id="favor_text">454</span></a>
+                            <div id="god_mini" class="god_mini poseidon">
+                            </div>
+                        </div>
+                        <a id="toggle_powers" href="#"></a>
+                        <div id="units_sidebar">
+                            <div id="sidebar_top">
+                                <div id="map_duration" class="layout_time">
+                                </div>
+                            </div>
+                            <div id="powers_wrapper" class="sidebar_unit_wrapper">
+                                <div id="powers_container" class="sidebar_unit_container clearfix">
+                                </div>
+                            </div>
+                            <div id="ground_wrapper" class="sidebar_unit_wrapper">
+                                <div id="ground_container" class="sidebar_unit_container clearfix">
+                                </div>
+                                <a href="#" name="ground" class="toggle_units"></a>
+                            </div>
+                            <div id="sea_wrapper" class="sidebar_unit_wrapper">
+                                <div id="sea_container" class="sidebar_unit_container clearfix">
+                                </div>
+                                <a href="#" name="sea" class="toggle_units"></a>
+                            </div>
+                            <div id="militia_wrapper" class="sidebar_unit_wrapper">
+                                <div id="militia_container" class="sidebar_unit_container clearfix">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="main_area">
+                <div id="content">
+                    <div id="loader">
+                        <div id="loader_content">
+                            <span id="loader_step_buildings" style="color: #FF0000;">
+                                [GameData - Buildings]
+                            </span>
+                            <span id="loader_step_units" style="color: #FF0000;">
+                                [GameData - Units]
+                            </span>
+                            <span id="loader_step_powers" style="color: #FF0000;">
+                                [GameData - Powers]
+                            </span>
+                            <span id="loader_step_map" style="color: #FF0000;">
+                                [GameData - Map]
+                            </span>
+                            <span id="loader_step_bar" style="color: #FF0000;">
+                                [GameData - Current Town]
+                            </span>
+                            <div id="load_progress">
+                                <div id="load_progress_bar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sidebar">
+                <div id="picomap_wrapper">
+                    <div id="picomap_canvas">
+                        <div id="picomap">
+                            <div id="picomap_islands_layer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="map_tools">
+                        <input id="xcoord" type="text" size="3" maxlength="3" tabindex="1000" />
+                        <input id="ycoord" type="text" size="3" maxlength="3" tabindex="1001" />
+                        <a id="map_jump_button" href="#"></a>
+                        <a id="toggle_color_table" class="color_table" href="#"></a>
+                        <a id="map_jump_to_current_town_button" href="#"></a>
+                    </div>
+                    <div id="sea_id">
+                    </div>
+                    <a id="map_zoom" href="#"></a>
+                </div>
+                <div id="links">
+                    <ul>
+                        <li id="link_index">
+                            <a href="#townindex">City overview</a>
+                        </li>
+                        <li id="link_messages">
+                            <a href="#messages">Messages							    <span id="new_messages" class="no_new_messages"></span>
+                            </a>
+                        </li>
+                        <li id="link_report">
+                            <a href="#reports">Reports							    <span id="new_reports" style="display:inline-block;background-image: url(http://static.grepolis.com/images/game/report/new.png);" class="no_new_messages"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#alliance">Alliance</a>
+                        </li>
+                        <li id="link_alliance_forum">
+                            <a href="#allianceforum">Alliance forum								<span id="new_post" class="no_new_post"></span>
+                            </a>
+                        </li>
+                        <li id="link_planer" style="display:none">
+                            <a href="#attackplaner">Attack planner</a>
+                        </li>
+                        <li>
+                            <a href="#settings">Settings</a>
+                        </li>
+                        <li>
+                            <a href="#profile">Profile</a>
+                        </li>
+                        <li id="link_ranking">
+                            <a href="#">Ranking (166.)</a>
+                        </li>
+                        <li>
+                            <a href="http://wiki.en.grepolis.com" target="_blank">Help</a>
+                        </li>
+                        <li>
+                            <a href="http://forum.beta.grepolis.com" target="_blank">Forum</a>
+                        </li>
+                        <li>
+                            <a href="#premium">Premium</a>
+                        </li>
+                        <li>
+                            <a href="#chat" id="chat_link">Chat</a>
+                        </li>
+                        <li>
+                            <a href="#logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="server_time_wrapper">
+                    <div id="server_time" class="layout_time">
+                    </div>
+                </div>
+                <div id="advisers">
+                    <a href="#" onclick="Layout.wnd.Create(Layout.wnd.TYPE_PREMIUM, 'Premium', {});">
+                    <span id="curator" class="adviser curator_info"></span>
+                    <span id="trader" class="adviser trader_info"></span>
+                    <span id="priest" class="adviser passive priest_info"></span>
+                    <span id="commander" class="adviser passive commander_info"></span>
+                    <span id="captain" class="adviser passive captain_info"></span>
+                    </a>
+                </div>
+            </div>
+            <div id="incomming_attack_count">
+                <div id="incomming_attack_img">
+                </div>
+                <div id="incomming_attack_count_text">
+                </div>
+            </div>
+            <div id="notification_area">
+                <a id="delete_all_notifications" href="#"></a>
+                <div id="hidden_notification_count">
+                </div>
+            </div>
+            <div id="gpwindow_area_left">
+                <div id="gpwindow_area_right">
+                    <div id="gpwindow_area">
+                        <div id="close_all_windows_wrapper" class="left">
+                            <div class="right">
+                                <div class="center">
+                                    <a id="close_all_windows" href="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <a href="#" class="report_translation">
+            <span>Incorrect translation? Click here!</span>
+            </a>
+            <script type="text/html" id="report_translation_dialog_tmpl">
+            /*<![CDATA[*/
+            <div id="new_window_top"></div>
+            <div id="new_window_left"></div>
+            <div id="new_window_right"></div>
+            <div id="new_window_bottom"></div>
+            <div id="new_window_content">
+            <div class="new_window_content_content"></div>
+            </div>
+            /*]]>*/
+            </script>
+            -->
+        </div>
+        <table class="popup" id="popup_div" cellpadding="0" cellspacing="0">
+            <tr class="popup_top">
+                <td class="popup_top_left">
+                </td>
+                <td class="popup_top_middle">
+                </td>
+                <td class="popup_top_right">
+                </td>
+            </tr>
+            <tr>
+                <td class="popup_middle_left">
+                </td>
+                <td class="popup_middle_middle" id="popup_content">
+                </td>
+                <td class="popup_middle_right">
+                </td>
+            </tr>
+            <tr class="popup_bottom">
+                <td class="popup_bottom_left">
+                </td>
+                <td class="popup_bottom_middle">
+                </td>
+                <td class="popup_bottom_right">
+                </td>
+            </tr>
+        </table>
+        <div id="bbcode_popups">
+            <div class="bb_sizes" style="display:none; clear:both">
+                <table class="bb_popup" class="bb_popup_div" cellpadding="0" cellspacing="0">
+                    <tr class="bb_popup_top">
+                        <td class="bb_popup_top_left">
+                        </td>
+                        <td class="bb_popup_top_middle">
+                        </td>
+                        <td class="bb_popup_top_right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bb_popup_middle_left">
+                        </td>
+                        <td class="bb_popup_middle_middle">
+                            <ul>
+                                <li>
+                                    <a href="#" id="s6">&raquo; Very small</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="s7">&raquo; Small</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="s9">&raquo; Normal</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="s12">&raquo; Large</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="s20">&raquo; Gigantic</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="bb_popup_middle_right">
+                        </td>
+                    </tr>
+                    <tr class="bb_popup_bottom">
+                        <td class="bb_popup_bottom_left">
+                        </td>
+                        <td class="bb_popup_bottom_middle">
+                        </td>
+                        <td class="bb_popup_bottom_right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bb_color_picker" style="display: none;">
+                <table class="bb_popup" class="bb_popup_div" cellpadding="0" cellspacing="0">
+                    <tr class="bb_popup_top">
+                        <td class="bb_popup_top_left">
+                        </td>
+                        <td class="bb_popup_top_middle">
+                        </td>
+                        <td class="bb_popup_top_right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bb_popup_middle_left">
+                        </td>
+                        <td class="bb_popup_middle_middle">
+                            <div class="bb_color_picker_colors">
+                                <div class="bb_color_picker_c0" style="background:#f00">
+                                </div>
+                                <div class="bb_color_picker_c1" style="background:#ff0">
+                                </div>
+                                <div class="bb_color_picker_c2" style="background:#0f0">
+                                </div>
+                                <div class="bb_color_picker_c3" style="background:#0ff">
+                                </div>
+                                <div class="bb_color_picker_c4" style="background:#00f">
+                                </div>
+                                <div class="bb_color_picker_c5" style="background:#f0f">
+                                </div>
+                            </div>
+                            <div class="bb_color_picker_tones">
+                                <div class="bb_color_picker_00">
+                                </div>
+                                <div class="bb_color_picker_01">
+                                </div>
+                                <div class="bb_color_picker_02">
+                                </div>
+                                <div class="bb_color_picker_03">
+                                </div>
+                                <div class="bb_color_picker_04">
+                                </div>
+                                <div class="bb_color_picker_05">
+                                </div>
+                                <br />
+                                <div class="bb_color_picker_10">
+                                </div>
+                                <div class="bb_color_picker_11">
+                                </div>
+                                <div class="bb_color_picker_12">
+                                </div>
+                                <div class="bb_color_picker_13">
+                                </div>
+                                <div class="bb_color_picker_14">
+                                </div>
+                                <div class="bb_color_picker_15">
+                                </div>
+                                <br />
+                                <div class="bb_color_picker_20">
+                                </div>
+                                <div class="bb_color_picker_21">
+                                </div>
+                                <div class="bb_color_picker_22">
+                                </div>
+                                <div class="bb_color_picker_23">
+                                </div>
+                                <div class="bb_color_picker_24">
+                                </div>
+                                <div class="bb_color_picker_25">
+                                </div>
+                                <br />
+                                <div class="bb_color_picker_30">
+                                </div>
+                                <div class="bb_color_picker_31">
+                                </div>
+                                <div class="bb_color_picker_32">
+                                </div>
+                                <div class="bb_color_picker_33">
+                                </div>
+                                <div class="bb_color_picker_34">
+                                </div>
+                                <div class="bb_color_picker_35">
+                                </div>
+                                <br />
+                                <div class="bb_color_picker_40">
+                                </div>
+                                <div class="bb_color_picker_41">
+                                </div>
+                                <div class="bb_color_picker_42">
+                                </div>
+                                <div class="bb_color_picker_43">
+                                </div>
+                                <div class="bb_color_picker_44">
+                                </div>
+                                <div class="bb_color_picker_45">
+                                </div>
+                                <br />
+                                <div class="bb_color_picker_50">
+                                </div>
+                                <div class="bb_color_picker_51">
+                                </div>
+                                <div class="bb_color_picker_52">
+                                </div>
+                                <div class="bb_color_picker_53">
+                                </div>
+                                <div class="bb_color_picker_54">
+                                </div>
+                                <div class="bb_color_picker_55">
+                                </div>
+                                <br />
+                            </div>
+                            <div class="bb_color_picker_preview">
+                                Text
+                            </div>
+                            <span class="grepo_input">
+                                <span class="left">
+                                    <span class="right">
+                                        <input type="text" class="bb_color_picker_tx" style="width:50px;" maxlength="6"
+                                        />
+                                    </span>
+                                </span>
+                            </span>
+                            <a href="#" class="confirm"></a>
+                            <a href="#" class="cancel"></a>
+                        </td>
+                        <td class="bb_popup_middle_right">
+                        </td>
+                    </tr>
+                    <tr class="bb_popup_bottom">
+                        <td class="bb_popup_bottom_left">
+                        </td>
+                        <td class="bb_popup_bottom_middle">
+                        </td>
+                        <td class="bb_popup_bottom_right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bb_town_chooser" style="display:none; clear:both;">
+                <table class="bb_popup" class="bb_popup_div" cellpadding="0" cellspacing="0">
+                    <tr class="bb_popup_top">
+                        <td class="bb_popup_top_left">
+                        </td>
+                        <td class="bb_popup_top_middle">
+                        </td>
+                        <td class="bb_popup_top_right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bb_popup_middle_left">
+                        </td>
+                        <td class="bb_popup_middle_middle">
+                            <label for="bb_town_chooser_town_input">
+                                Name of the city
+                            </label>
+                            <input type="text" class="bb_town_chooser_town_input" />
+                        </td>
+                        <td class="bb_popup_middle_right">
+                        </td>
+                    </tr>
+                    <tr class="bb_popup_bottom">
+                        <td class="bb_popup_bottom_left">
+                        </td>
+                        <td class="bb_popup_bottom_middle">
+                        </td>
+                        <td class="bb_popup_bottom_right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bb_report_chooser" style="display:none; clear:both;">
+                <table class="bb_popup" class="bb_popup_div" cellpadding="0" cellspacing="0">
+                    <tr class="bb_popup_top">
+                        <td class="bb_popup_top_left">
+                        </td>
+                        <td class="bb_popup_top_middle">
+                        </td>
+                        <td class="bb_popup_top_right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bb_popup_middle_left">
+                        </td>
+                        <td class="bb_popup_middle_middle">
+                            <label for="bb_report_chooser_report_input">
+                                Title of the published report
+                            </label>
+                            <input type="text" class="bb_report_chooser_report_input" />
+                        </td>
+                        <td class="bb_popup_middle_right">
+                        </td>
+                    </tr>
+                    <tr class="bb_popup_bottom">
+                        <td class="bb_popup_bottom_left">
+                        </td>
+                        <td class="bb_popup_bottom_middle">
+                        </td>
+                        <td class="bb_popup_bottom_right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bb_award_chooser" style="display:none; clear:both;">
+                <table class="bb_popup" class="bb_popup_div" cellpadding="0" cellspacing="0">
+                    <tr class="bb_popup_top">
+                        <td class="bb_popup_top_left">
+                        </td>
+                        <td class="bb_popup_top_middle">
+                        </td>
+                        <td class="bb_popup_top_right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bb_popup_middle_left">
+                        </td>
+                        <td class="bb_popup_middle_middle">
+                            <select name="type" class="bb_award_chooser_award_type">
+                                <option value="">
+                                    - please select -
+                                </option>
+                                <option value="all">
+                                    All awards
+                                </option>
+                                <option value="world">
+                                    Awards in one world
+                                </option>
+                                <option value="award">
+                                    A particular award
+                                </option>
+                            </select>
+                            <select name="world" class="bb_award_chooser_award_world" style="display:none">
+                            </select>
+                            <select name="award" class="bb_award_chooser_award_award" style="display:none">
+                            </select>
+                        </td>
+                        <td class="bb_popup_middle_right">
+                        </td>
+                    </tr>
+                    <tr class="bb_popup_bottom">
+                        <td class="bb_popup_bottom_left">
+                        </td>
+                        <td class="bb_popup_bottom_middle">
+                        </td>
+                        <td class="bb_popup_bottom_right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <img id="version" src="/version_img.php" style="display: none" />
+        <!-- google analytics: error - tracking code is empty //-->
+        <!-- Google Code for Players in Grepolis Remarketing List -->
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            var google_conversion_id = 1026023037;
+            var google_conversion_language = "en";
+            var google_conversion_format = "3";
+            var google_conversion_color = "666666";
+            var google_conversion_label = "3jsJCKun7QEQ_byf6QM";
+            var google_conversion_value = 0; /* ]]> */
+        </script>
+        <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+        </script>
+        <noscript>
+            <div style="display:inline;">
+                <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1026023037/?label=3jsJCKun7QEQ_byf6QM&amp;guid=ON&amp;script=0"
+                />
+            </div>
+        </noscript>
+    </body>
+
+</html>
