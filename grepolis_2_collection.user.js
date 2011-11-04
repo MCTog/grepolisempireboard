@@ -1,48 +1,48 @@
 // ==UserScript==
-// @name      Grepolis 2 Collection
-// @namespace   .
-// @description   Grepolis 2 Collection special version (compilation of scripts of many authors) german only
-// @licence     Creative Commons (http://creativecommons.org/licenses/by-sa/3.0/)
-// @icon      http://www.imgbox.de/users/Peety/grepolis/IconGrepoCollection.png
-// @resource    icongrepocoll   http://www.imgbox.de/users/Peety/grepolis/icongrepocoll.png
-// @resource    iconAtt       http://www.imgbox.de/users/Peety/grepolis/iconAtt.png
-// @resource    iconDef       http://www.imgbox.de/users/Peety/grepolis/iconDef.png
-// @resource    iconWd        http://www.imgbox.de/users/Peety/grepolis/iconWood.png
-// @resource    iconStn       http://www.imgbox.de/users/Peety/grepolis/iconStone.png
-// @resource    iconSil       http://www.imgbox.de/users/Peety/grepolis/iconSilver.png
-// @resource    iconFavor     http://www.imgbox.de/users/Peety/grepolis/iconFavor.png
-// @resource    menubg2       http://www.imgbox.de/users/Peety/grepolis/menubg2.png
-// @resource    town_list_top2    http://www.imgbox.de/users/Peety/grepolis/town_list_top2.png
-// @resource    town_list_middle2 http://www.imgbox.de/users/Peety/grepolis/town_list_middle2.png
-// @resource    town_list_bottom2 http://www.imgbox.de/users/Peety/grepolis/town_list_bottom2.png
-// @resource    pbar_hide     http://www.imgbox.de/users/Peety/grepolis/progressbar_hide.png
-// @resource    pbar_red      http://www.imgbox.de/users/Peety/grepolis/progressbar_red.png
-// @resource    pbar_orange     http://www.imgbox.de/users/Peety/grepolis/progressbar_orange.png
-// @resource    pbar_yellow     http://www.imgbox.de/users/Peety/grepolis/progressbar_yellow.png
-// @resource    pbar_green      http://www.imgbox.de/users/Peety/grepolis/progressbar_green.png
-// @resource    pbar_bgII     http://www.imgbox.de/users/Peety/grepolis/progressbar_bgII.png
-// @resource    crButtonL     http://www.imgbox.de/users/Peety/grepolis/crButtonL.png
-// @resource    crButtonR     http://www.imgbox.de/users/Peety/grepolis/crButtonR.png
-// @resource    bMsg        http://www.imgbox.de/users/Peety/grepolis/bMsg.png
-// @resource    uLink       http://www.imgbox.de/users/Peety/grepolis/uLink.png
-// @resource    booty       http://www.imgbox.de/users/Peety/grepolis/booty.png
-// @resource    mood_drop     http://www.imgbox.de/users/Peety/grepolis/mood_drop.png
-// @resource    strength      http://www.imgbox.de/users/Peety/grepolis/strength.png
-// @resource    strength_drop   http://www.imgbox.de/users/Peety/grepolis/strength_drop.png
-// @resource    strength_prev   http://www.imgbox.de/users/Peety/grepolis/strength_prev.png
-// @resource    strength_now    http://www.imgbox.de/users/Peety/grepolis/strength_now.png
-// @resource    strength_total    http://www.imgbox.de/users/Peety/grepolis/strength_total.png
-// @resource    ge_button     http://www.imgbox.de/users/Peety/grepolis/ge_button.png
-// @resource    ge_button2      http://www.imgbox.de/users/Peety/grepolis/ge_button2.png
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js
-// @exclude     http://forum.*.grepolis.*
-// @include     http://zz3.grepolis.*
+// @name			Grepolis 2 Collection
+// @namespace		.
+// @description		Grepolis 2 Collection special version (compilation of scripts of many authors) german only
+// @licence			Creative Commons (http://creativecommons.org/licenses/by-sa/3.0/)
+// @icon			http://www.imgbox.de/users/Peety/grepolis/IconGrepoCollection.png
+// @resource		icongrepocoll		http://www.imgbox.de/users/Peety/grepolis/icongrepocoll.png
+// @resource		iconAtt				http://www.imgbox.de/users/Peety/grepolis/iconAtt.png
+// @resource		iconDef				http://www.imgbox.de/users/Peety/grepolis/iconDef.png
+// @resource		iconWd				http://www.imgbox.de/users/Peety/grepolis/iconWood.png
+// @resource		iconStn				http://www.imgbox.de/users/Peety/grepolis/iconStone.png
+// @resource		iconSil				http://www.imgbox.de/users/Peety/grepolis/iconSilver.png
+// @resource		iconFavor			http://www.imgbox.de/users/Peety/grepolis/iconFavor.png
+// @resource		menubg2				http://www.imgbox.de/users/Peety/grepolis/menubg2.png
+// @resource		town_list_top2		http://www.imgbox.de/users/Peety/grepolis/town_list_top2.png
+// @resource		town_list_middle2	http://www.imgbox.de/users/Peety/grepolis/town_list_middle2.png
+// @resource		town_list_bottom2	http://www.imgbox.de/users/Peety/grepolis/town_list_bottom2.png
+// @resource		pbar_hide			http://www.imgbox.de/users/Peety/grepolis/progressbar_hide.png
+// @resource		pbar_red			http://www.imgbox.de/users/Peety/grepolis/progressbar_red.png
+// @resource		pbar_orange			http://www.imgbox.de/users/Peety/grepolis/progressbar_orange.png
+// @resource		pbar_yellow			http://www.imgbox.de/users/Peety/grepolis/progressbar_yellow.png
+// @resource		pbar_green			http://www.imgbox.de/users/Peety/grepolis/progressbar_green.png
+// @resource		pbar_bgII			http://www.imgbox.de/users/Peety/grepolis/progressbar_bgII.png
+// @resource		crButtonL			http://www.imgbox.de/users/Peety/grepolis/crButtonL.png
+// @resource		crButtonR			http://www.imgbox.de/users/Peety/grepolis/crButtonR.png
+// @resource		bMsg 				http://www.imgbox.de/users/Peety/grepolis/bMsg.png
+// @resource		uLink		 		http://www.imgbox.de/users/Peety/grepolis/uLink.png
+// @resource		booty				http://www.imgbox.de/users/Peety/grepolis/booty.png
+// @resource		mood_drop			http://www.imgbox.de/users/Peety/grepolis/mood_drop.png
+// @resource		strength			http://www.imgbox.de/users/Peety/grepolis/strength.png
+// @resource		strength_drop		http://www.imgbox.de/users/Peety/grepolis/strength_drop.png
+// @resource		strength_prev		http://www.imgbox.de/users/Peety/grepolis/strength_prev.png
+// @resource		strength_now		http://www.imgbox.de/users/Peety/grepolis/strength_now.png
+// @resource		strength_total		http://www.imgbox.de/users/Peety/grepolis/strength_total.png
+// @resource		ge_button			http://www.imgbox.de/users/Peety/grepolis/ge_button.png
+// @resource		ge_button2			http://www.imgbox.de/users/Peety/grepolis/ge_button2.png
+// @require			http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js
+// @exclude			http://forum.*.grepolis.*
+// @include			http://zz3.grepolis.*
 // @include     http://de21.grepolis.*
-// @exclude     http://de16.grepolis.*
-// @exclude     http://de17.grepolis.*
-// @exclude     http://de18.grepolis.*
+// @exclude			http://de16.grepolis.*
+// @exclude			http://de17.grepolis.*
+// @exclude			http://de18.grepolis.*
 // @exclude     http://de19.grepolis.*
-// @version     0.9.21
+// @version			0.9.21
 // ==/UserScript==
 
 
@@ -114,14 +114,14 @@ if (typeof unsafeWindow === 'object') {
 }
 var $ = uW.jQuery;
 var jsVoid = 'javaScript:void(0);';
-if (document.body == undefined) return;   // not ready?
-if (document.body == null) return;      // not ready?
+if (document.body == undefined) return; 	// not ready?
+if (document.body == null) return;			// not ready?
 GE.Server = /http\:\/\/(\w+)\.grepolis\..*/.exec( uW.document.URL );
 if (GE.Server == undefined) return;
 if (uW.GameData == undefined) return;
 if (uW.Game == undefined) return;
 GE.GameData = uW.GameData;
-GE.Game = uW.Game;
+GE.Game	= uW.Game;
 if (GE.Game.townId == undefined) { return; }
 GE.Controller = GE.Game.controller;
 if (GE.Game.action == undefined) { GE.Action = ""; } else { GE.Action = GE.Game.action; }
@@ -150,42 +150,42 @@ var Link2_Name = GM_getValue("Link2Name_"+ GE.Server[1], "");
 var Own_Link2 = GM_getValue("OwnLink2_"+ GE.Server[1], "");
 
 var pImage = {
-    'icongrepocoll'   : GM_getResourceURL('icongrepocoll'),
-    'iconWd'      : GM_getResourceURL('iconWd'),
-    'iconStn'     : GM_getResourceURL('iconStn'),
-    'iconSil'     : GM_getResourceURL('iconSil'),
-    'iconFavor'     : GM_getResourceURL('iconFavor'),
-    'iconAtt'     : GM_getResourceURL('iconAtt'),
-    'iconDef'     : GM_getResourceURL('iconDef'),
-    'menubg2'     : GM_getResourceURL('menubg2'),
-    'town_list_top2'  : GM_getResourceURL('town_list_top2'),
+    'icongrepocoll'		: GM_getResourceURL('icongrepocoll'),
+    'iconWd'			: GM_getResourceURL('iconWd'),
+    'iconStn'			: GM_getResourceURL('iconStn'),
+    'iconSil'			: GM_getResourceURL('iconSil'),
+    'iconFavor'			: GM_getResourceURL('iconFavor'),
+    'iconAtt'			: GM_getResourceURL('iconAtt'),
+    'iconDef'			: GM_getResourceURL('iconDef'),
+    'menubg2'			: GM_getResourceURL('menubg2'),
+    'town_list_top2' 	: GM_getResourceURL('town_list_top2'),
     'town_list_middle2' : GM_getResourceURL('town_list_middle2'),
     'town_list_bottom2' : GM_getResourceURL('town_list_bottom2'),
-    'pbar_hide'     : GM_getResourceURL('pbar_hide'),
-    'pbar_red'      : GM_getResourceURL('pbar_red'),
-    'pbar_orange'   : GM_getResourceURL('pbar_orange'),
-    'pbar_yellow'   : GM_getResourceURL('pbar_yellow'),
-    'pbar_green'    : GM_getResourceURL('pbar_green'),
-    'pbar_bgII'     : GM_getResourceURL('pbar_bgII'),
-    'crButtonL'     : GM_getResourceURL('crButtonL'),
-    'crButtonR'     : GM_getResourceURL('crButtonR'),
-    'bMsg'        : GM_getResourceURL('bMsg'),
-    'uLink'       : GM_getResourceURL('uLink'),
-    'booty'       : GM_getResourceURL('booty'),
-    'mood_drop'     : GM_getResourceURL('mood_drop'),
-    'strength'      : GM_getResourceURL('strength'),
-    'strength_drop'   : GM_getResourceURL('strength_drop'),
-    'strength_prev'   : GM_getResourceURL('strength_prev'),
-    'strength_now'    : GM_getResourceURL('strength_now'),
-    'strength_total'  : GM_getResourceURL('strength_total'),
-    'ge_button'     : GM_getResourceURL('ge_button'),
-    'ge_button2'    : GM_getResourceURL('ge_button2'),
-    'desire'      : ['http://www.imgbox.de/users/Peety/grepolis/desire.png'],
-    'fair_wind'     : ['http://www.imgbox.de/users/Peety/grepolis/fair_wind.png'],
+    'pbar_hide'			: GM_getResourceURL('pbar_hide'),
+    'pbar_red'			: GM_getResourceURL('pbar_red'),
+    'pbar_orange'		: GM_getResourceURL('pbar_orange'),
+    'pbar_yellow'		: GM_getResourceURL('pbar_yellow'),
+    'pbar_green'		: GM_getResourceURL('pbar_green'),
+    'pbar_bgII'			: GM_getResourceURL('pbar_bgII'),
+    'crButtonL'			: GM_getResourceURL('crButtonL'),
+    'crButtonR'			: GM_getResourceURL('crButtonR'),
+    'bMsg'				: GM_getResourceURL('bMsg'),
+    'uLink'				: GM_getResourceURL('uLink'),
+    'booty'				: GM_getResourceURL('booty'),
+    'mood_drop'			: GM_getResourceURL('mood_drop'),
+    'strength'			: GM_getResourceURL('strength'),
+    'strength_drop'		: GM_getResourceURL('strength_drop'),
+    'strength_prev'		: GM_getResourceURL('strength_prev'),
+    'strength_now'		: GM_getResourceURL('strength_now'),
+    'strength_total'	: GM_getResourceURL('strength_total'),
+    'ge_button'			: GM_getResourceURL('ge_button'),
+    'ge_button2'		: GM_getResourceURL('ge_button2'),
+    'desire'			: ['http://www.imgbox.de/users/Peety/grepolis/desire.png'],
+    'fair_wind'			: ['http://www.imgbox.de/users/Peety/grepolis/fair_wind.png'],
     'strength_of_heroes': ['http://www.imgbox.de/users/Peety/grepolis/strength_of_heroes.png'],
-    'iconWood'      : ['http://www.imgbox.de/users/Peety/grepolis/iconWood.png'],
-    'iconStone'     : ['http://www.imgbox.de/users/Peety/grepolis/iconStone.png'],
-    'iconSilver'    : ['http://www.imgbox.de/users/Peety/grepolis/iconSilver.png']
+    'iconWood'			: ['http://www.imgbox.de/users/Peety/grepolis/iconWood.png'],
+    'iconStone'			: ['http://www.imgbox.de/users/Peety/grepolis/iconStone.png'],
+    'iconSilver'		: ['http://www.imgbox.de/users/Peety/grepolis/iconSilver.png']
 };
 
 
@@ -647,31 +647,31 @@ var text_translations = {
     "de" : {
       popups : {
         // Texts uses in pop-ups.
-        show_games  : "Anzeige Olympischer Spiele an/aus.",
+        show_games	: "Anzeige Olympischer Spiele an/aus.",
         show_theater: "Anzeige Theaterspiele an/aus.",
-        show_party  : "Anzeige Stadtfeste an/aus.",
+        show_party 	: "Anzeige Stadtfeste an/aus.",
         show_triumph: "Anzeige Triumphzüge an/aus.",
-        next_party  : "Click zum <b>Ausführen</b> eines Stadtfestes.",
-        auto_party  : "Click zum <b>automatischen Ausführen</b> möglicher Stadtfeste.",
-        no_party  : "Kein weiteres Stadtfest möglich.",
+        next_party 	: "Click zum <b>Ausführen</b> eines Stadtfestes.",
+        auto_party	: "Click zum <b>automatischen Ausführen</b> möglicher Stadtfeste.",
+        no_party	: "Kein weiteres Stadtfest möglich.",
         next_triumph: "Click zum <b>Ausführen</b> eines Triumphzugs.",
         auto_triumph: "Click zum <b>automatischen Ausführen</b> möglicher Triumphzüge.",
-        no_triumph  : "Kein weiterer Triumphzug möglich."
+        no_triumph	: "Kein weiterer Triumphzug möglich."
       }
     },
     "en" : {
       popups : {
         // Texts uses in pop-ups.
-        show_games  : "Show Olympic Games on/off.",
+        show_games	: "Show Olympic Games on/off.",
         show_theater: "Show theater plays on/off.",
-        show_party  : "Show town parties on/off.",
+        show_party	: "Show town parties on/off.",
         show_triumph: "Show triumph parties on/off.",
-        next_party  : "Click for <b>start</b> of one town party.",
-        auto_party  : "Click for <b>automatic start</b> of all possible town parties.",
-        no_party  : "No further town party available.",
+        next_party	: "Click for <b>start</b> of one town party.",
+        auto_party	: "Click for <b>automatic start</b> of all possible town parties.",
+        no_party	: "No further town party available.",
         next_triumph: "Click for <b>start</b> of one victory procession.",
         auto_triumph: "Click for <b>automatic start</b> of all possible victory processions.",
-        no_triumph  : "No further triumph party available."
+        no_triumph	: "No further triumph party available."
       }
     }
 };
@@ -689,32 +689,32 @@ default:
 
 var unitCosts = {
     // Wood, Stone, Iron, FoodPoints, Favor, Name, Booty
-    'militia':    [ 0, 0, 0, 0, 0, 0, L('militia'), 0],
-    'unkown':   [ 0, 0, 0, 0, 0, 0, L('unknown'), 0],   // 'unkown': Fehler in
+    'militia':		[ 0, 0, 0, 0, 0, 0, L('militia'), 0],
+    'unkown':		[ 0, 0, 0, 0, 0, 0, L('unknown'), 0],   // 'unkown': Fehler in
     // Grepo, soll wohl
     // 'unknown' heißen
-    'sword':    [95, 0, 85, 1, 0, 16, L('sword'), 16],
-    'slinger':    [55, 100, 40, 1, 0, 8, L('slinger'), 8],
-    'archer':   [120, 0, 75, 1, 0, 24, L('archer'), 24],
-    'hoplite':    [0, 75, 150, 1, 0, 8, L('hoplite'), 8],
-    'rider':    [240, 120, 360, 3, 0, 72, L('rider'), 72],
-    'chariot':    [200, 440, 320, 4, 0, 64, L('chariot'), 64],
-    'catapult':   [1200, 1200, 1200, 15, 0, 400, L('catapult'), 400],
+    'sword':		[95, 0, 85, 1, 0, 16, L('sword'), 16],
+    'slinger':		[55, 100, 40, 1, 0, 8, L('slinger'), 8],
+    'archer':		[120, 0, 75, 1, 0, 24, L('archer'), 24],
+    'hoplite':		[0, 75, 150, 1, 0, 8, L('hoplite'), 8],
+    'rider':		[240, 120, 360, 3, 0, 72, L('rider'), 72],
+    'chariot':		[200, 440, 320, 4, 0, 64, L('chariot'), 64],
+    'catapult':		[1200, 1200, 1200, 15, 0, 400, L('catapult'), 400],
     'big_transporter': [500, 500, 400, 7, 0, 20, L('big_transporter'), 0],
-    'bireme':   [800, 700, 180, 8, 0, 0, L('bireme'), 0],
-    'attack_ship':  [1300, 300, 800, 10, 0, 0, L('attack_ship'), 0],
+    'bireme':		[800, 700, 180, 8, 0, 0, L('bireme'), 0],
+    'attack_ship':	[1300, 300, 800, 10, 0, 0, L('attack_ship'), 0],
     'demolition_ship': [500, 750, 150, 8, 0, 0, L('demolition_ship'), 0],
     'small_transporter': [800, 0, 400, 5, 0, 10, L('small_transporter'), 0],
-    'trireme':    [2000, 1300, 900, 16, 0, 0, L('trireme'), 0],
+    'trireme':		[2000, 1300, 900, 16, 0, 0, L('trireme'), 0],
     'colonize_ship':[10000, 10000, 10000, 170, 0, 0, L('colonize_ship'), 0],
-    'minotaur':   [1400, 600, 3100, 30, 202, 480, L('minotaur'), 480],
-    'manticore':  [4400, 3000, 3400, 45, 405, 360, L('manticore'), 360],
-    'zyklop':   [2000, 4200, 3360, 40, 360, 320, L('zyklop'), 320],
-    'sea_monster':  [5400, 2800, 3800, 50, 400, 0, L('sea_monster'), 0],
-    'harpy':    [1600, 400, 1360, 14, 130, 340, L('harpy'), 340],
-    'medusa':   [1500, 3800, 2200, 18, 210, 400, L('medusa'), 400],
-    'centaur':    [1740, 300, 700, 12, 100, 200, L('centaur'), 200],
-    'pegasus':    [2800, 360, 80, 20, 180, 160, L('pegasus'), 160]
+    'minotaur':		[1400, 600, 3100, 30, 202, 480, L('minotaur'), 480],
+    'manticore':	[4400, 3000, 3400, 45, 405, 360, L('manticore'), 360],
+    'zyklop':		[2000, 4200, 3360, 40, 360, 320, L('zyklop'), 320],
+    'sea_monster':	[5400, 2800, 3800, 50, 400, 0, L('sea_monster'), 0],
+    'harpy':		[1600, 400, 1360, 14, 130, 340, L('harpy'), 340],
+    'medusa':		[1500, 3800, 2200, 18, 210, 400, L('medusa'), 400],
+    'centaur':		[1740, 300, 700, 12, 100, 200, L('centaur'), 200],
+    'pegasus':		[2800, 360, 80, 20, 180, 160, L('pegasus'), 160]
 };
 
 GE.buildingStats = [];
@@ -1097,7 +1097,7 @@ Config = {
       var notice = document.createElement('div');
       notice.id = "ConfigSettings";
       notice.setAttribute('style', 'position:fixed; left:20%; top:77px');
-      var html = '<div class="game_inner_box">'
+      var	html = '<div class="game_inner_box">'
         html +='<table cellspacing="0" cellpadding="0" class="game_border">'
           html += '<tr><td class="game_border_edge"></td><td class="game_border_top"></td><td class="game_border_edge game_border_edge_2"></td></tr>';
       html += '<tr><td class="game_border_left"></td><td><div style="position:relative; margin: 0px; display: inline-block;">';
@@ -1274,11 +1274,11 @@ Config = {
       switch(field.type) {
       case 'checkbox':
         if(typeof(field.value) == 'undefined' || !field.value)
-          return (typeof(GM_getValue(key)) != 'undefined' && GM_getValue(key).toString() == "1") ? true : false;  // false
+          return (typeof(GM_getValue(key)) != 'undefined' && GM_getValue(key).toString() == "1") ? true : false;	// false
         // by
         // default
         else
-          return (typeof(GM_getValue(key)) != 'undefined' && GM_getValue(key).toString() == "0") ? false : true;  // true
+          return (typeof(GM_getValue(key)) != 'undefined' && GM_getValue(key).toString() == "0") ? false : true;	// true
         // by
         // default
         break;
@@ -1292,14 +1292,14 @@ Config = {
     },
 
     save: function() {
-      Res_Pass  = Config.tempOptions['ResPass'];
-      Res_Key   = Config.tempOptions['ResKey'];
+      Res_Pass	= Config.tempOptions['ResPass'];
+      Res_Key		= Config.tempOptions['ResKey'];
       Polis_Search= Config.tempOptions['PolisSearch'];
-      Map_Key   = Config.tempOptions['MapKey'];
-      Link1_Name  = Config.tempOptions['Link1Name'];
-      Own_Link1 = Config.tempOptions['OwnLink1'];
-      Link2_Name  = Config.tempOptions['Link2Name'];
-      Own_Link2 = Config.tempOptions['OwnLink2'];
+      Map_Key		= Config.tempOptions['MapKey'];
+      Link1_Name	= Config.tempOptions['Link1Name'];
+      Own_Link1	= Config.tempOptions['OwnLink1'];
+      Link2_Name	= Config.tempOptions['Link2Name'];
+      Own_Link2	= Config.tempOptions['OwnLink2'];
 
       for(var x in Config.tempOptions) {
         if (Config.tempOptions[x] == '0' || Config.tempOptions[x] == '1') {
@@ -1320,7 +1320,7 @@ Config = {
 
 
 var allyLnk = false, userLnk = false;
-if (Config.get('optAllylinks')) {allyLnk = true;}   // 'cause of GM_getValue
+if (Config.get('optAllylinks')) {allyLnk = true;} 	// 'cause of GM_getValue
 //access violation in
 //unsafeWindow
 if (Config.get('optUserlinks')) {userLnk = true;}
@@ -1530,7 +1530,7 @@ function ft(sec) {
   // += sec+"\"";
   return time;
 };
-var counter_updsec = 5;  // update interval
+var counter_updsec = 5;	 // update interval
 function counters() {
   for (var i in GE.counters) {
     if (GE.counters[i] && $g(GE.counters[i][0])) {
@@ -1679,7 +1679,7 @@ function makeDraggable(parent, item) {
 };
 //End of Drag-n-drop
 
-function GE_Report_Clean() {      // not used!!
+function GE_Report_Clean() {  		// not used!!
   $g("GE_Report").innerHTML = '';
 }
 
@@ -2288,8 +2288,8 @@ if ((GE.Controller == 'town_overviews') && (( uW.document.URL.indexOf("=culture_
   var date = new Date();
   var red_time = parseInt( date.getTime() / 1000 + (20 * 60), 10); // time
   // for red
-  var orange_time = red_time + (40 * 60);             // + time for orange
-  var yellow_time = orange_time + (60 * 60);            // + time for yellow
+  var orange_time = red_time + (40 * 60);							// + time for orange
+  var yellow_time = orange_time + (60 * 60);						// + time for yellow
   allEtas = new Array(allEtaSpans.snapshotLength);
   allProgressbars = new Array(allEtaSpans.snapshotLength);
   // ETA Farbe zuordnen
@@ -2336,7 +2336,7 @@ if ((GE.Controller == 'town_overviews') && (( uW.document.URL.indexOf("=culture_
         $('#place_culture_count span').mousePopup( new MousePopup( 'Zeit bis zum Erreichen der nächsten Stufe' ) );\
         }\
         })();\
-    "));  // ie may needs (null == scriptEl.canHaveChildren ||
+    "));	// ie may needs (null == scriptEl.canHaveChildren ||
     // scriptEl.canHaveChildren) ? scriptEl.text = txt;
     document.body.appendChild(scriptEl);
   }
@@ -2663,11 +2663,11 @@ if (Config.get('optProdinfo')) {
     if (sirm !== Infinity) { GE.counters["GE_silver_C"] = ["GE_silver_C", sirm]; }
     if (farm !== Infinity) { GE.counters["GE_favor_C"] = ["GE_favor_C", farm]; } else { GE.counters["GE_favor_C"] = ["GE_favor_C", 0]; farm2 = L("NOGOD"); }
 
-    var prodinfoHTML =  '<table><tr>'+
-    ' <td id="GE_wood"> '+GE.Layout.production.wood+' -<span id="GE_wood_C">'+ wrm2 +'</span> </td>'+
-    ' <td id="GE_stone"> '+GE.Layout.production.stone+' -<span id="GE_stone_C">'+ strm2 +'</span> </td>'+
-    ' <td id="GE_silver"> '+GE.Layout.production.iron+' -<span id="GE_silver_C">'+ sirm2 +'</span> </td>'+
-    ' <td id="GE_favor"> '+GE.Layout.current_god_favor_production+' -<span id="GE_favor_C">'+ farm2 +'</span> </td>'+
+    var prodinfoHTML =	'<table><tr>'+
+    '	<td id="GE_wood"> '+GE.Layout.production.wood+' -<span id="GE_wood_C">'+ wrm2 +'</span> </td>'+
+    '	<td id="GE_stone"> '+GE.Layout.production.stone+' -<span id="GE_stone_C">'+ strm2 +'</span> </td>'+
+    '	<td id="GE_silver"> '+GE.Layout.production.iron+' -<span id="GE_silver_C">'+ sirm2 +'</span> </td>'+
+    '	<td id="GE_favor"> '+GE.Layout.current_god_favor_production+' -<span id="GE_favor_C">'+ farm2 +'</span> </td>'+
     '</tr></table>';
     if ($g('GE_prodinfo')) {
       $g('GE_prodinfo').innerHTML = prodinfoHTML;
@@ -2775,52 +2775,52 @@ if (Config.get('optAllylinks')) {
 if (Config.get('optBuildingpnts')) {
   var grepoPoints = (function () {
     var buildingsData = {
-        'main':     [110, 11, 12, 13, 15, 16, 18, 19, 22, 23, 26, 29, 31, 35, 38, 41, 46, 51, 56, 61, 67, 74, 81, 90, 98],
-        'lumber':   [22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
-        'farm':     [17, 2, 2, 3, 2, 4, 3, 4, 5, 5, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 20, 21, 25, 27, 31, 34, 38, 43, 48, 54, 61, 67, 76, 85, 95, 106, 120, 133, 150],
-        'stoner':   [22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
-        'storage':    [15, 2, 2, 3, 3, 4, 4, 4, 5, 6, 7, 8, 8, 10, 12, 13, 15, 16, 20, 22, 25, 28, 33, 37, 42, 48, 55, 63, 71, 81],
-        'ironer':   [22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
-        'barracks':   [33, 4, 5, 4, 6, 6, 6, 8, 8, 9, 10, 12, 13, 14, 16, 17, 20, 22, 24, 28, 30, 34, 38, 42, 47, 52, 59, 65, 73, 81],
-        'wall':     [34, 4, 4, 5, 6, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 20, 22, 25, 27, 31, 35, 39, 44, 48, 55],
-        'hide':     [60, 12, 14, 18, 20, 25, 30, 36, 43, 52],
-        'docks':    [66, 7, 7, 8, 9, 9, 11, 12, 12, 15, 15, 17, 19, 21, 23, 25, 27, 31, 33, 37, 40, 44, 49, 54, 59, 65, 72, 78, 87, 95],
-        'academy':    [67, 8, 9, 10, 12, 12, 15, 16, 17, 20, 23, 25, 28, 31, 35, 40, 44, 49, 56, 62, 69, 78, 87, 98, 109, 122, 137, 154, 172, 193],
-        'temple':   [216, 17, 19, 20, 22, 23, 26, 27, 30, 32, 34, 38, 40, 43, 47, 51, 55, 59, 64, 69, 75, 80, 87, 94, 102],
-        'market':   [108, 9, 9, 10, 11, 12, 12, 14, 15, 16, 17, 19, 20, 22, 23, 26, 27, 30, 32, 34, 37, 41, 43, 47, 51, 55, 59, 64, 69, 74],
-        'place':    [33],
-        'theater':    [500],
-        'lighthouse': [500],
-        'library':    [500],
-        'thermal':    [500],
-        'tower':    [500],
-        'statue':   [500],
-        'oracle':   [500],
-        'trade_office': [500]
+        'main':			[110, 11, 12, 13, 15, 16, 18, 19, 22, 23, 26, 29, 31, 35, 38, 41, 46, 51, 56, 61, 67, 74, 81, 90, 98],
+        'lumber':		[22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
+        'farm':			[17, 2, 2, 3, 2, 4, 3, 4, 5, 5, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 20, 21, 25, 27, 31, 34, 38, 43, 48, 54, 61, 67, 76, 85, 95, 106, 120, 133, 150],
+        'stoner':		[22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
+        'storage':		[15, 2, 2, 3, 3, 4, 4, 4, 5, 6, 7, 8, 8, 10, 12, 13, 15, 16, 20, 22, 25, 28, 33, 37, 42, 48, 55, 63, 71, 81],
+        'ironer':		[22, 2, 3, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 10, 11, 13, 13, 15, 16, 18, 20, 21, 24, 26, 29, 32, 35, 38, 43, 46, 51, 56, 62, 68, 75, 82],
+        'barracks':		[33, 4, 5, 4, 6, 6, 6, 8, 8, 9, 10, 12, 13, 14, 16, 17, 20, 22, 24, 28, 30, 34, 38, 42, 47, 52, 59, 65, 73, 81],
+        'wall':			[34, 4, 4, 5, 6, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 20, 22, 25, 27, 31, 35, 39, 44, 48, 55],
+        'hide':			[60, 12, 14, 18, 20, 25, 30, 36, 43, 52],
+        'docks':		[66, 7, 7, 8, 9, 9, 11, 12, 12, 15, 15, 17, 19, 21, 23, 25, 27, 31, 33, 37, 40, 44, 49, 54, 59, 65, 72, 78, 87, 95],
+        'academy':		[67, 8, 9, 10, 12, 12, 15, 16, 17, 20, 23, 25, 28, 31, 35, 40, 44, 49, 56, 62, 69, 78, 87, 98, 109, 122, 137, 154, 172, 193],
+        'temple':		[216, 17, 19, 20, 22, 23, 26, 27, 30, 32, 34, 38, 40, 43, 47, 51, 55, 59, 64, 69, 75, 80, 87, 94, 102],
+        'market':		[108, 9, 9, 10, 11, 12, 12, 14, 15, 16, 17, 19, 20, 22, 23, 26, 27, 30, 32, 34, 37, 41, 43, 47, 51, 55, 59, 64, 69, 74],
+        'place':		[33],
+        'theater':		[500],
+        'lighthouse':	[500],
+        'library':		[500],
+        'thermal':		[500],
+        'tower':		[500],
+        'statue':		[500],
+        'oracle':		[500],
+        'trade_office':	[500]
     };
     var populationData = {
-        'main':     [2,2,2,3,3,4,4,4,4,5,4,6,5,5,6,6,6,6,7,6,7,7,7,8,7],
-        'lumber':   [1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
-        'farm':     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        'stoner':   [1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
-        'storage':    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        'ironer':   [1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
-        'barracks':   [1,1,2,2,2,2,3,2,2,3,3,2,3,3,3,3,3,3,3,3,3,4,3,3,4,3,4,3,4,3],
-        'wall':     [2,2,3,3,3,3,3,3,4,3,3,4,3,4,3,4,3,4,4,4,3,4,4,4,4],
-        'hide':     [3,1,1,1,1,0,1,0,1,0],
-        'docks':    [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
-        'academy':    [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        'temple':   [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-        'market':   [2,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        'place':    [0],
-        'theater':    [60],
-        'lighthouse': [60],
-        'library':    [60],
-        'thermal':    [60],
-        'tower':    [60],
-        'statue':   [60],
-        'oracle':   [60],
-        'trade_office': [60]
+        'main':			[2,2,2,3,3,4,4,4,4,5,4,6,5,5,6,6,6,6,7,6,7,7,7,8,7],
+        'lumber':		[1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
+        'farm':			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        'stoner':		[1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
+        'storage':		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        'ironer':		[1,1,2,2,1,2,2,2,3,2,2,2,3,2,3,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,4],
+        'barracks':		[1,1,2,2,2,2,3,2,2,3,3,2,3,3,3,3,3,3,3,3,3,4,3,3,4,3,4,3,4,3],
+        'wall':			[2,2,3,3,3,3,3,3,4,3,3,4,3,4,3,4,3,4,4,4,3,4,4,4,4],
+        'hide':			[3,1,1,1,1,0,1,0,1,0],
+        'docks':		[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        'academy':		[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+        'temple':		[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+        'market':		[2,2,3,2,3,2,3,3,2,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+        'place':		[0],
+        'theater':		[60],
+        'lighthouse':	[60],
+        'library':		[60],
+        'thermal':		[60],
+        'tower':		[60],
+        'statue':		[60],
+        'oracle':		[60],
+        'trade_office':	[60]
     };
     var allpoints = 0, allpop = 0;
     var allpointswQ = 0, allpopwQ = 0;
@@ -2837,8 +2837,8 @@ if (Config.get('optBuildingpnts')) {
     var getUpgradeBuildingHTMLPart_old;
     var getUpgradeBuildingHTMLPart_new = function(building) {
       var ret = getUpgradeBuildingHTMLPart_old.apply(window, arguments);
-      var name = building.controller.replace(/^building_(.*)$/, '$1');
-      var level = levels[name];
+      var	name = building.controller.replace(/^building_(.*)$/, '$1');
+      var	level = levels[name];
       var levelQueue = levelsQueue[name];
       var points = 0, pop = 0;
       if (typeof level === 'number' && typeof levelQueue === 'number') {
@@ -2917,7 +2917,7 @@ if (Config.get('optBuildingpnts')) {
                 levelsQueue[key] = level;
                 b.append('<span class="building_points_block">' + (val[0] !== undefined ? val[0] : '?') + 'p</span>');
               }
-            }     
+            }			
           });
           uW.buildingMousePopup();
           // container for points --- (todo: xpoints wegen doppeltem Durchlauf
@@ -3667,7 +3667,7 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
   ResCalc = {
       uW : null,
       $  : null,
-      UnitData : {      // Unit data from grepo version 1.07
+      UnitData : {		  // Unit data from grepo version 1.07
         militia : {resources:{wood:   0,stone:   0,iron:   0},population: 0,favor:  0},
         sword   : {resources:{wood:  95,stone:   0,iron:  85},population: 1,favor:  0},
         slinger : {resources:{wood:  55,stone: 100,iron:  40},population: 1,favor:  0},
@@ -3692,7 +3692,7 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
         colonize_ship   : {resources:{wood:10000,stone:10000,iron:10000},population:170,favor:  0},
         sea_monster     : {resources:{wood: 5400,stone: 2800,iron: 3800},population: 50,favor:400}
       },
-      server  : "",
+      server	: "",
 
       // Translations, Thx to ludoo http://userscripts.org/users/ludoo
       text_translations:{
@@ -3728,7 +3728,7 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
         // Get the unsafe window outside of GM.
         if (typeof unsafeWindow === 'object') {
           ResCalc.uW = unsafeWindow;
-        } else  {
+        } else 	{
           ResCalc.uW = window;
         }
 
@@ -4102,7 +4102,7 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
             '<div class="game_inner_box" style="z-index: 21; position:absolute; left:0px; top:0px; display:none;" id="'+idPrefix+'ResCostBox">'
             +    '<table cellspacing="0" cellpadding="0" class="game_border">'
             +    '<tr><td class="game_border_edge"/><td class="game_border_top"/>'
-            + '<td class="game_border_edge game_border_edge_2"/></tr>'
+            +	'<td class="game_border_edge game_border_edge_2"/></tr>'
             +    '<tr><td class="game_border_left"/>'
             +    '<td>'
             +     '<div style="position:relative; margin: 0px; display: inline-block;">'
@@ -4118,8 +4118,8 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
             +   '<td class="game_border_right"/>'
             +   '</tr>'
             +  '<tr><td class="game_border_edge game_border_edge_3"/>'
-            + '<td class="game_border_bottom"/>'
-            + '<td class="game_border_edge game_border_edge_4"/></tr>'
+            +	'<td class="game_border_bottom"/>'
+            +	'<td class="game_border_edge game_border_edge_4"/></tr>'
             +    '</table></div>'
         );
         // Delay drag binding, otherwise some of the properties may not be
@@ -4139,29 +4139,29 @@ if ((Config.get('optResCalc')) && ((GE.Controller == "building_wall") || (GE.Con
         ResCalc.createPopup( idPrefix, title,
             '<table cellspacing="0" cellpadding="0" class="place_simulator_table">'
             + '<tr>'
-            + '<td class="place_simulator_even" width="18px"/>'
-            + '<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadWood"  style="'+wdStyle+'"/></td>'
-            + '<td class="left_border place_simulator_even" style="min-width: 45px" align=center><div id="'+idPrefix+'HeadStone" style="'+stStyle+'"/></td>'
-            + '<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadIron"  style="'+svStyle+'"/></td>'
-            + '<td class="left_border place_simulator_even" style="min-width: 45px" align=center><div id="'+idPrefix+'HeadFavor" style="'+fvStyle+'"/></td>'
-            + '<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadBH"    style="'+bhStyle+'"/></td>'
+            +	'<td class="place_simulator_even" width="18px"/>'
+            +	'<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadWood"  style="'+wdStyle+'"/></td>'
+            +	'<td class="left_border place_simulator_even" style="min-width: 45px" align=center><div id="'+idPrefix+'HeadStone" style="'+stStyle+'"/></td>'
+            +	'<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadIron"  style="'+svStyle+'"/></td>'
+            +	'<td class="left_border place_simulator_even" style="min-width: 45px" align=center><div id="'+idPrefix+'HeadFavor" style="'+fvStyle+'"/></td>'
+            +	'<td class="left_border place_simulator_odd"  style="min-width: 45px" align=center><div id="'+idPrefix+'HeadBH"    style="'+bhStyle+'"/></td>'
             + '</tr>'
             + '<tr>'
-            + '<td class="left_border place_simulator_even place_losses" align=center style = "border: none;">'
-            + '<div class="place_symbol place_att" id="'+idPrefix+'AttLosts"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttWood"  style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'AttStone" style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttIron"  style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'AttFavor" style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttBH"    style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses" align=center style = "border: none;">'
+            +	'<div class="place_symbol place_att" id="'+idPrefix+'AttLosts"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttWood"  style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'AttStone" style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttIron"  style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'AttFavor" style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'AttBH"    style = "margin:2px;"/></td>'
             + '</tr>'
             + '<tr>'
-            + '<td class="left_border place_simulator_even place_losses" align=center style = "border: none;"><div class="place_symbol place_def" id="'+idPrefix+'DefLosts"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefWood"  style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'DefStone" style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefIron"  style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'DefFavor" style = "margin:2px;"/></td>'
-            + '<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefBH"    style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses" align=center style = "border: none;"><div class="place_symbol place_def" id="'+idPrefix+'DefLosts"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefWood"  style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'DefStone" style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefIron"  style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_even place_losses"><div id="'+idPrefix+'DefFavor" style = "margin:2px;"/></td>'
+            +	'<td class="left_border place_simulator_odd place_losses" ><div id="'+idPrefix+'DefBH"    style = "margin:2px;"/></td>'
             +' </tr>'
             +' </table></div>' );
 
@@ -4753,6 +4753,7 @@ if ((Config.get('optCulture')) || (Config.get('optMarket'))) {
 
 if (1) {
   uW.WndHandlerWonders.prototype.onRcvDataOrig = uW.WndHandlerWonders.prototype.onRcvData;
+  uW.WndHandlerWonders.prototype.iTowns = uW.ITowns;
 
   uW.WndHandlerWonders.prototype.fillResources = function () {
     error_log("WndHandlerWonders: fillResources");
@@ -4825,6 +4826,7 @@ if (1) {
     this.sendResources();  
   }
 
+
   uW.WndHandlerWonders.prototype.sendResources = function () {
     var root = this.wnd.getJQElement();
     var wood = root.find('#wonder_type_wood').val();
@@ -4845,11 +4847,34 @@ if (1) {
     }
   };
 
+  var iTowns = uW.ITowns;
+
+  uW.WndHandlerWonders.prototype.fillAutomatic = function () {
+    error_log("WndHandlerWonders: fillAutomatic");
+    var resources = ['wood', 'stone', 'iron'],
+    towns = iTowns.getTowns(),
+    town, town_id, res, i, elem;
+    for (town_id in towns) {
+      if (!towns.hasOwnProperty(town_id)) {
+        continue;
+      }
+      error_log("WndHandlerWonders: fillAutomatic town_id="+town_id);
+      iTowns.updateResourceCounter(town_id);
+      town = towns[town_id];
+      res = town.resources();
+      i = resources.length;
+      while (i--) {
+        var id = resources[i];
+        error_log("WndHandlerWonders: fillAutomatic "+id+"="+res[id]);
+      }   
+    }
+  }
+  
   uW.WndHandlerWonders.prototype.onRcvData = function (data) {
     error_log("WndHandlerWonders: onRcvData");
-    this.onRcvDataOrig(data);
 
-    $(".wonder_res_container .button").after('<a onclick="w(this).call(\'fillResources\')" href="#" class="button "><span class="left"><span class="right"><span class="middle">Fill</span></span></span></a><a onclick="w(this).call(\'fillSendNext\')" href="#" class="button "><span class="left"><span class="right"><span class="middle">Fill&Go</span></span></span></a>');
+    this.onRcvDataOrig(data);
+    $(".wonder_res_container .button").after('<a onclick="w(this).call(\'fillResources\')" href="#" class="button "><span class="left"><span class="right"><span class="middle">Fill</span></span></span></a><a onclick="w(this).call(\'fillSendNext\')" href="#" class="button "><span class="left"><span class="right"><span class="middle">Fill&Go</span></span></span></a><a onclick="w(this).call(\'fillAutomatic\')" href="#" class="button "><span class="left"><span class="right"><span class="middle">Automatic</span></span></span></a>');
   }
 }
 
